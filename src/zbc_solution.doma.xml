@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DOMA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD01V>
+    <DOMNAME>ZBC_SOLUTION</DOMNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DATATYPE>CHAR</DATATYPE>
+    <LENG>000010</LENG>
+    <OUTPUTLEN>000010</OUTPUTLEN>
+    <VALEXI>X</VALEXI>
+    <DDTEXT>Solution</DDTEXT>
+    <DOMMASTER>E</DOMMASTER>
+    <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
+   </DD01V>
+   <DD07V_TAB>
+    <DD07V>
+     <DOMNAME>ZBC_SOLUTION</DOMNAME>
+     <VALPOS>0001</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>UNRESOLVED</DOMVALUE_L>
+     <DDTEXT>Not resolved yet</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZBC_SOLUTION</DOMNAME>
+     <VALPOS>0002</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>DONE</DOMVALUE_L>
+     <DDTEXT>Done</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZBC_SOLUTION</DOMNAME>
+     <VALPOS>0003</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>WONTFIX</DOMVALUE_L>
+     <DDTEXT>Will not be fixed</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZBC_SOLUTION</DOMNAME>
+     <VALPOS>0004</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>DUPLICATE</DOMVALUE_L>
+     <DDTEXT>This is a duplicate</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZBC_SOLUTION</DOMNAME>
+     <VALPOS>0005</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>CANTREPOR</DOMVALUE_L>
+     <DDTEXT>Can not reproduce</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZBC_SOLUTION</DOMNAME>
+     <VALPOS>0006</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>ASDESIGNED</DOMVALUE_L>
+     <DDTEXT>Works as designed</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZBC_SOLUTION</DOMNAME>
+     <VALPOS>0007</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>RTFM</DOMVALUE_L>
+     <DDTEXT>Read the f... Manual</DDTEXT>
+    </DD07V>
+   </DD07V_TAB>
+  </asx:values>
+ </asx:abap>
+</abapGit>
