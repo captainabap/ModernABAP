@@ -4,21 +4,22 @@ CLASS zbc_create_demo_data DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-   interfaces if_oo_adt_classrun.
-  "! <p class="shorttext synchronized" lang="en">Generate some data for ZBC_TASKS</p>
-  "! Generate some data for the table ZBC_TASKS
-  methods generate_tasks.
+    INTERFACES if_oo_adt_classrun.
+    "! <p class="shorttext synchronized" lang="en">Generate some data for ZBC_TASKS</p>
+    "! Generate some data for the table ZBC_TASKS
+    METHODS generate_tasks.
   PRIVATE SECTION.
-    METHODS select_tasks importing out type ref to if_oo_adt_classrun_out.
+    METHODS select_tasks IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS delete_data.
 ENDCLASS.
 
 
 
 CLASS zbc_create_demo_data IMPLEMENTATION.
   METHOD generate_tasks.
-    types tt_zbc_tasks type STANDARD TABLE OF zbc_tasks with default key.
+    TYPES tt_zbc_tasks TYPE STANDARD TABLE OF zbc_tasks WITH DEFAULT KEY.
 
-    data(generated_records) = value tt_zbc_tasks(
+    DATA(generated_records) = VALUE tt_zbc_tasks(
     ( author  = sy-uname
       task_id = '1'
       summary = 'First Task'
@@ -27,25 +28,34 @@ CLASS zbc_create_demo_data IMPLEMENTATION.
       type = 'BUG' )
     ).
 
-    DELETE from zbc_tasks.
-
-   " insert  zbc_tasks from table @generated_records.
+     insert  zbc_tasks from table @generated_records.
 
   ENDMETHOD.
 
   METHOD if_oo_adt_classrun~main.
+   "delete_data( ).
    " generate_tasks( ).
     select_tasks( out ).
   ENDMETHOD.
 
 
   METHOD select_tasks.
-    select *
-      from zbc_tasks
-      into table @data(tasks).
+    SELECT task_id,
+           status,
+           solution
+      FROM zbc_tasks
+      INTO TABLE @DATA(tasks).
 
-       out->write( tasks ).
+    out->write( tasks ).
 
-      ENDMETHOD.
+  ENDMETHOD.
+
+
+  METHOD delete_data.
+
+
+    DELETE FROM zbc_tasks.
+
+  ENDMETHOD.
 
 ENDCLASS.
