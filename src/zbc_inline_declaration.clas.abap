@@ -4,10 +4,10 @@ CLASS zbc_inline_declaration DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-    TYPES chickentype TYPE string.
-    TYPES cowtype     TYPE string.
-    TYPES dogtype(20)     TYPE c.
-    TYPES birdtype(1)    TYPE c.
+    TYPES chickentype  TYPE string.
+    TYPES cowtype      TYPE string.
+    TYPES dogtype(20)  TYPE c.
+    TYPES birdtype(10) TYPE c.
 
     INTERFACES if_oo_adt_classrun .
 
@@ -24,8 +24,11 @@ CLASS zbc_inline_declaration DEFINITION
                 dog     TYPE dogtype
                 bird    TYPE birdtype.
 
-    METHODS call_my_method_classic .
-    METHODS call_my_method_modern .
+    METHODS call_my_method_classic IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+
+    METHODS call_my_method_modern IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+
+
 ENDCLASS.
 
 CLASS zbc_inline_declaration IMPLEMENTATION.
@@ -33,8 +36,8 @@ CLASS zbc_inline_declaration IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
 
-    select_into_table_modern( out ).
-
+    call_my_method_classic( out ).
+    call_my_method_modern( out  ).
 
   ENDMETHOD.
 
@@ -86,26 +89,33 @@ CLASS zbc_inline_declaration IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD my_method.
-
+    chicken = 'Ich bin ein Huhn!'.
+    cow     = 'Ein Irisches Hochlandrind'.
+    dog     = 'Wuff!'.
+    bird    = 'Piep!Piep'.
   ENDMETHOD.
 
   METHOD call_my_method_classic.
-DATA chicken TYPE chickentype  .
-DATA cow     TYPE cowtype      .
-DATA dog     TYPE dogtype      .
-DATA bird    TYPE birdtype     .
+    DATA chicken TYPE chickentype  .
+    DATA cow     TYPE cowtype      .
+    DATA dog     TYPE dogtype      .
+    DATA bird    TYPE birdtype     .
 
-my_method( IMPORTING chicken =  chicken
-                     cow     =  cow
-                     dog     =  dog
-                     bird    =  bird ).
+    my_method( IMPORTING chicken =  chicken
+                         cow     =  cow
+                         dog     =  dog
+                         bird    =  bird ).
+
+    out->write( |Classic: \n{ chicken }\n{ cow }\n{ dog }\n{ bird }| ).
   ENDMETHOD.
 
   METHOD call_my_method_modern.
-my_method( IMPORTING chicken = data(chicken)
-                     cow     = data(cow)
-                     dog     = data(dog)
-                     bird    = data(bird) ).
+    my_method( IMPORTING chicken = DATA(chicken)
+                         cow     = DATA(cow)
+                         dog     = DATA(dog)
+                         bird    = DATA(bird) ).
+
+    out->write( |Modern: \n{ chicken }\n{ cow }\n{ dog }\n{ bird }| ).
   ENDMETHOD.
 
 ENDCLASS.

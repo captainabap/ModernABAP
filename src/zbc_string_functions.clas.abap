@@ -13,6 +13,7 @@ CLASS zbc_string_functions DEFINITION
                                       RETURNING VALUE(result) TYPE string.
     METHODS replace_name IMPORTING text          TYPE string
                          RETURNING VALUE(result) TYPE string.
+    METHODS concat_options.
 ENDCLASS.
 
 
@@ -23,6 +24,7 @@ CLASS zbc_string_functions IMPLEMENTATION.
   METHOD concat_lines_of_expression.
     """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     result = concat_lines_of( table = intab sep = '-' ).
+
   ENDMETHOD.
 
   METHOD concat_lines_of_statement.
@@ -33,13 +35,30 @@ CLASS zbc_string_functions IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD if_oo_adt_classrun~main.
-    out->write( replace_name( 'Peter Pan' ) ).
+    out->write( concat_lines_of_expression( VALUE #( ( |A| ) ( |B| ) ) ) ).
   ENDMETHOD.
 
-  method replace_name.
+  METHOD replace_name.
     result = replace( val = text
                       pcre = '(.*)\s(.*)'
                       with = '$2, $1' ).
-  endmethod.
+  ENDMETHOD.
+
+  METHOD concat_options.
+    DATA resultstring1 TYPE string.
+    DATA resultstring2 TYPE string.
+    DATA resultstring3 TYPE string.
+
+    "Option 1: with CONCATENATE
+    CONCATENATE 'ABC' 'DEF' 'GHI' INTO resultstring1.
+
+    "Option 2: with the && Operator
+    resultstring2 = 'ABC' && 'DEF' && 'GHI'.
+
+    "Option 3: with multiple calculation assignments
+    resultstring3 = 'ABC'.
+    resultstring3 &&= 'DEF'.
+    resultstring3 &&= 'GHI'.
+  ENDMETHOD.
 
 ENDCLASS.
