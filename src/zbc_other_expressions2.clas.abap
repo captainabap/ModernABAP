@@ -1,17 +1,20 @@
-CLASS zbc_other_expressions DEFINITION
+CLASS zbc_other_expressions2 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
     TYPES: BEGIN OF ts_demo,
-             date    TYPE dats,
-             amount  TYPE p LENGTH 16 DECIMALS 2,
-             account TYPE c LENGTH 10,
-             curr    TYPE c LENGTH 3,
+             date         TYPE dats,
+             amount       TYPE p LENGTH 16 DECIMALS 2,
+             account      TYPE c LENGTH 10,
+             curr         TYPE c LENGTH 3,
+             country      TYPE c LENGTH 3,
+             country_text TYPE c LENGTH 50,
            END OF ts_demo.
 
-    TYPES tt_demo TYPE STANDARD TABLE OF ts_demo WITH DEFAULT KEY.
+    TYPES tt_demo TYPE sorted TABLE OF ts_demo WITH unique DEFAULT KEY
+           WITH NON-UNIQUE SORTED KEY a COMPONENTS country .
 
     INTERFACES if_oo_adt_classrun.
     METHODS demo_exact_calculation
@@ -45,26 +48,31 @@ CLASS zbc_other_expressions DEFINITION
     METHODS my_method IMPORTING text TYPE char8.
     METHODS demo_cast.
     METHODS demo_corresponding    IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS demo_reduce  IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS demo_corresponding_lookup IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS demo_cond IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS demo_switch IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS demo_filter IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS demo_filter_table IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
 ENDCLASS.
 
 
 
-CLASS zbc_other_expressions IMPLEMENTATION.
+CLASS zbc_other_expressions2 IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
     DATA dec  TYPE p LENGTH 16 DECIMALS 2.
     dec = 1 / 3.
-    demo_exact_calculation( out = out input = 5 ).
-    demo_exact_calculation( out = out input = 3 ).
-    demo_exact_assignment( out = out input = 5 ).
-    demo_exact_assignment( out = out input = dec ).
-    demo_calculation_assignment( out = out vat = 19 ).
-    demo_value_operator( out ).
-    for_counter( out ).
-    for_loop( out ).
-    base_in_value( out ).
-    new_data_object( out ).
-    demo_reduce( out ).
+*    demo_exact_calculation( out = out input = 5 ).
+*    demo_exact_calculation( out = out input = 3 ).
+*    demo_exact_assignment( out = out input = 5 ).
+*    demo_exact_assignment( out = out input = dec ).
+*    demo_calculation_assignment( out = out vat = 19 ).
+*    demo_value_operator( out ).
+*    for_counter( out ).
+*    for_loop( out ).
+*    base_in_value( out ).
+*    new_data_object( out ).
+    demo_corresponding_lookup( out ).
+    demo_filter_table( out ).
   ENDMETHOD.
 
   METHOD demo_exact_calculation.
@@ -286,24 +294,54 @@ CLASS zbc_other_expressions IMPLEMENTATION.
       FROM zbc_tasks
       INTO @DATA(ls_task_original) .
 
-    ls_task_small = CORRESPONDING #( BASE ( ls_task_small )
-                                     ls_task_original ).
+    ls_task_small = CORRESPONDING #( ls_task_original
+                                     MAPPING id    = task_id
+                                             title = summary
+                                     EXCEPT assignee ).
     out->write( ls_task_small ).
   ENDMETHOD.
 
-  METHOD demo_reduce.
-    SELECT  summary
-      FROM zbc_tasks
-      INTO TABLE @DATA(lt_tasks)
-      UP TO 10 ROWS.
+  METHOD demo_corresponding_lookup.
+    DATA lt_lookup TYPE HASHED TABLE OF I_CountryText WITH UNIQUE KEY country.
+    DATA(lt_orig) = VALUE tt_demo( ( country = 'DE' )
+                                   ( country = 'US' ) ).
+    SELECT * FROM i_countrytext WHERE language = 'D' INTO TABLE @lt_lookup.
 
-    DATA(lv_result) = REDUCE string( INIT r  TYPE string
-                                     FOR line IN lt_tasks
-                                     NEXT
-                                      r &&= line-summary(1)
-                                      ).
-    out->write( lv_result ).
-    out->write( lt_tasks ).
+    DATA(lt_new) = CORRESPONDING tt_demo( lt_orig FROM lt_lookup
+                                                  USING country = country
+                                                  MAPPING country_text = CountryName  ).
+    out->write( lt_new ).
+  ENDMETHOD.
+
+  METHOD demo_cond.
+    DATA(result) = COND tt_demo( WHEN sy-datum = '20220929' THEN VALUE #( ( amount = 10 curr = 'EUR'  ) )
+                                 WHEN sy-langu = 'D'        THEN VALUE #( ( amount = 11 curr = 'EUR'  ) )
+                                 ELSE                            VALUE #( ( amount = 9 curr = 'USD' ) ) ).
+    out->write( result ).
+  ENDMETHOD.
+
+  METHOD demo_switch.
+    DATA(result) = switch tt_demo( sy-datum WHEN '20220929' THEN VALUE #( ( amount = 10 curr = 'EUR'  ) )
+                                            WHEN '20220930' THEN VALUE #( ( amount = 11 curr = 'EUR'  ) )
+                                            ELSE                 VALUE #( ( amount = 9 curr = 'USD' ) ) ).
+    out->write( result ).
+  ENDMETHOD.
+
+  METHOD demo_filter.
+    DATA lt_data TYPE sorted TABLE OF I_CountryText WITH UNIQUE KEY language  country.
+    SELECT * FROM i_countrytext INTO TABLE @lt_data.
+
+    out->write( filter #( lt_data where language = 'D' ) ).
+  ENDMETHOD.
+
+  METHOD demo_filter_table.
+    DATA lt_data TYPE sorted TABLE OF I_CountryText WITH UNIQUE KEY country.
+    DATA(lt_filter) = VALUE tt_demo( ( country = 'DE' )
+                                   ( country = 'US' ) ).
+    SELECT * FROM i_countrytext WHERE language = 'D' INTO TABLE @lt_data.
+
+    DATA(lt_new) = filter #( lt_data in lt_filter USING KEY a where country = country  ).
+    out->write( lt_new ).
   ENDMETHOD.
 
 ENDCLASS.

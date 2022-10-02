@@ -33,7 +33,7 @@ CLASS zbc_create_demo_data IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD if_oo_adt_classrun~main.
-   "delete_data( ).
+   delete_data( ).
    " generate_tasks( ).
     select_tasks( out ).
   ENDMETHOD.
@@ -55,6 +55,7 @@ CLASS zbc_create_demo_data IMPLEMENTATION.
 
 
     DELETE FROM zbc_tasks.
+    delete from zbc_users.
 
   ENDMETHOD.
 
