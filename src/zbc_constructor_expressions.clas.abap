@@ -13,10 +13,12 @@ CLASS zbc_constructor_expressions DEFINITION
              country_text TYPE c LENGTH 50,
            END OF ts_demo.
 
-    TYPES tt_demo TYPE sorted TABLE OF ts_demo WITH unique DEFAULT KEY
+    TYPES tt_demo TYPE SORTED TABLE OF ts_demo WITH UNIQUE DEFAULT KEY
            WITH NON-UNIQUE SORTED KEY a COMPONENTS country .
 
     INTERFACES if_oo_adt_classrun.
+
+  PROTECTED SECTION.
     METHODS demo_exact_calculation
       IMPORTING input TYPE int4
                 out   TYPE REF TO if_oo_adt_classrun_out.
@@ -61,19 +63,20 @@ ENDCLASS.
 
 CLASS zbc_constructor_expressions IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
-    DATA dec  TYPE p LENGTH 16 DECIMALS 2.
-    dec = 1 / 3.
-    demo_exact_calculation( out = out input = 5 ).
-    demo_exact_calculation( out = out input = 3 ).
-    demo_exact_assignment( out = out input = 5 ).
-    demo_exact_assignment( out = out input = dec ).
-    demo_calculation_assignment( out = out vat = 19 ).
-    demo_value_operator( out ).
-    for_counter( out ).
-    for_loop( out ).
-    base_in_value( out ).
-    new_data_object( out ).
-    demo_reduce( out ).
+*    DATA dec  TYPE p LENGTH 16 DECIMALS 2.
+*    dec = 1 / 3.
+*    demo_exact_calculation( out = out input = 5 ).
+*    demo_exact_calculation( out = out input = 3 ).
+*    demo_exact_assignment( out = out input = 5 ).
+*    demo_exact_assignment( out = out input = dec ).
+*    demo_calculation_assignment( out = out vat = 19 ).
+*    demo_value_operator( out ).
+*    for_counter( out ).
+*    for_loop( out ).
+*    base_in_value( out ).
+*    new_data_object( out ).
+*    demo_reduce( out ).
+
   ENDMETHOD.
 
   METHOD demo_exact_calculation.
@@ -333,26 +336,28 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD demo_switch.
-    DATA(result) = switch tt_demo( sy-datum WHEN '20220929' THEN VALUE #( ( amount = 10 curr = 'EUR'  ) )
+    DATA(result) = SWITCH tt_demo( sy-datum WHEN '20220929' THEN VALUE #( ( amount = 10 curr = 'EUR'  ) )
                                             WHEN '20220930' THEN VALUE #( ( amount = 11 curr = 'EUR'  ) )
                                             ELSE                 VALUE #( ( amount = 9 curr = 'USD' ) ) ).
     out->write( result ).
   ENDMETHOD.
 
   METHOD demo_filter.
-    DATA lt_data TYPE sorted TABLE OF I_CountryText WITH UNIQUE KEY language  country.
+    DATA lt_data TYPE SORTED TABLE OF I_CountryText WITH UNIQUE KEY language  country.
     SELECT * FROM i_countrytext INTO TABLE @lt_data.
 
-    out->write( filter #( lt_data where language = 'D' ) ).
+    out->write( FILTER #( lt_data WHERE language = 'D' ) ).
   ENDMETHOD.
 
   METHOD demo_filter_table.
-    DATA lt_data TYPE sorted TABLE OF I_CountryText WITH UNIQUE KEY country.
+    DATA lt_data TYPE SORTED TABLE OF I_CountryText WITH UNIQUE KEY country.
     DATA(lt_filter) = VALUE tt_demo( ( country = 'DE' )
                                    ( country = 'US' ) ).
     SELECT * FROM i_countrytext WHERE language = 'D' INTO TABLE @lt_data.
 
-    DATA(lt_new) = filter #( lt_data in lt_filter USING KEY a where country = country  ).
+    DATA(lt_new) = FILTER #( lt_data IN lt_filter USING KEY a WHERE country = country  ).
     out->write( lt_new ).
   ENDMETHOD.
+
+
 ENDCLASS.

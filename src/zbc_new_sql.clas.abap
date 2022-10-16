@@ -7,6 +7,7 @@ CLASS zbc_new_sql DEFINITION
     INTERFACES if_oo_adt_classrun.
     METHODS sql_functions IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
     METHODS with_clause   IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS UNION_all   IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
 ENDCLASS.
 
 
@@ -14,6 +15,7 @@ ENDCLASS.
 CLASS zbc_new_sql IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
     sql_functions( out ).
+    union_all( out ).
     " with_clause( out ).
   ENDMETHOD.
 
@@ -66,6 +68,20 @@ CLASS zbc_new_sql IMPLEMENTATION.
       ORDER BY t~assignee
 
       INTO TABLE @DATA(result).
+    out->write( result ).
+  ENDMETHOD.
+
+  METHOD union_all.
+    select task_id
+      from zbc_tasks where task_id < '0000000005'
+
+      union all
+
+    select cast( '0000000001' as NUMC( 10 ) ) as task_id
+      from zbc_wf
+
+    into table @data(result).
+
     out->write( result ).
   ENDMETHOD.
 
