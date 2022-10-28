@@ -31,7 +31,9 @@ CLASS zbc_inline_declaration DEFINITION
 
 ENDCLASS.
 
-CLASS zbc_inline_declaration IMPLEMENTATION.
+
+
+CLASS ZBC_INLINE_DECLARATION IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
@@ -41,17 +43,55 @@ CLASS zbc_inline_declaration IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD select_into_table_modern.
 
-    SELECT task_id,
-           status,
-           solution
-      FROM zbc_tasks
-      INTO TABLE @DATA(tasks).
+  METHOD factory_modern.
 
-    out->write( tasks ).
+    DATA(typedescr) = cl_abap_typedescr=>describe_by_data( some_data ).
 
   ENDMETHOD.
+
+
+  METHOD factory_classic.
+
+    DATA typedescr TYPE REF TO cl_abap_typedescr .
+
+    typedescr = cl_abap_typedescr=>describe_by_data( some_data ).
+
+  ENDMETHOD.
+
+
+  METHOD call_my_method_classic.
+    DATA chicken TYPE chickentype  .
+    DATA cow     TYPE cowtype      .
+    DATA dog     TYPE dogtype      .
+    DATA bird    TYPE birdtype     .
+
+    my_method( IMPORTING chicken =  chicken
+                         cow     =  cow
+                         dog     =  dog
+                         bird    =  bird ).
+
+    out->write( |Classic: \n{ chicken }\n{ cow }\n{ dog }\n{ bird }| ).
+  ENDMETHOD.
+
+
+  METHOD call_my_method_modern.
+    my_method( IMPORTING chicken = DATA(chicken)
+                         cow     = DATA(cow)
+                         dog     = DATA(dog)
+                         bird    = DATA(bird) ).
+
+    out->write( |Modern: \n{ chicken }\n{ cow }\n{ dog }\n{ bird }| ).
+  ENDMETHOD.
+
+
+  METHOD my_method.
+    chicken = 'Ich bin ein Huhn!'.
+    cow     = 'Ein Irisches Hochlandrind'.
+    dog     = 'Wuff!'.
+    bird    = 'Piep!Piep'.
+  ENDMETHOD.
+
 
   METHOD select_into_table_classic.
 
@@ -74,48 +114,16 @@ CLASS zbc_inline_declaration IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD factory_classic.
 
-    DATA typedescr TYPE REF TO cl_abap_typedescr .
+  METHOD select_into_table_modern.
 
-    typedescr = cl_abap_typedescr=>describe_by_data( some_data ).
+    SELECT task_id,
+           status,
+           solution
+      FROM zbc_tasks
+      INTO TABLE @DATA(tasks).
+
+    out->write( tasks ).
 
   ENDMETHOD.
-
-  METHOD factory_modern.
-
-    DATA(typedescr) = cl_abap_typedescr=>describe_by_data( some_data ).
-
-  ENDMETHOD.
-
-  METHOD my_method.
-    chicken = 'Ich bin ein Huhn!'.
-    cow     = 'Ein Irisches Hochlandrind'.
-    dog     = 'Wuff!'.
-    bird    = 'Piep!Piep'.
-  ENDMETHOD.
-
-  METHOD call_my_method_classic.
-    DATA chicken TYPE chickentype  .
-    DATA cow     TYPE cowtype      .
-    DATA dog     TYPE dogtype      .
-    DATA bird    TYPE birdtype     .
-
-    my_method( IMPORTING chicken =  chicken
-                         cow     =  cow
-                         dog     =  dog
-                         bird    =  bird ).
-
-    out->write( |Classic: \n{ chicken }\n{ cow }\n{ dog }\n{ bird }| ).
-  ENDMETHOD.
-
-  METHOD call_my_method_modern.
-    my_method( IMPORTING chicken = DATA(chicken)
-                         cow     = DATA(cow)
-                         dog     = DATA(dog)
-                         bird    = DATA(bird) ).
-
-    out->write( |Modern: \n{ chicken }\n{ cow }\n{ dog }\n{ bird }| ).
-  ENDMETHOD.
-
 ENDCLASS.

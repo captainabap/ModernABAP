@@ -36,7 +36,9 @@ ENDCLASS.
 
 
 
-CLASS zbc_roulette IMPLEMENTATION.
+CLASS ZBC_ROULETTE IMPLEMENTATION.
+
+
   METHOD class_constructor.
     gt_result = value #( ( result = 0 couleur = couleur-zero  pair = pair-zero   )
                          ( result = 1 couleur = couleur-noire pair = pair-impair )
@@ -46,13 +48,13 @@ CLASS zbc_roulette IMPLEMENTATION.
     go_random = CL_ABAP_RANDOM_INT=>create( min = 0 max = 4 ).
   ENDMETHOD.
 
+
   METHOD get_result.
     data(ls_result) = gt_result[ result = go_random->get_next( ) ].
     result  = ls_result-result.
     pair    = ls_result-pair.
     couleur = ls_result-couleur.
   ENDMETHOD.
-
 
 
   METHOD if_oo_adt_classrun~main.
@@ -68,5 +70,4 @@ CLASS zbc_roulette IMPLEMENTATION.
     ).
     out->write( |Zahl: { result }, { pair }, { couleur }| ).
   ENDMETHOD.
-
 ENDCLASS.

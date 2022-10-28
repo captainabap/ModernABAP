@@ -23,7 +23,10 @@ CLASS zbc_exercises DEFINITION
       IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
 ENDCLASS.
 
-CLASS zbc_exercises IMPLEMENTATION.
+
+
+CLASS ZBC_EXERCISES IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
 *    SELECT  firstname,
@@ -35,6 +38,7 @@ CLASS zbc_exercises IMPLEMENTATION.
 *    out->write( users ).
     exercise_reduce( out ).
   ENDMETHOD.
+
 
   METHOD get_salutation.
     DATA salutation TYPE string.
@@ -70,8 +74,6 @@ CLASS zbc_exercises IMPLEMENTATION.
   ENDMETHOD.
 
 
-
-
   METHOD exercise_value_operator.
     DATA lt_range TYPE RANGE OF dats.
 
@@ -91,6 +93,7 @@ CLASS zbc_exercises IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD exercise_corresponding.
     TYPES: BEGIN OF ts_benutzer,
              vorname    TYPE zbc_firstname,
@@ -109,6 +112,7 @@ CLASS zbc_exercises IMPLEMENTATION.
     out->write( benutzer ).
   ENDMETHOD.
 
+
   METHOD exercise_filter.
     DATA users TYPE SORTED TABLE OF zbc_users WITH NON-UNIQUE KEY gender.
     SELECT * FROM zbc_users INTO TABLE @users UP TO 10 ROWS.
@@ -120,6 +124,7 @@ CLASS zbc_exercises IMPLEMENTATION.
                 data = FILTER #( users WHERE gender = 'M' ) ).
 
   ENDMETHOD.
+
 
   METHOD exercise_reduce.
     SELECT *

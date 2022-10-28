@@ -14,10 +14,11 @@ ENDCLASS.
 
 
 
-CLASS zbc_enumerations IMPLEMENTATION.
+CLASS ZBC_ENUMERATIONS IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     out->write( |Wert ohne CONV: { true } | ).
     out->write( |Wert mit CONV: { CONV char1( true ) }| ).
   ENDMETHOD.
-
 ENDCLASS.

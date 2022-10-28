@@ -16,7 +16,9 @@ ENDCLASS.
 
 
 
-CLASS zbc_window_functions IMPLEMENTATION.
+CLASS ZBC_WINDOW_FUNCTIONS IMPLEMENTATION.
+
+
   METHOD create_testdata.
     DATA(demo_data) = VALUE tt_wf(
        ( location = 'A' ldate = '20221010' value = '5' )
@@ -36,10 +38,12 @@ CLASS zbc_window_functions IMPLEMENTATION.
     INSERT  zbc_wf FROM TABLE @demo_data.
   ENDMETHOD.
 
+
   METHOD if_oo_adt_classrun~main.
     create_testdata( ).
     demo_lead( out ).
   ENDMETHOD.
+
 
   METHOD demo_sum.
     SELECT location,
@@ -55,6 +59,7 @@ CLASS zbc_window_functions IMPLEMENTATION.
     out->write( result ).
   ENDMETHOD.
 
+
   METHOD demo_sum_order.
     SELECT location,
            ldate,
@@ -69,6 +74,7 @@ CLASS zbc_window_functions IMPLEMENTATION.
 
     out->write( result ).
   ENDMETHOD.
+
 
   METHOD demo_sum_rows.
     SELECT location,
@@ -87,6 +93,7 @@ CLASS zbc_window_functions IMPLEMENTATION.
     out->write( result ).
   ENDMETHOD.
 
+
   METHOD demo_lead.
     SELECT assignee,
            task_id,
@@ -102,5 +109,4 @@ CLASS zbc_window_functions IMPLEMENTATION.
      INTO TABLE @DATA(result).
     out->write( result ).
   ENDMETHOD.
-
 ENDCLASS.

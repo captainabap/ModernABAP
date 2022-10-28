@@ -12,12 +12,15 @@ ENDCLASS.
 
 
 
-CLASS zbc_new_sql IMPLEMENTATION.
+CLASS ZBC_NEW_SQL IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     sql_functions( out ).
     union_all( out ).
     " with_clause( out ).
   ENDMETHOD.
+
 
   METHOD sql_functions.
     SELECT  ltrim( task_id, '0' ) AS task_id,
@@ -49,6 +52,7 @@ CLASS zbc_new_sql IMPLEMENTATION.
     out->write( result ).
   ENDMETHOD.
 
+
   METHOD with_clause.
     WITH +cnt AS ( SELECT assignee ,
                           COUNT( * ) AS task_cnt
@@ -71,6 +75,7 @@ CLASS zbc_new_sql IMPLEMENTATION.
     out->write( result ).
   ENDMETHOD.
 
+
   METHOD union_all.
     select task_id
       from zbc_tasks where task_id < '0000000005'
@@ -84,5 +89,4 @@ CLASS zbc_new_sql IMPLEMENTATION.
 
     out->write( result ).
   ENDMETHOD.
-
 ENDCLASS.

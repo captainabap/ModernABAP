@@ -7,7 +7,10 @@ CLASS zbc_string_functions_ex DEFINITION
     INTERFACES if_oo_adt_classrun.
 ENDCLASS.
 
-CLASS zbc_string_functions_ex IMPLEMENTATION.
+
+
+CLASS ZBC_STRING_FUNCTIONS_EX IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
     SELECT *
@@ -23,5 +26,4 @@ CLASS zbc_string_functions_ex IMPLEMENTATION.
     ENDLOOP.
 
   ENDMETHOD.
-
 ENDCLASS.

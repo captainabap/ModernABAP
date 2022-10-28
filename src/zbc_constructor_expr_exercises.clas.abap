@@ -23,13 +23,43 @@ ENDCLASS.
 
 
 
-CLASS zbc_constructor_expr_exercises IMPLEMENTATION.
-  METHOD if_oo_adt_classrun~main.
+CLASS ZBC_CONSTRUCTOR_EXPR_EXERCISES IMPLEMENTATION.
 
-    exercise_value_operator( out ).
-    exercise_corresponding( out ).
-    exercise_filter( out ).
-    exercise_reduce( out ).
+
+  METHOD exercise_corresponding.
+    TYPES: BEGIN OF ts_benutzer,
+             vorname    TYPE zbc_firstname,
+             nachname   TYPE zbc_lastname,
+             geb_dat    TYPE zbc_date_of_birth,
+             geschlecht TYPE zbc_gender,
+           END OF ts_benutzer.
+    TYPES: tt_benutzer TYPE STANDARD TABLE OF ts_benutzer.
+
+    SELECT * FROM zbc_users INTO TABLE @DATA(users).
+
+    DATA(benutzer) = CORRESPONDING tt_benutzer(  users MAPPING geb_dat    = date_of_birth
+                                                                vorname    = firstname
+                                                                nachname   = lastname
+                                                                geschlecht = gender ).
+    out->write( benutzer ).
+  ENDMETHOD.
+
+
+  METHOD exercise_filter.
+    DATA users TYPE SORTED TABLE OF zbc_users WITH NON-UNIQUE KEY gender.
+    SELECT * FROM zbc_users INTO TABLE @users UP TO 10 ROWS.
+
+    out->write( name = 'Damen: '
+                data = FILTER #( users WHERE gender = 'F' ) ).
+
+    out->write( name = 'Herren: '
+                data = FILTER #( users WHERE gender = 'M' ) ).
+
+  ENDMETHOD.
+
+
+  METHOD exercise_reduce.
+
   ENDMETHOD.
 
 
@@ -52,38 +82,12 @@ CLASS zbc_constructor_expr_exercises IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD exercise_corresponding.
-    TYPES: BEGIN OF ts_benutzer,
-             vorname    TYPE zbc_firstname,
-             nachname   TYPE zbc_lastname,
-             geb_dat    TYPE zbc_date_of_birth,
-             geschlecht TYPE zbc_gender,
-           END OF ts_benutzer.
-    TYPES: tt_benutzer TYPE STANDARD TABLE OF ts_benutzer.
 
-    SELECT * FROM zbc_users INTO TABLE @DATA(users).
+  METHOD if_oo_adt_classrun~main.
 
-    DATA(benutzer) = CORRESPONDING tt_benutzer(  users MAPPING geb_dat    = date_of_birth
-                                                                vorname    = firstname
-                                                                nachname   = lastname
-                                                                geschlecht = gender ).
-    out->write( benutzer ).
+    exercise_value_operator( out ).
+    exercise_corresponding( out ).
+    exercise_filter( out ).
+    exercise_reduce( out ).
   ENDMETHOD.
-
-  METHOD exercise_filter.
-    DATA users TYPE SORTED TABLE OF zbc_users WITH NON-UNIQUE KEY gender.
-    SELECT * FROM zbc_users INTO TABLE @users UP TO 10 ROWS.
-
-    out->write( name = 'Damen: '
-                data = FILTER #( users WHERE gender = 'F' ) ).
-
-    out->write( name = 'Herren: '
-                data = FILTER #( users WHERE gender = 'M' ) ).
-
-  ENDMETHOD.
-
-  METHOD exercise_reduce.
-
-  ENDMETHOD.
-
 ENDCLASS.

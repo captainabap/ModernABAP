@@ -11,14 +11,6 @@
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
    </VSEOCLASS>
-   <DESCRIPTIONS>
-    <SEOCOMPOTX>
-     <CLSNAME>ZBC_CREATE_DEMO_DATA</CLSNAME>
-     <CMPNAME>GENERATE_TASKS</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Generate some data for ZBC_TASKS</DESCRIPT>
-    </SEOCOMPOTX>
-   </DESCRIPTIONS>
   </asx:values>
  </asx:abap>
 </abapGit>

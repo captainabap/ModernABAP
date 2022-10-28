@@ -18,14 +18,8 @@ ENDCLASS.
 
 
 
-CLASS zbc_string_functions IMPLEMENTATION.
+CLASS ZBC_STRING_FUNCTIONS IMPLEMENTATION.
 
-
-  METHOD concat_lines_of_expression.
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    result = concat_lines_of( table = intab sep = '-' ).
-
-  ENDMETHOD.
 
   METHOD concat_lines_of_statement.
     """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -34,15 +28,13 @@ CLASS zbc_string_functions IMPLEMENTATION.
            SEPARATED BY '-'.
   ENDMETHOD.
 
-  METHOD if_oo_adt_classrun~main.
-    out->write( concat_lines_of_expression( VALUE #( ( |A| ) ( |B| ) ) ) ).
+
+  METHOD concat_lines_of_expression.
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    result = concat_lines_of( table = intab sep = '-' ).
+
   ENDMETHOD.
 
-  METHOD replace_name.
-    result = replace( val = text
-                      pcre = '(.*)\s(.*)'
-                      with = '$2, $1' ).
-  ENDMETHOD.
 
   METHOD concat_options.
     DATA resultstring1 TYPE string.
@@ -61,4 +53,15 @@ CLASS zbc_string_functions IMPLEMENTATION.
     resultstring3 &&= 'GHI'.
   ENDMETHOD.
 
+
+  METHOD if_oo_adt_classrun~main.
+    out->write( concat_lines_of_expression( VALUE #( ( |A| ) ( |B| ) ) ) ).
+  ENDMETHOD.
+
+
+  METHOD replace_name.
+    result = replace( val = text
+                      pcre = '(.*)\s(.*)'
+                      with = '$2, $1' ).
+  ENDMETHOD.
 ENDCLASS.

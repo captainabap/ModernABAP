@@ -13,7 +13,9 @@ CLASS zbc_game_of_life DEFINITION
 
 ENDCLASS.
 
-CLASS zbc_game_of_life IMPLEMENTATION.
+
+
+CLASS ZBC_GAME_OF_LIFE IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
@@ -27,5 +29,4 @@ CLASS zbc_game_of_life IMPLEMENTATION.
     mo_board->write( out ).
     enddo.
   ENDMETHOD.
-
 ENDCLASS.

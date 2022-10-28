@@ -61,7 +61,9 @@ ENDCLASS.
 
 
 
-CLASS zbc_constructor_expressions IMPLEMENTATION.
+CLASS ZBC_CONSTRUCTOR_EXPRESSIONS IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
 *    DATA dec  TYPE p LENGTH 16 DECIMALS 2.
 *    dec = 1 / 3.
@@ -78,6 +80,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 *    demo_reduce( out ).
 
   ENDMETHOD.
+
 
   METHOD demo_exact_calculation.
     out->write( |\ndemo_exact_calculation, INPUT = { input }| ).
@@ -104,6 +107,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
+
   METHOD demo_calculation_assignment.
     DATA amount TYPE p LENGTH 16 DECIMALS 2.
     amount = '101' .
@@ -112,6 +116,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 
     out->write( |Betrag mit Mwst.: {  amount }| ) .
   ENDMETHOD.
+
 
   METHOD demo_value_operator.
 
@@ -130,6 +135,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD demo_value_table.
     DATA lr_data TYPE RANGE OF dats.
 
@@ -141,6 +147,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
       WHERE due_date IN @lr_data
       INTO TABLE @DATA(result).
   ENDMETHOD.
+
 
   METHOD loop_into_data.
     SELECT task_id,
@@ -163,9 +170,12 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
     READ TABLE lt_tasks ASSIGNING FIELD-SYMBOL(<ls_task>) WITH KEY task_id = 10.
   ENDMETHOD.
 
+
   METHOD loop_assigning_fs.
 
   ENDMETHOD.
+
+
   METHOD bex_variable_exit_classic.
 *    data: loc_var_range type rrrangeexit,
 *          l_s_range type rrrangesid,
@@ -202,6 +212,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 *ENDIF.
   ENDMETHOD.
 
+
   METHOD bex_variable_exit_modern.
 *if i_step = 2.
 * try.
@@ -221,6 +232,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 *endif.
   ENDMETHOD.
 
+
   METHOD for_counter.
     DATA lt_int TYPE TABLE OF i.
 
@@ -230,6 +242,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 
     out->write( lt_int ).
   ENDMETHOD.
+
 
   METHOD for_loop.
     SELECT summary,
@@ -245,6 +258,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 
     out->write( lt_tmp ).
   ENDMETHOD.
+
 
   METHOD base_in_value.
     DATA(first_table) =
@@ -262,6 +276,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD new_data_object.
     DATA(lr_tmp) = NEW tt_demo( ( account = '123' amount = '12.34' curr = 'EUR' )
                                 ( account = '125' amount = '12.34' curr = 'EUR' ) ).
@@ -269,13 +284,16 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
     out->write( <fs> ).
   ENDMETHOD.
 
+
   METHOD demo_conv.
     my_method( text = CONV #( syst-datum ) ).
   ENDMETHOD.
 
+
   METHOD my_method.
     "Do nothing
   ENDMETHOD.
+
 
   METHOD demo_cast.
     DATA ls_task TYPE zbc_tasks.
@@ -286,6 +304,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
     DATA(lr_components) = REF #( lt_components  ).
 
   ENDMETHOD.
+
 
   METHOD demo_corresponding.
     DATA: BEGIN OF ls_task_small,
@@ -302,6 +321,8 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
                                      ls_task_original ).
     out->write( ls_task_small ).
   ENDMETHOD.
+
+
   METHOD demo_corresponding_lookup.
     DATA lt_lookup TYPE HASHED TABLE OF I_CountryText WITH UNIQUE KEY country.
     DATA(lt_orig) = VALUE tt_demo( ( country = 'DE' )
@@ -313,6 +334,8 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
                                                   MAPPING country_text = CountryName  ).
     out->write( lt_new ).
   ENDMETHOD.
+
+
   METHOD demo_reduce.
     SELECT  summary
       FROM zbc_tasks
@@ -328,12 +351,14 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
     out->write( lt_tasks ).
   ENDMETHOD.
 
+
   METHOD demo_cond.
     DATA(result) = COND tt_demo( WHEN sy-datum = '20220929' THEN VALUE #( ( amount = 10 curr = 'EUR'  ) )
                                  WHEN sy-langu = 'D'        THEN VALUE #( ( amount = 11 curr = 'EUR'  ) )
                                  ELSE                            VALUE #( ( amount = 9 curr = 'USD' ) ) ).
     out->write( result ).
   ENDMETHOD.
+
 
   METHOD demo_switch.
     DATA(result) = SWITCH tt_demo( sy-datum WHEN '20220929' THEN VALUE #( ( amount = 10 curr = 'EUR'  ) )
@@ -342,12 +367,14 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
     out->write( result ).
   ENDMETHOD.
 
+
   METHOD demo_filter.
     DATA lt_data TYPE SORTED TABLE OF I_CountryText WITH UNIQUE KEY language  country.
     SELECT * FROM i_countrytext INTO TABLE @lt_data.
 
     out->write( FILTER #( lt_data WHERE language = 'D' ) ).
   ENDMETHOD.
+
 
   METHOD demo_filter_table.
     DATA lt_data TYPE SORTED TABLE OF I_CountryText WITH UNIQUE KEY country.
@@ -358,6 +385,4 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
     DATA(lt_new) = FILTER #( lt_data IN lt_filter USING KEY a WHERE country = country  ).
     out->write( lt_new ).
   ENDMETHOD.
-
-
 ENDCLASS.

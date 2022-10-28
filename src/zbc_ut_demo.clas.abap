@@ -26,7 +26,8 @@ ENDCLASS.
 
 
 
-CLASS zbc_ut_demo IMPLEMENTATION.
+CLASS ZBC_UT_DEMO IMPLEMENTATION.
+
 
   METHOD calculate_delta.
     loop at it_data into data(ls_data).
@@ -39,6 +40,4 @@ CLASS zbc_ut_demo IMPLEMENTATION.
                         delta = ls_data-quant * -1 ) into table rt_result.
     endloop.
   ENDMETHOD.
-
-
 ENDCLASS.

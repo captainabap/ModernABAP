@@ -48,7 +48,10 @@ CLASS zbc_board DEFINITION
     METHODS switch_to_next_status.
 ENDCLASS.
 
-CLASS zbc_board IMPLEMENTATION.
+
+
+CLASS ZBC_BOARD IMPLEMENTATION.
+
 
   METHOD constructor.
     DO size TIMES.
@@ -62,42 +65,6 @@ CLASS zbc_board IMPLEMENTATION.
     ENDDO.
   ENDMETHOD.
 
-  METHOD write.
-    DATA line TYPE string.
-    out->write( |\n| ).
-    LOOP AT mt_fields INTO DATA(ls_field)
-                      GROUP BY ls_field-y ASCENDING
-                      INTO DATA(lg_group).
-      CLEAR line.
-      LOOP AT GROUP lg_group INTO DATA(ls_group).
-
-        line &&= SWITCH char1( ls_group-status WHEN alive THEN char_alive
-                                               WHEN dead  THEN char_dead ).
-      ENDLOOP.
-
-      out->write( line ).
-    ENDLOOP.
-  ENDMETHOD.
-
-  METHOD set.
-    mt_fields[ x = x
-               y = y ]-status = alive.
-  ENDMETHOD.
-
-  METHOD get.
-    TRY.
-        result = mt_fields[ x = x
-                            y = y ]-status.
-      CATCH cx_root.
-        result = dead.
-    ENDTRY.
-  ENDMETHOD.
-
-  METHOD set_blinker.
-    set( x = x     y = y  ).
-    set( x = x + 1 y = y  ).
-    set( x = x + 2 y = y  ).
-  ENDMETHOD.
 
   METHOD next_step.
     LOOP AT mt_fields ASSIGNING FIELD-SYMBOL(<ls_field>).
@@ -106,6 +73,13 @@ CLASS zbc_board IMPLEMENTATION.
     ENDLOOP.
     switch_to_next_status( ).
   ENDMETHOD.
+
+
+  METHOD set.
+    mt_fields[ x = x
+               y = y ]-status = alive.
+  ENDMETHOD.
+
 
   METHOD calculate_next_status.
 
@@ -119,6 +93,24 @@ CLASS zbc_board IMPLEMENTATION.
                              AND status  = alive  THEN alive
                             ELSE dead ).
   ENDMETHOD.
+
+
+  METHOD set_blinker.
+    set( x = x     y = y  ).
+    set( x = x + 1 y = y  ).
+    set( x = x + 2 y = y  ).
+  ENDMETHOD.
+
+
+  METHOD get.
+    TRY.
+        result = mt_fields[ x = x
+                            y = y ]-status.
+      CATCH cx_root.
+        result = dead.
+    ENDTRY.
+  ENDMETHOD.
+
 
   METHOD count_neigbours.
     result       = SWITCH int4( get( x = x + 1 y = y     ) WHEN dead THEN 0
@@ -139,6 +131,7 @@ CLASS zbc_board IMPLEMENTATION.
                                                             WHEN alive THEN 1 ).
   ENDMETHOD.
 
+
   METHOD switch_to_next_status.
     LOOP AT mt_fields ASSIGNING FIELD-SYMBOL(<line>).
       <line>-status      = <line>-next_status.
@@ -146,4 +139,21 @@ CLASS zbc_board IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
+
+  METHOD write.
+    DATA line TYPE string.
+    out->write( |\n| ).
+    LOOP AT mt_fields INTO DATA(ls_field)
+                      GROUP BY ls_field-y ASCENDING
+                      INTO DATA(lg_group).
+      CLEAR line.
+      LOOP AT GROUP lg_group INTO DATA(ls_group).
+
+        line &&= SWITCH char1( ls_group-status WHEN alive THEN char_alive
+                                               WHEN dead  THEN char_dead ).
+      ENDLOOP.
+
+      out->write( line ).
+    ENDLOOP.
+  ENDMETHOD.
 ENDCLASS.

@@ -20,7 +20,9 @@ ENDCLASS.
 
 
 
-CLASS zbc_internal_tables IMPLEMENTATION.
+CLASS ZBC_INTERNAL_TABLES IMPLEMENTATION.
+
+
   METHOD demo_table_expressions.
     SELECT *
       FROM zbc_users
@@ -41,6 +43,7 @@ CLASS zbc_internal_tables IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD if_oo_adt_classrun~main.
     demo_table_expressions( out ).
     demo_table_functions( out ).
@@ -48,6 +51,7 @@ CLASS zbc_internal_tables IMPLEMENTATION.
     demo_write_with_te( out ).
     demo_loop_step( out ).
   ENDMETHOD.
+
 
   METHOD demo_table_functions.
     SELECT *
@@ -73,6 +77,7 @@ CLASS zbc_internal_tables IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD demo_grouping.
     DATA(lt_user) =  get_user_table( ) .
     DELETE lt_user FROM 10.
@@ -91,6 +96,7 @@ CLASS zbc_internal_tables IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
+
   METHOD get_user_table.
     SELECT *
       FROM zbc_users
@@ -104,5 +110,4 @@ CLASS zbc_internal_tables IMPLEMENTATION.
       out->write( |Benutzer: { ls_user-user_id }| ).
     ENDLOOP.
   ENDMETHOD.
-
 ENDCLASS.

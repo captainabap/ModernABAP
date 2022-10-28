@@ -25,7 +25,9 @@ ENDCLASS.
 
 
 
-CLASS zbc_dmo_task IMPLEMENTATION.
+CLASS ZBC_DMO_TASK IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     set_status(
       iv_status = status-canceled
@@ -33,9 +35,9 @@ CLASS zbc_dmo_task IMPLEMENTATION.
     ).
   ENDMETHOD.
 
+
   METHOD set_status.
     out->write( |Konvertiert: { conv zbc_task_status(   status-inprogress ) }|
               && |\nUnkonvertiert: { status-inprogress }| ).
   ENDMETHOD.
-
 ENDCLASS.
