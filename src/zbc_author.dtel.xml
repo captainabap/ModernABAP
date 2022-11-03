@@ -3,15 +3,15 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DD04V>
-    <ROLLNAME>ZBC_USER_ID</ROLLNAME>
+    <ROLLNAME>ZBC_AUTHOR</ROLLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
     <DOMNAME>XUBNAME</DOMNAME>
     <HEADLEN>55</HEADLEN>
     <SCRLEN1>10</SCRLEN1>
     <SCRLEN2>20</SCRLEN2>
     <SCRLEN3>40</SCRLEN3>
-    <DDTEXT>User</DDTEXT>
-    <SCRTEXT_M>User</SCRTEXT_M>
+    <DDTEXT>Author of the object</DDTEXT>
+    <SCRTEXT_M>Author</SCRTEXT_M>
     <DTELMASTER>E</DTELMASTER>
     <REFKIND>D</REFKIND>
     <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
