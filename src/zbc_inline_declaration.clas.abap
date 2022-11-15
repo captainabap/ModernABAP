@@ -11,6 +11,9 @@ CLASS zbc_inline_declaration DEFINITION
 
     INTERFACES if_oo_adt_classrun .
 
+    "! <p class="shorttext synchronized" lang="en">Beispielmethode für SELECT INTO ... DATA</p>
+    "! Beliebiger Beschreibungstext
+    "! @parameter out | <p class="shorttext synchronized" lang="en">Das ist der OUT-Stream</p>
     METHODS SELECT_INTO_table_modern  IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
     METHODS SELECT_INTO_table_classic IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
     METHODS factory_classic           IMPORTING out       TYPE REF TO if_oo_adt_classrun_out
@@ -21,7 +24,7 @@ CLASS zbc_inline_declaration DEFINITION
     METHODS my_method
       EXPORTING chicken TYPE chickentype
                 cow     TYPE cowtype
-                dog     TYPE dogtype
+                dog     TYPE any
                 bird    TYPE birdtype.
 
     METHODS call_my_method_classic IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
@@ -37,7 +40,6 @@ CLASS ZBC_INLINE_DECLARATION IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
-
     call_my_method_classic( out ).
     call_my_method_modern( out  ).
 
@@ -45,14 +47,12 @@ CLASS ZBC_INLINE_DECLARATION IMPLEMENTATION.
 
 
   METHOD factory_modern.
-
     DATA(typedescr) = cl_abap_typedescr=>describe_by_data( some_data ).
 
   ENDMETHOD.
 
 
   METHOD factory_classic.
-
     DATA typedescr TYPE REF TO cl_abap_typedescr .
 
     typedescr = cl_abap_typedescr=>describe_by_data( some_data ).
@@ -61,10 +61,11 @@ CLASS ZBC_INLINE_DECLARATION IMPLEMENTATION.
 
 
   METHOD call_my_method_classic.
-    DATA chicken TYPE chickentype  .
-    DATA cow     TYPE cowtype      .
-    DATA dog     TYPE dogtype      .
-    DATA bird    TYPE birdtype     .
+" Blockmodus: Alt + Shift + A
+    data chicken TYPE chickentype  .
+    data cow     TYPE cowtype      .
+    data dog     TYPE dogtype      .
+    data bird    TYPE birdtype     .
 
     my_method( IMPORTING chicken =  chicken
                          cow     =  cow
@@ -76,9 +77,10 @@ CLASS ZBC_INLINE_DECLARATION IMPLEMENTATION.
 
 
   METHOD call_my_method_modern.
+  data dog type string.
     my_method( IMPORTING chicken = DATA(chicken)
                          cow     = DATA(cow)
-                         dog     = DATA(dog)
+                         dog     = dog
                          bird    = DATA(bird) ).
 
     out->write( |Modern: \n{ chicken }\n{ cow }\n{ dog }\n{ bird }| ).
@@ -96,7 +98,7 @@ CLASS ZBC_INLINE_DECLARATION IMPLEMENTATION.
   METHOD select_into_table_classic.
 
     TYPES: BEGIN OF linetype,
-             task_id  TYPE zbc_tasks-task_id,
+             task_id  TYPE zbc_tasks-task_key,
              status   TYPE zbc_tasks-status,
              solution TYPE zbc_tasks-solution,
            END OF linetype.
@@ -104,7 +106,7 @@ CLASS ZBC_INLINE_DECLARATION IMPLEMENTATION.
     DATA tasks TYPE STANDARD TABLE OF linetype
       WITH DEFAULT KEY.
 
-    SELECT task_id,
+    SELECT task_key,
            status,
            solution
       FROM zbc_tasks
@@ -117,7 +119,7 @@ CLASS ZBC_INLINE_DECLARATION IMPLEMENTATION.
 
   METHOD select_into_table_modern.
 
-    SELECT task_id,
+    SELECT task_key,
            status,
            solution
       FROM zbc_tasks

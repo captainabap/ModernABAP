@@ -27,21 +27,32 @@ CLASS ZBC_CONSTRUCTOR_EXPR_EXERCISES IMPLEMENTATION.
 
 
   METHOD exercise_corresponding.
+
     TYPES: BEGIN OF ts_benutzer,
-             vorname    TYPE zbc_firstname,
-             nachname   TYPE zbc_lastname,
+             vorname    TYPE char10,
+             nachname   TYPE char10,
              geb_dat    TYPE zbc_date_of_birth,
              geschlecht TYPE zbc_gender,
            END OF ts_benutzer.
-    TYPES: tt_benutzer TYPE STANDARD TABLE OF ts_benutzer.
+
+    TYPES: tt_benutzer TYPE STANDARD TABLE OF ts_benutzer with default key.
+    DATA benutzer TYPE tt_benutzer.
 
     SELECT * FROM zbc_users INTO TABLE @DATA(users).
 
-    DATA(benutzer) = CORRESPONDING tt_benutzer(  users MAPPING geb_dat    = date_of_birth
-                                                                vorname    = firstname
-                                                                nachname   = lastname
-                                                                geschlecht = gender ).
-    out->write( benutzer ).
+*    benutzer = corresponding  tt_benutzer( users MAPPING vorname    = firstname
+*                                                          nachname   = lastname
+*                                                          geschlecht = gender
+*                                                          geb_dat    = date_of_birth ) .
+
+    benutzer = value tt_benutzer( for user
+                                   in users
+                                   ( vorname = to_upper( user-firstname )
+                                     nachname = user-lastname
+                                      ) )        .
+
+    out->WRITE( benutzer ).
+
   ENDMETHOD.
 
 
@@ -85,9 +96,9 @@ CLASS ZBC_CONSTRUCTOR_EXPR_EXERCISES IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
 
-    exercise_value_operator( out ).
-    exercise_corresponding( out ).
+*    exercise_value_operator( out ).
+*    exercise_corresponding( out ).
     exercise_filter( out ).
-    exercise_reduce( out ).
+*    exercise_reduce( out ).
   ENDMETHOD.
 ENDCLASS.

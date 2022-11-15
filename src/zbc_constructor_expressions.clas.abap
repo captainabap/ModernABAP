@@ -20,64 +20,64 @@ CLASS zbc_constructor_expressions DEFINITION
 
   PROTECTED SECTION.
     METHODS demo_exact_calculation
-      IMPORTING input TYPE int4
-                out   TYPE REF TO if_oo_adt_classrun_out.
+      IMPORTING input TYPE int4.
 
     METHODS demo_exact_assignment
-      IMPORTING input TYPE any
-                out   TYPE REF TO if_oo_adt_classrun_out.
+      IMPORTING input TYPE any.
 
     METHODS demo_calculation_assignment
-      IMPORTING vat TYPE int4
-                out TYPE REF TO if_oo_adt_classrun_out.
+      IMPORTING vat TYPE int4.
 
-    METHODS demo_value_operator
-      IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS demo_value_operator  .
 
     METHODS demo_value_table
-      IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS loop_into_data IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+      .
+    METHODS loop_into_data .
 
-    METHODS loop_assigning_fs IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS loop_assigning_fs .
     METHODS bex_variable_exit_classic." importing i_t_var_range type rrs0_t_var_range.
     METHODS bex_variable_exit_modern.
 
-    METHODS for_counter IMPORTING  out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS for_loop    IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS base_in_value  IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS new_data_object   IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS demo_conv   IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
+    METHODS for_counter .
+    METHODS for_loop    .
+    METHODS base_in_value  .
+    METHODS new_data_object   .
+    METHODS demo_conv   .
     METHODS my_method IMPORTING text TYPE char8.
-    METHODS demo_cast.
-    METHODS demo_corresponding    IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS demo_reduce  IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS demo_corresponding_lookup IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS demo_cond IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS demo_switch IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS demo_filter IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS demo_filter_table IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
-
+    METHODS demo_cast    .
+    METHODS demo_corresponding    .
+    METHODS demo_reduce  .
+    METHODS demo_corresponding_lookup .
+    METHODS demo_cond .
+    METHODS demo_switch .
+    METHODS demo_filter .
+    METHODS demo_filter_table .
+  PRIVATE SECTION.
+    DATA out TYPE REF TO if_oo_adt_classrun_out.
 ENDCLASS.
 
-
-
-CLASS ZBC_CONSTRUCTOR_EXPRESSIONS IMPLEMENTATION.
+CLASS zbc_constructor_expressions IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
+    me->out = out.
+
+*      demo_cast( ).
+
+*     for_counter( ).
 *    DATA dec  TYPE p LENGTH 16 DECIMALS 2.
 *    dec = 1 / 3.
-*    demo_exact_calculation( out = out input = 5 ).
-*    demo_exact_calculation( out = out input = 3 ).
-*    demo_exact_assignment( out = out input = 5 ).
-*    demo_exact_assignment( out = out input = dec ).
-*    demo_calculation_assignment( out = out vat = 19 ).
-*    demo_value_operator( out ).
-*    for_counter( out ).
-*    for_loop( out ).
-*    base_in_value( out ).
-*    new_data_object( out ).
-*    demo_reduce( out ).
+*    demo_exact_calculation( input = 5 ).
+*    demo_exact_calculation( input = 3 ).
+*    demo_exact_assignment( input = 5 ).
+*    demo_exact_assignment( input = dec ).
+*    demo_calculation_assignment( vat = 19 ).
+*    demo_value_operator( ).
+*    for_counter( ).
+*    for_loop( ).
+*    base_in_value( ).
+*    new_data_object( ).
+    demo_reduce( ).
 
   ENDMETHOD.
 
@@ -126,10 +126,18 @@ CLASS ZBC_CONSTRUCTOR_EXPRESSIONS IMPLEMENTATION.
            END OF ts_data.
     TYPES tt_data TYPE STANDARD TABLE OF ts_data
                   WITH DEFAULT KEY.
-    DATA  lt_data TYPE tt_data.
 
-    lt_data = VALUE tt_data( ( a = 1  b = 'ABC'  )
-                             ( a = 13 b = 'Hallo') ).
+    DATA  c     TYPE i.
+*    DATA  lt_data TYPE tt_data.
+*
+*    lt_data = VALUE #( ( a = 1  b = 'ABC'  )
+*                       ( a = 13 b = 'Hallo') ).
+
+
+
+*    DATA  lt_data TYPE tt_data.
+    DATA(lt_data) = VALUE tt_data( ( a = 1  b = 'ABC'  )
+                                   ( a = 13 b = 'Hallo' ) ).
 
     out->write( lt_data ).
 
@@ -150,7 +158,7 @@ CLASS ZBC_CONSTRUCTOR_EXPRESSIONS IMPLEMENTATION.
 
 
   METHOD loop_into_data.
-    SELECT task_id,
+    SELECT task_key,
            status,
            solution
       FROM zbc_tasks
@@ -167,7 +175,7 @@ CLASS ZBC_CONSTRUCTOR_EXPRESSIONS IMPLEMENTATION.
 
     ENDLOOP.
     "    READ TABLE lt_tasks INTO DATA(ls_task) WITH KEY task_id = 10.
-    READ TABLE lt_tasks ASSIGNING FIELD-SYMBOL(<ls_task>) WITH KEY task_id = 10.
+    READ TABLE lt_tasks ASSIGNING FIELD-SYMBOL(<ls_task>) WITH KEY task_key = 'BW-22'.
   ENDMETHOD.
 
 
@@ -234,27 +242,29 @@ CLASS ZBC_CONSTRUCTOR_EXPRESSIONS IMPLEMENTATION.
 
 
   METHOD for_counter.
-    DATA lt_int TYPE TABLE OF i.
+    TYPES tt_c TYPE STANDARD TABLE OF c WITH DEFAULT KEY.
+    DATA chars(29) TYPE c VALUE ' ABCDEFGHIJKLMNOP'.
 
-    lt_int = VALUE #( FOR i = 1
-                      UNTIL i >= 10
-                      ( i ) ( i * 10 ) ).
 
-    out->write( lt_int ).
+    out->write( VALUE tt_c(   FOR i = 1
+                              THEN  i + 1
+                              UNTIL i >= 10
+                              ( chars+i(1) ) ) ).
   ENDMETHOD.
 
 
   METHOD for_loop.
     SELECT summary,
-           task_id
+           task_key
       FROM zbc_tasks
       INTO TABLE @DATA(lt_data)
       UP TO 10 ROWS.
 
     TYPES tt_tmp LIKE lt_data.
 
-    DATA(lt_tmp) = VALUE tt_tmp( FOR line IN lt_data WHERE ( task_id < 4  )
-                                 ( summary = to_upper( line-summary ) task_id = 42 )  ).
+    DATA(lt_tmp) = VALUE tt_tmp( FOR ls_line IN lt_data WHERE ( task_key < 4  )
+                                     ( summary = to_upper( ls_line-summary )
+                                       task_key = 42 )  ).
 
     out->write( lt_tmp ).
   ENDMETHOD.
@@ -297,18 +307,17 @@ CLASS ZBC_CONSTRUCTOR_EXPRESSIONS IMPLEMENTATION.
 
   METHOD demo_cast.
     DATA ls_task TYPE zbc_tasks.
-    DATA(lo_structdescr) = CAST cl_abap_structdescr( cl_abap_structdescr=>describe_by_data( ls_task ) ).
 
-    DATA(lt_components) = lo_structdescr->get_components(  ).
+    DATA(lt_components) = CAST cl_abap_structdescr( cl_abap_structdescr=>describe_by_data( ls_task ) )->get_components(  ) .
 
-    DATA(lr_components) = REF #( lt_components  ).
+    out->write( lt_components ).
 
   ENDMETHOD.
 
 
   METHOD demo_corresponding.
     DATA: BEGIN OF ls_task_small,
-            id       TYPE zbc_tasks-task_id,
+            key      TYPE zbc_tasks-task_key,
             title    TYPE zbc_tasks-summary,
             assignee TYPE zbc_tasks-assignee,
           END OF ls_task_small.
@@ -324,31 +333,36 @@ CLASS ZBC_CONSTRUCTOR_EXPRESSIONS IMPLEMENTATION.
 
 
   METHOD demo_corresponding_lookup.
-    DATA lt_lookup TYPE HASHED TABLE OF I_CountryText WITH UNIQUE KEY country.
+    DATA lt_lookup TYPE HASHED TABLE OF i_countrytext WITH UNIQUE KEY country.
     DATA(lt_orig) = VALUE tt_demo( ( country = 'DE' )
                                    ( country = 'US' ) ).
+
     SELECT * FROM i_countrytext WHERE language = 'D' INTO TABLE @lt_lookup.
+    out->write( lt_orig ).
 
     DATA(lt_new) = CORRESPONDING tt_demo( lt_orig FROM lt_lookup
                                                   USING country = country
-                                                  MAPPING country_text = CountryName  ).
+                                                  MAPPING country_text = countryname  ).
     out->write( lt_new ).
   ENDMETHOD.
 
 
   METHOD demo_reduce.
+    types tt_string type STANDARD TABLE OF string WITH DEFAULT KEY.
     SELECT  summary
       FROM zbc_tasks
       INTO TABLE @DATA(lt_tasks)
       UP TO 10 ROWS.
 
-    DATA(lv_result) = REDUCE string( INIT r  TYPE string
-                                     FOR line IN lt_tasks
-                                     NEXT
-                                      r &&= line-summary(1)
-                                      ).
-    out->write( lv_result ).
-    out->write( lt_tasks ).
+    DATA(lv_result) = REDUCE tt_string( INIT  r  TYPE tt_string
+                                              i  type int4
+                                         FOR ls_line IN lt_tasks
+                                         NEXT
+                                          i = i + 1
+                                          r = value #( base r ( ls_line-summary(i) ) )
+                                          ).
+    out->write( data = lv_result ).
+    out->write( name = |\nTable:| data = lt_tasks ).
   ENDMETHOD.
 
 
@@ -369,15 +383,15 @@ CLASS ZBC_CONSTRUCTOR_EXPRESSIONS IMPLEMENTATION.
 
 
   METHOD demo_filter.
-    DATA lt_data TYPE SORTED TABLE OF I_CountryText WITH UNIQUE KEY language  country.
+    DATA lt_data TYPE SORTED TABLE OF i_countrytext WITH UNIQUE KEY language  country.
     SELECT * FROM i_countrytext INTO TABLE @lt_data.
 
-    out->write( FILTER #( lt_data WHERE language = 'D' ) ).
+    out->write( FILTER #( lt_data WHERE language = 'E' ) ).
   ENDMETHOD.
 
 
   METHOD demo_filter_table.
-    DATA lt_data TYPE SORTED TABLE OF I_CountryText WITH UNIQUE KEY country.
+    DATA lt_data TYPE SORTED TABLE OF i_countrytext WITH UNIQUE KEY country.
     DATA(lt_filter) = VALUE tt_demo( ( country = 'DE' )
                                    ( country = 'US' ) ).
     SELECT * FROM i_countrytext WHERE language = 'D' INTO TABLE @lt_data.

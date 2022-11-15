@@ -14,7 +14,6 @@
     <SCRTEXT_M>Solution</SCRTEXT_M>
     <DTELMASTER>E</DTELMASTER>
     <REFKIND>D</REFKIND>
-    <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
    </DD04V>
   </asx:values>
  </asx:abap>
