@@ -9,10 +9,10 @@ CLASS zbc_create_demo_data DEFINITION
     "! Generate some data for the table ZBC_TASKS
 
   PRIVATE SECTION.
-    METHODS select_tasks IMPORTING out TYPE REF TO if_oo_adt_classrun_out.
     METHODS delete_data.
     methods fill_status_text.
     METHODS generate_tasks.
+    methods generate_users.
 ENDCLASS.
 
 
@@ -22,628 +22,2278 @@ CLASS ZBC_CREATE_DEMO_DATA IMPLEMENTATION.
 
   METHOD generate_tasks.
     TYPES tt_zbc_tasks TYPE STANDARD TABLE OF zbc_tasks WITH DEFAULT KEY.
-data(tasks) = VALUE tt_zbc_tasks( ( CLIENT ='100' TASK_ID ='0000000001' TASK_KEY ='MIG_1' SUMMARY ='Integer tincidunt ante vel ipsum.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum'
-ASSIGNEE ='0000000065' TYPE ='TASK' AUTHOR ='0000000073' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220203' SOLUTION ='ASDESIGNED' PRIORITY ='69' PRODUCT ='0885707203'  )
- ( CLIENT ='100' TASK_ID ='0000000002' TASK_KEY ='INT_2' SUMMARY ='Nunc purus.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.'
-ASSIGNEE ='0000000021' TYPE ='USERSTORY' AUTHOR ='0000000096' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230224' SOLUTION ='UNRESOLVED' PRIORITY ='76' PRODUCT ='0241852440'  )
- ( CLIENT ='100' TASK_ID ='0000000003' TASK_KEY ='MIG_3' SUMMARY ='Vivamus in felis eu sapien cursus vestibulum.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh l'
-ASSIGNEE ='0000000008' TYPE ='USERSTORY' AUTHOR ='0000000046' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220601' SOLUTION ='DONE' PRIORITY ='86' PRODUCT ='0486756270'  )
- ( CLIENT ='100' TASK_ID ='0000000004' TASK_KEY ='BW4_4' SUMMARY ='Etiam vel augue.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='In congue. Etiam justo. Etiam pretium iaculis justo.'
-ASSIGNEE ='0000000094' TYPE ='TASK' AUTHOR ='0000000038' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220518' SOLUTION ='UNRESOLVED' PRIORITY ='83' PRODUCT ='0729215637'  )
- ( CLIENT ='100' TASK_ID ='0000000005' TASK_KEY ='BW4_5' SUMMARY ='Nulla tellus.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.'
-ASSIGNEE ='0000000011' TYPE ='USERSTORY' AUTHOR ='0000000055' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230111' SOLUTION ='UNRESOLVED' PRIORITY ='31' PRODUCT ='0042656309'  )
- ( CLIENT ='100' TASK_ID ='0000000006' TASK_KEY ='SUP_6' SUMMARY ='Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.Praesen'
-ASSIGNEE ='0000000083' TYPE ='TASK' AUTHOR ='0000000067' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211025' SOLUTION ='UNRESOLVED' PRIORITY ='37' PRODUCT ='0184122275'  )
- ( CLIENT ='100' TASK_ID ='0000000007' TASK_KEY ='BW_7' SUMMARY ='Praesent blandit.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.Nam ultrices, libero non mattis pulvinar, nulla pe'
-ASSIGNEE ='0000000052' TYPE ='BUG' AUTHOR ='0000000082' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20210928' SOLUTION ='UNRESOLVED' PRIORITY ='5' PRODUCT ='0053743613'  )
- ( CLIENT ='100' TASK_ID ='0000000008' TASK_KEY ='SUP_8' SUMMARY ='Sed accumsan felis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu'
-ASSIGNEE ='0000000095' TYPE ='EPIC' AUTHOR ='0000000029' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211220' SOLUTION ='UNRESOLVED' PRIORITY ='95' PRODUCT ='0620372377'  )
- ( CLIENT ='100' TASK_ID ='0000000009' TASK_KEY ='SUP_9' SUMMARY ='Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh l'
-ASSIGNEE ='0000000084' TYPE ='BUG' AUTHOR ='0000000043' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220501' SOLUTION ='UNRESOLVED' PRIORITY ='76' PRODUCT ='0342390183'  )
- ( CLIENT ='100' TASK_ID ='0000000010' TASK_KEY ='MIG_10' SUMMARY ='Aenean fermentum.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu'
-ASSIGNEE ='0000000076' TYPE ='TASK' AUTHOR ='0000000076' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221202' SOLUTION ='UNRESOLVED' PRIORITY ='93' PRODUCT ='0573504591'  )
- ( CLIENT ='100' TASK_ID ='0000000011' TASK_KEY ='BW4_11' SUMMARY ='Quisque ut erat.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum'
-ASSIGNEE ='0000000097' TYPE ='EPIC' AUTHOR ='0000000040' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211124' SOLUTION ='UNRESOLVED' PRIORITY ='93' PRODUCT ='0328294458'  )
- ( CLIENT ='100' TASK_ID ='0000000012' TASK_KEY ='MIG_12' SUMMARY ='Etiam vel augue.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.'
-ASSIGNEE ='0000000073' TYPE ='EPIC' AUTHOR ='0000000039' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220301' SOLUTION ='DONE' PRIORITY ='12' PRODUCT ='0079108453'  )
- ( CLIENT ='100' TASK_ID ='0000000013' TASK_KEY ='SUP_13' SUMMARY ='Duis aliquam convallis nunc.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.Morbi non lectus. Aliquam sit am'
-ASSIGNEE ='0000000047' TYPE ='SUBTASK' AUTHOR ='0000000036' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220329' SOLUTION ='DONE' PRIORITY ='11' PRODUCT ='0919450998'  )
- ( CLIENT ='100' TASK_ID ='0000000014' TASK_KEY ='INT_14' SUMMARY ='Morbi vel lectus in quam fringilla rhoncus.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.In sagittis dui vel nisl. Duis ac nibh. Fusce lacus'
-ASSIGNEE ='0000000031' TYPE ='EPIC' AUTHOR ='0000000042' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220122' SOLUTION ='UNRESOLVED' PRIORITY ='20' PRODUCT ='0476355680'  )
- ( CLIENT ='100' TASK_ID ='0000000015' TASK_KEY ='BW_15' SUMMARY ='Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer e'
-ASSIGNEE ='0000000080' TYPE ='USERSTORY' AUTHOR ='0000000055' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220503' SOLUTION ='UNRESOLVED' PRIORITY ='63' PRODUCT ='0704305949'  )
- ( CLIENT ='100' TASK_ID ='0000000016' TASK_KEY ='BW_16' SUMMARY ='Cras in purus eu magna vulputate luctus.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.'
-ASSIGNEE ='0000000053' TYPE ='USERSTORY' AUTHOR ='0000000043' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220103' SOLUTION ='UNRESOLVED' PRIORITY ='62' PRODUCT ='0634408481'  )
- ( CLIENT ='100' TASK_ID ='0000000017' TASK_KEY ='BW_17' SUMMARY ='Sed ante.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.Morbi porttitor lorem'
-ASSIGNEE ='0000000039' TYPE ='USERSTORY' AUTHOR ='0000000059' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220506' SOLUTION ='UNRESOLVED' PRIORITY ='89' PRODUCT ='0484508054'  )
- ( CLIENT ='100' TASK_ID ='0000000018' TASK_KEY ='BW_18' SUMMARY ='Phasellus sit amet erat.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='In congue. Etiam justo. Etiam pretium iaculis justo.'
-ASSIGNEE ='0000000100' TYPE ='TASK' AUTHOR ='0000000079' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220619' SOLUTION ='UNRESOLVED' PRIORITY ='74' PRODUCT ='0926165798'  )
- ( CLIENT ='100' TASK_ID ='0000000019' TASK_KEY ='MIG_19' SUMMARY ='Proin risus.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.'
-ASSIGNEE ='0000000038' TYPE ='FEATURE' AUTHOR ='0000000020' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230202' SOLUTION ='UNRESOLVED' PRIORITY ='88' PRODUCT ='0992039185'  )
- ( CLIENT ='100' TASK_ID ='0000000020' TASK_KEY ='INT_20' SUMMARY ='Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.'
-ASSIGNEE ='0000000053' TYPE ='EPIC' AUTHOR ='0000000084' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221001' SOLUTION ='UNRESOLVED' PRIORITY ='61' PRODUCT ='0008130905'  )
- ( CLIENT ='100' TASK_ID ='0000000021' TASK_KEY ='INT_21' SUMMARY ='Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Sed ante. Vivamus tortor. Duis mattis egestas metus.'
-ASSIGNEE ='0000000070' TYPE ='BUG' AUTHOR ='0000000017' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220215' SOLUTION ='UNRESOLVED' PRIORITY ='21' PRODUCT ='0750939647'  )
- ( CLIENT ='100' TASK_ID ='0000000022' TASK_KEY ='BW_22' SUMMARY ='Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet'
-ASSIGNEE ='0000000057' TYPE ='EPIC' AUTHOR ='0000000096' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211213' SOLUTION ='UNRESOLVED' PRIORITY ='68' PRODUCT ='0213995050'  )
- ( CLIENT ='100' TASK_ID ='0000000023' TASK_KEY ='MIG_23' SUMMARY ='Aliquam sit amet diam in magna bibendum imperdiet.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.Morbi porttitor lorem'
-ASSIGNEE ='0000000057' TYPE ='FEATURE' AUTHOR ='0000000067' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230120' SOLUTION ='UNRESOLVED' PRIORITY ='72' PRODUCT ='0146961392'  )
- ( CLIENT ='100' TASK_ID ='0000000024' TASK_KEY ='SUP_24' SUMMARY ='Donec vitae nisi.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.Cras non velit nec nisi vulputate nonummy.'
-ASSIGNEE ='0000000031' TYPE ='USERSTORY' AUTHOR ='0000000048' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211109' SOLUTION ='CANTREPOR' PRIORITY ='65' PRODUCT ='0426549837'  )
- ( CLIENT ='100' TASK_ID ='0000000025' TASK_KEY ='BW_25' SUMMARY ='Aenean auctor gravida sem.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.Phasellus'
-ASSIGNEE ='0000000030' TYPE ='USERSTORY' AUTHOR ='0000000013' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211220' SOLUTION ='UNRESOLVED' PRIORITY ='67' PRODUCT ='0344405119'  )
- ( CLIENT ='100' TASK_ID ='0000000026' TASK_KEY ='INT_26' SUMMARY ='Cras in purus eu magna vulputate luctus.' STATUS ='RETEST' PROJECT ='0000000000'
-DESCRIPTION ='Phasellus in felis. Donec semper sapien a libero. Nam dui.'
-ASSIGNEE ='0000000092' TYPE ='USERSTORY' AUTHOR ='0000000100' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211225' SOLUTION ='DONE' PRIORITY ='87' PRODUCT ='0351053862'  )
- ( CLIENT ='100' TASK_ID ='0000000027' TASK_KEY ='SUP_27' SUMMARY ='Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pell'
-ASSIGNEE ='0000000091' TYPE ='USERSTORY' AUTHOR ='0000000040' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220808' SOLUTION ='UNRESOLVED' PRIORITY ='52' PRODUCT ='0121109742'  )
- ( CLIENT ='100' TASK_ID ='0000000028' TASK_KEY ='SUP_28' SUMMARY ='Quisque ut erat.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Phasellus in felis. Donec semper sapien a libero. Nam dui.Proin leo odio, porttitor id, consequat in, consequat ut, nu'
-ASSIGNEE ='0000000058' TYPE ='TASK' AUTHOR ='0000000067' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230109' SOLUTION ='UNRESOLVED' PRIORITY ='93' PRODUCT ='0278647057'  )
- ( CLIENT ='100' TASK_ID ='0000000029' TASK_KEY ='BW_29' SUMMARY ='Suspendisse potenti.' STATUS ='TEST' PROJECT ='0000000000'
-DESCRIPTION ='Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu'
-ASSIGNEE ='0000000055' TYPE ='SUBTASK' AUTHOR ='0000000035' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221009' SOLUTION ='DONE' PRIORITY ='5' PRODUCT ='0887529302'  )
- ( CLIENT ='100' TASK_ID ='0000000030' TASK_KEY ='SUP_30' SUMMARY ='Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS ='INPROGRE' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.Curabitur gravida nisi at'
-ASSIGNEE ='0000000043' TYPE ='FEATURE' AUTHOR ='0000000076' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220115' SOLUTION ='UNRESOLVED' PRIORITY ='48' PRODUCT ='0458365469'  )
- ( CLIENT ='100' TASK_ID ='0000000031' TASK_KEY ='BW4_31' SUMMARY ='Proin eu mi.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat var'
-ASSIGNEE ='0000000050' TYPE ='FEATURE' AUTHOR ='0000000015' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221101' SOLUTION ='UNRESOLVED' PRIORITY ='66' PRODUCT ='0746084841'  )
- ( CLIENT ='100' TASK_ID ='0000000032' TASK_KEY ='BW4_32' SUMMARY ='Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.' STATUS ='INPROGRE' PROJECT ='0000000004'
-DESCRIPTION ='Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer e'
-ASSIGNEE ='0000000084' TYPE ='TASK' AUTHOR ='0000000081' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220423' SOLUTION ='UNRESOLVED' PRIORITY ='53' PRODUCT ='0294705482'  )
- ( CLIENT ='100' TASK_ID ='0000000033' TASK_KEY ='BW4_33' SUMMARY ='Nam tristique tortor eu pede.' STATUS ='POSTPONE' PROJECT ='0000000004'
-DESCRIPTION ='Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultr'
-ASSIGNEE ='0000000047' TYPE ='USERSTORY' AUTHOR ='0000000078' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220905' SOLUTION ='UNRESOLVED' PRIORITY ='71' PRODUCT ='0705400704'  )
- ( CLIENT ='100' TASK_ID ='0000000034' TASK_KEY ='MIG_34' SUMMARY ='Mauris lacinia sapien quis libero.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus'
-ASSIGNEE ='0000000029' TYPE ='EPIC' AUTHOR ='0000000098' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211219' SOLUTION ='UNRESOLVED' PRIORITY ='49' PRODUCT ='0234229492'  )
- ( CLIENT ='100' TASK_ID ='0000000035' TASK_KEY ='MIG_35' SUMMARY ='Vestibulum sed magna at nunc commodo placerat.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.Morbi porttitor lorem'
-ASSIGNEE ='0000000100' TYPE ='BUG' AUTHOR ='0000000022' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230208' SOLUTION ='UNRESOLVED' PRIORITY ='9' PRODUCT ='0450893020'  )
- ( CLIENT ='100' TASK_ID ='0000000036' TASK_KEY ='MIG_36' SUMMARY ='Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.Sed a'
-ASSIGNEE ='0000000039' TYPE ='FEATURE' AUTHOR ='0000000077' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211210' SOLUTION ='UNRESOLVED' PRIORITY ='96' PRODUCT ='0840223056'  )
- ( CLIENT ='100' TASK_ID ='0000000037' TASK_KEY ='BW_37' SUMMARY ='Aliquam non mauris.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.Maecenas ut massa quis augue luctus tin'
-ASSIGNEE ='0000000081' TYPE ='EPIC' AUTHOR ='0000000081' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220110' SOLUTION ='UNRESOLVED' PRIORITY ='35' PRODUCT ='0307190109'  )
- ( CLIENT ='100' TASK_ID ='0000000038' TASK_KEY ='MIG_38' SUMMARY ='Nulla facilisi.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet'
-ASSIGNEE ='0000000013' TYPE ='EPIC' AUTHOR ='0000000091' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220402' SOLUTION ='UNRESOLVED' PRIORITY ='32' PRODUCT ='0037634082'  )
- ( CLIENT ='100' TASK_ID ='0000000039' TASK_KEY ='MIG_39' SUMMARY ='Morbi quis tortor id nulla ultrices aliquet.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.In sagittis dui vel nisl. Duis ac nibh. Fusce lacus'
-ASSIGNEE ='0000000056' TYPE ='FEATURE' AUTHOR ='0000000067' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220613' SOLUTION ='UNRESOLVED' PRIORITY ='94' PRODUCT ='0853821166'  )
- ( CLIENT ='100' TASK_ID ='0000000040' TASK_KEY ='BW_40' SUMMARY ='Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.'
-ASSIGNEE ='0000000092' TYPE ='BUG' AUTHOR ='0000000031' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211212' SOLUTION ='UNRESOLVED' PRIORITY ='31' PRODUCT ='0610975438'  )
- ( CLIENT ='100' TASK_ID ='0000000041' TASK_KEY ='SUP_41' SUMMARY ='Nulla suscipit ligula in lacus.' STATUS ='INPROGRE' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.In sagittis dui vel nisl. Duis ac nibh. Fusce lacus'
-ASSIGNEE ='0000000078' TYPE ='USERSTORY' AUTHOR ='0000000041' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221005' SOLUTION ='UNRESOLVED' PRIORITY ='62' PRODUCT ='0216045400'  )
- ( CLIENT ='100' TASK_ID ='0000000042' TASK_KEY ='INT_42' SUMMARY ='In hac habitasse platea dictumst.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.Praesen'
-ASSIGNEE ='0000000004' TYPE ='EPIC' AUTHOR ='0000000049' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230308' SOLUTION ='UNRESOLVED' PRIORITY ='69' PRODUCT ='0016210570'  )
- ( CLIENT ='100' TASK_ID ='0000000043' TASK_KEY ='INT_43' SUMMARY ='Aenean fermentum.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pell'
-ASSIGNEE ='0000000031' TYPE ='USERSTORY' AUTHOR ='0000000053' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211209' SOLUTION ='UNRESOLVED' PRIORITY ='83' PRODUCT ='0089490109'  )
- ( CLIENT ='100' TASK_ID ='0000000044' TASK_KEY ='SUP_44' SUMMARY ='Morbi quis tortor id nulla ultrices aliquet.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.Praesen'
-ASSIGNEE ='0000000068' TYPE ='BUG' AUTHOR ='0000000005' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220628' SOLUTION ='UNRESOLVED' PRIORITY ='93' PRODUCT ='0300415649'  )
- ( CLIENT ='100' TASK_ID ='0000000045' TASK_KEY ='INT_45' SUMMARY ='Proin eu mi.' STATUS ='RETEST' PROJECT ='0000000000'
-DESCRIPTION ='Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.Proin eu mi. Nulla ac enim. In tem'
-ASSIGNEE ='0000000018' TYPE ='SUBTASK' AUTHOR ='0000000062' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220829' SOLUTION ='DONE' PRIORITY ='93' PRODUCT ='0661282475'  )
- ( CLIENT ='100' TASK_ID ='0000000046' TASK_KEY ='MIG_46' SUMMARY ='Maecenas pulvinar lobortis est.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.'
-ASSIGNEE ='0000000015' TYPE ='TASK' AUTHOR ='0000000007' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221212' SOLUTION ='UNRESOLVED' PRIORITY ='16' PRODUCT ='0637157132'  )
- ( CLIENT ='100' TASK_ID ='0000000047' TASK_KEY ='BW4_47' SUMMARY ='Nam tristique tortor eu pede.' STATUS ='POSTPONE' PROJECT ='0000000004'
-DESCRIPTION ='Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.In sagittis dui vel nisl. Duis ac nibh. Fusce lacus'
-ASSIGNEE ='0000000079' TYPE ='SUBTASK' AUTHOR ='0000000031' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220319' SOLUTION ='UNRESOLVED' PRIORITY ='18' PRODUCT ='0158831210'  )
- ( CLIENT ='100' TASK_ID ='0000000048' TASK_KEY ='BW4_48' SUMMARY ='Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS ='FIXED' PROJECT ='0000000004'
-DESCRIPTION ='Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orc'
-ASSIGNEE ='0000000042' TYPE ='USERSTORY' AUTHOR ='0000000019' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220524' SOLUTION ='DONE' PRIORITY ='30' PRODUCT ='0281786745'  )
- ( CLIENT ='100' TASK_ID ='0000000049' TASK_KEY ='INT_49' SUMMARY ='In hac habitasse platea dictumst.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer e'
-ASSIGNEE ='0000000084' TYPE ='SUBTASK' AUTHOR ='0000000093' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220314' SOLUTION ='UNRESOLVED' PRIORITY ='41' PRODUCT ='0585129904'  )
- ( CLIENT ='100' TASK_ID ='0000000050' TASK_KEY ='INT_50' SUMMARY ='Integer tincidunt ante vel ipsum.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='In congue. Etiam justo. Etiam pretium iaculis justo.In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut t'
-ASSIGNEE ='0000000033' TYPE ='BUG' AUTHOR ='0000000052' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230210' SOLUTION ='UNRESOLVED' PRIORITY ='9' PRODUCT ='0527857683'  )
- ( CLIENT ='100' TASK_ID ='0000000051' TASK_KEY ='INT_51' SUMMARY ='Duis aliquam convallis nunc.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien'
-ASSIGNEE ='0000000013' TYPE ='USERSTORY' AUTHOR ='0000000009' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221119' SOLUTION ='UNRESOLVED' PRIORITY ='17' PRODUCT ='0693873417'  )
- ( CLIENT ='100' TASK_ID ='0000000052' TASK_KEY ='SUP_52' SUMMARY ='Nulla tellus.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet'
-ASSIGNEE ='0000000078' TYPE ='EPIC' AUTHOR ='0000000050' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220519' SOLUTION ='UNRESOLVED' PRIORITY ='40' PRODUCT ='0490930716'  )
- ( CLIENT ='100' TASK_ID ='0000000053' TASK_KEY ='SUP_53' SUMMARY ='Nullam varius.' STATUS ='INPROGRE' PROJECT ='0000000000'
-DESCRIPTION ='Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orc'
-ASSIGNEE ='0000000043' TYPE ='USERSTORY' AUTHOR ='0000000016' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220810' SOLUTION ='UNRESOLVED' PRIORITY ='69' PRODUCT ='0859973615'  )
- ( CLIENT ='100' TASK_ID ='0000000054' TASK_KEY ='BW_54' SUMMARY ='Phasellus id sapien in sapien iaculis congue.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luct'
-ASSIGNEE ='0000000098' TYPE ='TASK' AUTHOR ='0000000050' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220616' SOLUTION ='UNRESOLVED' PRIORITY ='17' PRODUCT ='0518654464'  )
- ( CLIENT ='100' TASK_ID ='0000000055' TASK_KEY ='BW_55' SUMMARY ='Maecenas pulvinar lobortis est.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.Nulla ut erat id mauris vulputate elementum. N'
-ASSIGNEE ='0000000009' TYPE ='USERSTORY' AUTHOR ='0000000042' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220914' SOLUTION ='DUPLICATE' PRIORITY ='15' PRODUCT ='0407470407'  )
- ( CLIENT ='100' TASK_ID ='0000000056' TASK_KEY ='MIG_56' SUMMARY ='Pellentesque ultrices mattis odio.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Phasellus in felis. Donec semper sapien a libero. Nam dui.Proin leo odio, porttitor id, consequat in, consequat ut, nu'
-ASSIGNEE ='0000000066' TYPE ='EPIC' AUTHOR ='0000000020' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220817' SOLUTION ='UNRESOLVED' PRIORITY ='5' PRODUCT ='0801297159'  )
- ( CLIENT ='100' TASK_ID ='0000000057' TASK_KEY ='MIG_57' SUMMARY ='Etiam justo.' STATUS ='INPROGRE' PROJECT ='0000000000'
-DESCRIPTION ='Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.In quis justo. Maecenas rhon'
-ASSIGNEE ='0000000071' TYPE ='EPIC' AUTHOR ='0000000024' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220620' SOLUTION ='UNRESOLVED' PRIORITY ='47' PRODUCT ='0689716658'  )
- ( CLIENT ='100' TASK_ID ='0000000058' TASK_KEY ='SUP_58' SUMMARY ='Aliquam erat volutpat.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel s'
-ASSIGNEE ='0000000039' TYPE ='SUBTASK' AUTHOR ='0000000074' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220826' SOLUTION ='UNRESOLVED' PRIORITY ='24' PRODUCT ='0798407570'  )
- ( CLIENT ='100' TASK_ID ='0000000059' TASK_KEY ='BW_59' SUMMARY ='Vestibulum sed magna at nunc commodo placerat.' STATUS ='CANCELED' PROJECT ='0000000000'
-DESCRIPTION ='Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat var'
-ASSIGNEE ='0000000070' TYPE ='EPIC' AUTHOR ='0000000034' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211014' SOLUTION ='WONTFIX' PRIORITY ='74' PRODUCT ='0943586868'  )
- ( CLIENT ='100' TASK_ID ='0000000060' TASK_KEY ='INT_60' SUMMARY ='Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.' STATUS ='CANCELED' PROJECT ='0000000000'
-DESCRIPTION ='Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.Morbi porttitor lorem'
-ASSIGNEE ='0000000031' TYPE ='EPIC' AUTHOR ='0000000068' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220313' SOLUTION ='WONTFIX' PRIORITY ='53' PRODUCT ='0638626256'  )
- ( CLIENT ='100' TASK_ID ='0000000061' TASK_KEY ='BW_61' SUMMARY ='Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tort'
-ASSIGNEE ='0000000093' TYPE ='FEATURE' AUTHOR ='0000000048' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211231' SOLUTION ='UNRESOLVED' PRIORITY ='94' PRODUCT ='0558532082'  )
- ( CLIENT ='100' TASK_ID ='0000000062' TASK_KEY ='INT_62' SUMMARY ='Morbi quis tortor id nulla ultrices aliquet.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luct'
-ASSIGNEE ='0000000004' TYPE ='USERSTORY' AUTHOR ='0000000083' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220806' SOLUTION ='UNRESOLVED' PRIORITY ='95' PRODUCT ='0907390890'  )
- ( CLIENT ='100' TASK_ID ='0000000063' TASK_KEY ='BW4_63' SUMMARY ='Nullam porttitor lacus at turpis.' STATUS ='INPROGRE' PROJECT ='0000000004'
-DESCRIPTION ='Fusce consequat. Nulla nisl. Nunc nisl.'
-ASSIGNEE ='0000000024' TYPE ='BUG' AUTHOR ='0000000021' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220307' SOLUTION ='UNRESOLVED' PRIORITY ='84' PRODUCT ='0743839215'  )
- ( CLIENT ='100' TASK_ID ='0000000064' TASK_KEY ='BW4_64' SUMMARY ='Ut tellus.' STATUS ='INPROGRE' PROJECT ='0000000004'
-DESCRIPTION ='Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer e'
-ASSIGNEE ='0000000055' TYPE ='EPIC' AUTHOR ='0000000079' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220108' SOLUTION ='UNRESOLVED' PRIORITY ='53' PRODUCT ='0353340072'  )
- ( CLIENT ='100' TASK_ID ='0000000065' TASK_KEY ='BW_65' SUMMARY ='Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS ='INPROGRE' PROJECT ='0000000000'
-DESCRIPTION ='Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.Sed a'
-ASSIGNEE ='0000000056' TYPE ='USERSTORY' AUTHOR ='0000000042' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230104' SOLUTION ='UNRESOLVED' PRIORITY ='35' PRODUCT ='0571312669'  )
- ( CLIENT ='100' TASK_ID ='0000000066' TASK_KEY ='INT_66' SUMMARY ='Nulla justo.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas'
-ASSIGNEE ='0000000019' TYPE ='BUG' AUTHOR ='0000000059' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221103' SOLUTION ='RTFM' PRIORITY ='75' PRODUCT ='0967959293'  )
- ( CLIENT ='100' TASK_ID ='0000000067' TASK_KEY ='INT_67' SUMMARY ='Curabitur at ipsum ac tellus semper interdum.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum'
-ASSIGNEE ='0000000026' TYPE ='TASK' AUTHOR ='0000000024' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221228' SOLUTION ='UNRESOLVED' PRIORITY ='35' PRODUCT ='0808935460'  )
- ( CLIENT ='100' TASK_ID ='0000000068' TASK_KEY ='BW4_68' SUMMARY ='Nulla nisl.' STATUS ='CANCELED' PROJECT ='0000000004'
-DESCRIPTION ='Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.Morbi porttitor lorem'
-ASSIGNEE ='0000000084' TYPE ='BUG' AUTHOR ='0000000067' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221006' SOLUTION ='RTFM' PRIORITY ='44' PRODUCT ='0814211826'  )
- ( CLIENT ='100' TASK_ID ='0000000069' TASK_KEY ='BW_69' SUMMARY ='Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.' STATUS ='RETEST' PROJECT ='0000000000'
-DESCRIPTION ='Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit'
-ASSIGNEE ='0000000038' TYPE ='USERSTORY' AUTHOR ='0000000048' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220308' SOLUTION ='DONE' PRIORITY ='80' PRODUCT ='0580228167'  )
- ( CLIENT ='100' TASK_ID ='0000000070' TASK_KEY ='BW4_70' SUMMARY ='Donec ut dolor.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.'
-ASSIGNEE ='0000000061' TYPE ='FEATURE' AUTHOR ='0000000046' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230317' SOLUTION ='UNRESOLVED' PRIORITY ='2' PRODUCT ='0481633016'  )
- ( CLIENT ='100' TASK_ID ='0000000071' TASK_KEY ='INT_71' SUMMARY ='Proin at turpis a pede posuere nonummy.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tinci'
-ASSIGNEE ='0000000053' TYPE ='TASK' AUTHOR ='0000000040' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220519' SOLUTION ='UNRESOLVED' PRIORITY ='84' PRODUCT ='0907600660'  )
- ( CLIENT ='100' TASK_ID ='0000000072' TASK_KEY ='MIG_72' SUMMARY ='Nam tristique tortor eu pede.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.Nulla ut erat id mauris vulputate elementum. N'
-ASSIGNEE ='0000000072' TYPE ='FEATURE' AUTHOR ='0000000014' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221018' SOLUTION ='WONTFIX' PRIORITY ='94' PRODUCT ='0775741248'  )
- ( CLIENT ='100' TASK_ID ='0000000073' TASK_KEY ='MIG_73' SUMMARY ='Mauris sit amet eros.' STATUS ='INPROGRE' PROJECT ='0000000000'
-DESCRIPTION ='Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut'
-ASSIGNEE ='0000000090' TYPE ='EPIC' AUTHOR ='0000000044' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220423' SOLUTION ='UNRESOLVED' PRIORITY ='1' PRODUCT ='0647155955'  )
- ( CLIENT ='100' TASK_ID ='0000000074' TASK_KEY ='BW4_74' SUMMARY ='Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Du'
-ASSIGNEE ='0000000020' TYPE ='EPIC' AUTHOR ='0000000084' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220208' SOLUTION ='UNRESOLVED' PRIORITY ='29' PRODUCT ='0577394656'  )
- ( CLIENT ='100' TASK_ID ='0000000075' TASK_KEY ='MIG_75' SUMMARY ='Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus'
-ASSIGNEE ='0000000065' TYPE ='SUBTASK' AUTHOR ='0000000097' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220708' SOLUTION ='UNRESOLVED' PRIORITY ='45' PRODUCT ='0051078191'  )
- ( CLIENT ='100' TASK_ID ='0000000076' TASK_KEY ='SUP_76' SUMMARY ='Curabitur in libero ut massa volutpat convallis.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.Maecenas ut massa quis augue luctus tin'
-ASSIGNEE ='0000000039' TYPE ='FEATURE' AUTHOR ='0000000051' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230223' SOLUTION ='WONTFIX' PRIORITY ='83' PRODUCT ='0965242482'  )
- ( CLIENT ='100' TASK_ID ='0000000077' TASK_KEY ='MIG_77' SUMMARY ='Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.Cras mi pede, malesuada in, imperdie'
-ASSIGNEE ='0000000062' TYPE ='SUBTASK' AUTHOR ='0000000020' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230323' SOLUTION ='UNRESOLVED' PRIORITY ='62' PRODUCT ='0025135384'  )
- ( CLIENT ='100' TASK_ID ='0000000078' TASK_KEY ='SUP_78' SUMMARY ='Morbi vel lectus in quam fringilla rhoncus.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.'
-ASSIGNEE ='0000000001' TYPE ='BUG' AUTHOR ='0000000037' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221224' SOLUTION ='UNRESOLVED' PRIORITY ='85' PRODUCT ='0254130802'  )
- ( CLIENT ='100' TASK_ID ='0000000079' TASK_KEY ='SUP_79' SUMMARY ='Integer non velit.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.'
-ASSIGNEE ='0000000065' TYPE ='USERSTORY' AUTHOR ='0000000024' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221116' SOLUTION ='UNRESOLVED' PRIORITY ='29' PRODUCT ='0602222099'  )
- ( CLIENT ='100' TASK_ID ='0000000080' TASK_KEY ='MIG_80' SUMMARY ='Nunc purus.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.Vestibulum quam sapien, varius'
-ASSIGNEE ='0000000049' TYPE ='USERSTORY' AUTHOR ='0000000075' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230209' SOLUTION ='UNRESOLVED' PRIORITY ='89' PRODUCT ='0190458820'  )
- ( CLIENT ='100' TASK_ID ='0000000081' TASK_KEY ='MIG_81' SUMMARY ='Pellentesque at nulla.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tort'
-ASSIGNEE ='0000000062' TYPE ='USERSTORY' AUTHOR ='0000000060' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220529' SOLUTION ='UNRESOLVED' PRIORITY ='46' PRODUCT ='0182382246'  )
- ( CLIENT ='100' TASK_ID ='0000000082' TASK_KEY ='BW4_82' SUMMARY ='Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit'
-ASSIGNEE ='0000000011' TYPE ='EPIC' AUTHOR ='0000000055' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220809' SOLUTION ='UNRESOLVED' PRIORITY ='45' PRODUCT ='0999524989'  )
- ( CLIENT ='100' TASK_ID ='0000000083' TASK_KEY ='INT_83' SUMMARY ='Etiam pretium iaculis justo.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.'
-ASSIGNEE ='0000000071' TYPE ='SUBTASK' AUTHOR ='0000000026' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220603' SOLUTION ='DONE' PRIORITY ='85' PRODUCT ='0625067925'  )
- ( CLIENT ='100' TASK_ID ='0000000084' TASK_KEY ='MIG_84' SUMMARY ='Maecenas tincidunt lacus at velit.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.'
-ASSIGNEE ='0000000041' TYPE ='TASK' AUTHOR ='0000000064' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221028' SOLUTION ='CANTREPOR' PRIORITY ='80' PRODUCT ='0304875341'  )
- ( CLIENT ='100' TASK_ID ='0000000085' TASK_KEY ='SUP_85' SUMMARY ='Donec ut dolor.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.Cras non velit nec nisi vulputate nonummy.'
-ASSIGNEE ='0000000072' TYPE ='TASK' AUTHOR ='0000000078' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230302' SOLUTION ='UNRESOLVED' PRIORITY ='9' PRODUCT ='0961572130'  )
- ( CLIENT ='100' TASK_ID ='0000000086' TASK_KEY ='INT_86' SUMMARY ='Maecenas pulvinar lobortis est.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices'
-ASSIGNEE ='0000000099' TYPE ='BUG' AUTHOR ='0000000023' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220521' SOLUTION ='UNRESOLVED' PRIORITY ='84' PRODUCT ='0549601677'  )
- ( CLIENT ='100' TASK_ID ='0000000087' TASK_KEY ='BW_87' SUMMARY ='Phasellus in felis.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien'
-ASSIGNEE ='0000000052' TYPE ='EPIC' AUTHOR ='0000000085' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220314' SOLUTION ='DONE' PRIORITY ='3' PRODUCT ='0450810613'  )
- ( CLIENT ='100' TASK_ID ='0000000088' TASK_KEY ='BW_88' SUMMARY ='Nulla ac enim.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.Mauris enim'
-ASSIGNEE ='0000000030' TYPE ='FEATURE' AUTHOR ='0000000003' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220222' SOLUTION ='DONE' PRIORITY ='26' PRODUCT ='0100428216'  )
- ( CLIENT ='100' TASK_ID ='0000000089' TASK_KEY ='SUP_89' SUMMARY ='Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus'
-ASSIGNEE ='0000000060' TYPE ='SUBTASK' AUTHOR ='0000000039' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211030' SOLUTION ='UNRESOLVED' PRIORITY ='51' PRODUCT ='0543696648'  )
- ( CLIENT ='100' TASK_ID ='0000000090' TASK_KEY ='BW4_90' SUMMARY ='Vestibulum rutrum rutrum neque.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Du'
-ASSIGNEE ='0000000068' TYPE ='BUG' AUTHOR ='0000000003' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230305' SOLUTION ='UNRESOLVED' PRIORITY ='92' PRODUCT ='0493897615'  )
- ( CLIENT ='100' TASK_ID ='0000000091' TASK_KEY ='MIG_91' SUMMARY ='Mauris ullamcorper purus sit amet nulla.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu'
-ASSIGNEE ='0000000073' TYPE ='FEATURE' AUTHOR ='0000000098' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230201' SOLUTION ='UNRESOLVED' PRIORITY ='98' PRODUCT ='0167048552'  )
- ( CLIENT ='100' TASK_ID ='0000000092' TASK_KEY ='BW_92' SUMMARY ='Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.'
-ASSIGNEE ='0000000025' TYPE ='USERSTORY' AUTHOR ='0000000093' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220603' SOLUTION ='UNRESOLVED' PRIORITY ='50' PRODUCT ='0668857912'  )
- ( CLIENT ='100' TASK_ID ='0000000093' TASK_KEY ='BW4_93' SUMMARY ='Morbi porttitor lorem id ligula.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Phasellus in felis. Donec semper sapien a libero. Nam dui.Proin leo odio, porttitor id, consequat in, consequat ut, nu'
-ASSIGNEE ='0000000057' TYPE ='TASK' AUTHOR ='0000000007' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220707' SOLUTION ='UNRESOLVED' PRIORITY ='21' PRODUCT ='0164270386'  )
- ( CLIENT ='100' TASK_ID ='0000000094' TASK_KEY ='INT_94' SUMMARY ='Pellentesque at nulla.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.Curabitur gravida nisi at'
-ASSIGNEE ='0000000017' TYPE ='FEATURE' AUTHOR ='0000000054' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220716' SOLUTION ='UNRESOLVED' PRIORITY ='77' PRODUCT ='0472593389'  )
- ( CLIENT ='100' TASK_ID ='0000000095' TASK_KEY ='BW_95' SUMMARY ='Maecenas ut massa quis augue luctus tincidunt.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer e'
-ASSIGNEE ='0000000098' TYPE ='EPIC' AUTHOR ='0000000087' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220704' SOLUTION ='UNRESOLVED' PRIORITY ='27' PRODUCT ='0705739672'  )
- ( CLIENT ='100' TASK_ID ='0000000096' TASK_KEY ='BW_96' SUMMARY ='Pellentesque viverra pede ac diam.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.Praesen'
-ASSIGNEE ='0000000039' TYPE ='BUG' AUTHOR ='0000000080' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220426' SOLUTION ='UNRESOLVED' PRIORITY ='86' PRODUCT ='0858523099'  )
- ( CLIENT ='100' TASK_ID ='0000000097' TASK_KEY ='MIG_97' SUMMARY ='Vivamus vestibulum sagittis sapien.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.'
-ASSIGNEE ='0000000096' TYPE ='TASK' AUTHOR ='0000000077' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220707' SOLUTION ='DUPLICATE' PRIORITY ='74' PRODUCT ='0293855653'  )
- ( CLIENT ='100' TASK_ID ='0000000098' TASK_KEY ='INT_98' SUMMARY ='Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien'
-ASSIGNEE ='0000000066' TYPE ='EPIC' AUTHOR ='0000000063' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221224' SOLUTION ='DONE' PRIORITY ='25' PRODUCT ='0206129762'  )
- ( CLIENT ='100' TASK_ID ='0000000099' TASK_KEY ='SUP_99' SUMMARY ='Phasellus in felis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.'
-ASSIGNEE ='0000000031' TYPE ='SUBTASK' AUTHOR ='0000000045' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211101' SOLUTION ='UNRESOLVED' PRIORITY ='96' PRODUCT ='0428115887'  )
- ( CLIENT ='100' TASK_ID ='0000000100' TASK_KEY ='BW4_100' SUMMARY ='Nulla suscipit ligula in lacus.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu'
-ASSIGNEE ='0000000074' TYPE ='USERSTORY' AUTHOR ='0000000053' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211107' SOLUTION ='UNRESOLVED' PRIORITY ='94' PRODUCT ='0410358611'  )
- ( CLIENT ='100' TASK_ID ='0000000101' TASK_KEY ='SUP_101' SUMMARY ='Duis aliquam convallis nunc.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.Cum sociis natoque penatibus et ma'
-ASSIGNEE ='0000000018' TYPE ='BUG' AUTHOR ='0000000097' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211118' SOLUTION ='UNRESOLVED' PRIORITY ='62' PRODUCT ='0864120813'  )
- ( CLIENT ='100' TASK_ID ='0000000102' TASK_KEY ='MIG_102' SUMMARY ='Etiam pretium iaculis justo.' STATUS ='RETEST' PROJECT ='0000000000'
-DESCRIPTION ='Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit'
-ASSIGNEE ='0000000007' TYPE ='FEATURE' AUTHOR ='0000000076' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211125' SOLUTION ='DONE' PRIORITY ='65' PRODUCT ='0516048693'  )
- ( CLIENT ='100' TASK_ID ='0000000103' TASK_KEY ='BW_103' SUMMARY ='Pellentesque viverra pede ac diam.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.'
-ASSIGNEE ='0000000045' TYPE ='TASK' AUTHOR ='0000000046' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230103' SOLUTION ='UNRESOLVED' PRIORITY ='23' PRODUCT ='0952009146'  )
- ( CLIENT ='100' TASK_ID ='0000000104' TASK_KEY ='MIG_104' SUMMARY ='Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.In sagittis dui vel nisl. Duis ac nibh. Fusce lacus'
-ASSIGNEE ='0000000050' TYPE ='EPIC' AUTHOR ='0000000091' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221222' SOLUTION ='UNRESOLVED' PRIORITY ='8' PRODUCT ='0026781073'  )
- ( CLIENT ='100' TASK_ID ='0000000105' TASK_KEY ='MIG_105' SUMMARY ='Morbi ut odio.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.Donec diam neque, vestibulum eg'
-ASSIGNEE ='0000000080' TYPE ='TASK' AUTHOR ='0000000051' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221109' SOLUTION ='UNRESOLVED' PRIORITY ='10' PRODUCT ='0190289008'  )
- ( CLIENT ='100' TASK_ID ='0000000106' TASK_KEY ='SUP_106' SUMMARY ='Sed accumsan felis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel s'
-ASSIGNEE ='0000000038' TYPE ='EPIC' AUTHOR ='0000000072' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211118' SOLUTION ='UNRESOLVED' PRIORITY ='51' PRODUCT ='0634381134'  )
- ( CLIENT ='100' TASK_ID ='0000000107' TASK_KEY ='BW4_107' SUMMARY ='Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.Cum sociis natoque penatibus et ma'
-ASSIGNEE ='0000000094' TYPE ='FEATURE' AUTHOR ='0000000010' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220309' SOLUTION ='UNRESOLVED' PRIORITY ='8' PRODUCT ='0876140266'  )
- ( CLIENT ='100' TASK_ID ='0000000108' TASK_KEY ='MIG_108' SUMMARY ='Nulla ac enim.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Phasellus in felis. Donec semper sapien a libero. Nam dui.'
-ASSIGNEE ='0000000003' TYPE ='FEATURE' AUTHOR ='0000000035' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230323' SOLUTION ='UNRESOLVED' PRIORITY ='1' PRODUCT ='0435966009'  )
- ( CLIENT ='100' TASK_ID ='0000000109' TASK_KEY ='SUP_109' SUMMARY ='Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh l'
-ASSIGNEE ='0000000014' TYPE ='TASK' AUTHOR ='0000000063' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211204' SOLUTION ='UNRESOLVED' PRIORITY ='48' PRODUCT ='0153387097'  )
- ( CLIENT ='100' TASK_ID ='0000000110' TASK_KEY ='BW4_110' SUMMARY ='Curabitur gravida nisi at nibh.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luct'
-ASSIGNEE ='0000000041' TYPE ='TASK' AUTHOR ='0000000053' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220109' SOLUTION ='UNRESOLVED' PRIORITY ='19' PRODUCT ='0974304657'  )
- ( CLIENT ='100' TASK_ID ='0000000111' TASK_KEY ='MIG_111' SUMMARY ='Nullam porttitor lacus at turpis.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Sed ante. Vivamus tortor. Duis mattis egestas metus.Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nul'
-ASSIGNEE ='0000000083' TYPE ='BUG' AUTHOR ='0000000088' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230127' SOLUTION ='UNRESOLVED' PRIORITY ='88' PRODUCT ='0547546521'  )
- ( CLIENT ='100' TASK_ID ='0000000112' TASK_KEY ='INT_112' SUMMARY ='Vestibulum sed magna at nunc commodo placerat.' STATUS ='CANCELED' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Du'
-ASSIGNEE ='0000000067' TYPE ='TASK' AUTHOR ='0000000045' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220220' SOLUTION ='WONTFIX' PRIORITY ='64' PRODUCT ='0922363978'  )
- ( CLIENT ='100' TASK_ID ='0000000113' TASK_KEY ='BW4_113' SUMMARY ='Quisque ut erat.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pell'
-ASSIGNEE ='0000000002' TYPE ='BUG' AUTHOR ='0000000007' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221223' SOLUTION ='UNRESOLVED' PRIORITY ='95' PRODUCT ='0631765695'  )
- ( CLIENT ='100' TASK_ID ='0000000114' TASK_KEY ='SUP_114' SUMMARY ='Phasellus in felis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.'
-ASSIGNEE ='0000000028' TYPE ='FEATURE' AUTHOR ='0000000078' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220529' SOLUTION ='UNRESOLVED' PRIORITY ='42' PRODUCT ='0597263976'  )
- ( CLIENT ='100' TASK_ID ='0000000115' TASK_KEY ='INT_115' SUMMARY ='Quisque id justo sit amet sapien dignissim vestibulum.' STATUS ='CANCELED' PROJECT ='0000000000'
-DESCRIPTION ='Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.Morbi porttitor lorem'
-ASSIGNEE ='0000000011' TYPE ='SUBTASK' AUTHOR ='0000000059' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220307' SOLUTION ='DUPLICATE' PRIORITY ='89' PRODUCT ='0969496693'  )
- ( CLIENT ='100' TASK_ID ='0000000116' TASK_KEY ='SUP_116' SUMMARY ='Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.'
-ASSIGNEE ='0000000006' TYPE ='USERSTORY' AUTHOR ='0000000031' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211212' SOLUTION ='UNRESOLVED' PRIORITY ='21' PRODUCT ='0560525011'  )
- ( CLIENT ='100' TASK_ID ='0000000117' TASK_KEY ='BW4_117' SUMMARY ='Cras non velit nec nisi vulputate nonummy.' STATUS ='POSTPONE' PROJECT ='0000000004'
-DESCRIPTION ='Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pell'
-ASSIGNEE ='0000000016' TYPE ='BUG' AUTHOR ='0000000071' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220122' SOLUTION ='UNRESOLVED' PRIORITY ='33' PRODUCT ='0288947123'  )
- ( CLIENT ='100' TASK_ID ='0000000118' TASK_KEY ='BW4_118' SUMMARY ='Cras in purus eu magna vulputate luctus.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.'
-ASSIGNEE ='0000000017' TYPE ='FEATURE' AUTHOR ='0000000045' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230218' SOLUTION ='UNRESOLVED' PRIORITY ='63' PRODUCT ='0629467475'  )
- ( CLIENT ='100' TASK_ID ='0000000119' TASK_KEY ='BW_119' SUMMARY ='Aliquam erat volutpat.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pell'
-ASSIGNEE ='0000000025' TYPE ='USERSTORY' AUTHOR ='0000000083' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220417' SOLUTION ='UNRESOLVED' PRIORITY ='89' PRODUCT ='0990145258'  )
- ( CLIENT ='100' TASK_ID ='0000000120' TASK_KEY ='INT_120' SUMMARY ='Ut tellus.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.Cras non velit nec nisi vulputate nonummy.'
-ASSIGNEE ='0000000070' TYPE ='EPIC' AUTHOR ='0000000086' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220313' SOLUTION ='UNRESOLVED' PRIORITY ='14' PRODUCT ='0727849227'  )
- ( CLIENT ='100' TASK_ID ='0000000121' TASK_KEY ='INT_121' SUMMARY ='Morbi non lectus.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Du'
-ASSIGNEE ='0000000055' TYPE ='BUG' AUTHOR ='0000000040' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211129' SOLUTION ='DUPLICATE' PRIORITY ='58' PRODUCT ='0249346473'  )
- ( CLIENT ='100' TASK_ID ='0000000122' TASK_KEY ='MIG_122' SUMMARY ='Suspendisse ornare consequat lectus.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices'
-ASSIGNEE ='0000000022' TYPE ='SUBTASK' AUTHOR ='0000000070' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211012' SOLUTION ='RTFM' PRIORITY ='20' PRODUCT ='0317576014'  )
- ( CLIENT ='100' TASK_ID ='0000000123' TASK_KEY ='BW4_123' SUMMARY ='Aenean fermentum.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.Donec diam neque, vestibulum eg'
-ASSIGNEE ='0000000053' TYPE ='BUG' AUTHOR ='0000000019' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230111' SOLUTION ='UNRESOLVED' PRIORITY ='13' PRODUCT ='0133374411'  )
- ( CLIENT ='100' TASK_ID ='0000000124' TASK_KEY ='MIG_124' SUMMARY ='Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.Cras mi pede, malesuada in, imperdie'
-ASSIGNEE ='0000000030' TYPE ='SUBTASK' AUTHOR ='0000000065' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230202' SOLUTION ='UNRESOLVED' PRIORITY ='59' PRODUCT ='0186369360'  )
- ( CLIENT ='100' TASK_ID ='0000000125' TASK_KEY ='BW4_125' SUMMARY ='Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Phasellus in felis. Donec semper sapien a libero. Nam dui.'
-ASSIGNEE ='0000000008' TYPE ='USERSTORY' AUTHOR ='0000000033' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220901' SOLUTION ='UNRESOLVED' PRIORITY ='50' PRODUCT ='0616578842'  )
- ( CLIENT ='100' TASK_ID ='0000000126' TASK_KEY ='SUP_126' SUMMARY ='Vivamus vestibulum sagittis sapien.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.Phasellus'
-ASSIGNEE ='0000000005' TYPE ='USERSTORY' AUTHOR ='0000000098' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221110' SOLUTION ='UNRESOLVED' PRIORITY ='60' PRODUCT ='0914437378'  )
- ( CLIENT ='100' TASK_ID ='0000000127' TASK_KEY ='INT_127' SUMMARY ='Mauris lacinia sapien quis libero.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.Praesen'
-ASSIGNEE ='0000000007' TYPE ='TASK' AUTHOR ='0000000023' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220524' SOLUTION ='CANTREPOR' PRIORITY ='59' PRODUCT ='0785195757'  )
- ( CLIENT ='100' TASK_ID ='0000000128' TASK_KEY ='MIG_128' SUMMARY ='Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.Cum sociis natoque penatibus et ma'
-ASSIGNEE ='0000000088' TYPE ='BUG' AUTHOR ='0000000042' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211203' SOLUTION ='UNRESOLVED' PRIORITY ='24' PRODUCT ='0459091098'  )
- ( CLIENT ='100' TASK_ID ='0000000129' TASK_KEY ='SUP_129' SUMMARY ='Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.Nam ultrices, libero non mattis pulvinar, nulla pe'
-ASSIGNEE ='0000000001' TYPE ='SUBTASK' AUTHOR ='0000000067' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220814' SOLUTION ='DUPLICATE' PRIORITY ='92' PRODUCT ='0909777599'  )
- ( CLIENT ='100' TASK_ID ='0000000130' TASK_KEY ='SUP_130' SUMMARY ='Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.Maecenas ut massa quis augue luctus tin'
-ASSIGNEE ='0000000066' TYPE ='USERSTORY' AUTHOR ='0000000077' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220924' SOLUTION ='UNRESOLVED' PRIORITY ='2' PRODUCT ='0432268835'  )
- ( CLIENT ='100' TASK_ID ='0000000131' TASK_KEY ='BW4_131' SUMMARY ='Donec ut mauris eget massa tempor convallis.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu'
-ASSIGNEE ='0000000084' TYPE ='EPIC' AUTHOR ='0000000090' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230305' SOLUTION ='UNRESOLVED' PRIORITY ='60' PRODUCT ='0209746827'  )
- ( CLIENT ='100' TASK_ID ='0000000132' TASK_KEY ='SUP_132' SUMMARY ='Donec semper sapien a libero.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa vol'
-ASSIGNEE ='0000000086' TYPE ='USERSTORY' AUTHOR ='0000000080' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220604' SOLUTION ='UNRESOLVED' PRIORITY ='97' PRODUCT ='0673877328'  )
- ( CLIENT ='100' TASK_ID ='0000000133' TASK_KEY ='BW4_133' SUMMARY ='Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.Praesen'
-ASSIGNEE ='0000000052' TYPE ='BUG' AUTHOR ='0000000043' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221003' SOLUTION ='UNRESOLVED' PRIORITY ='60' PRODUCT ='0534013312'  )
- ( CLIENT ='100' TASK_ID ='0000000134' TASK_KEY ='BW_134' SUMMARY ='In quis justo.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus'
-ASSIGNEE ='0000000062' TYPE ='TASK' AUTHOR ='0000000066' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221208' SOLUTION ='UNRESOLVED' PRIORITY ='59' PRODUCT ='0968126575'  )
- ( CLIENT ='100' TASK_ID ='0000000135' TASK_KEY ='INT_135' SUMMARY ='Phasellus in felis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.Cras mi pede, malesuada in, imperdie'
-ASSIGNEE ='0000000025' TYPE ='TASK' AUTHOR ='0000000031' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221107' SOLUTION ='UNRESOLVED' PRIORITY ='35' PRODUCT ='0532268155'  )
- ( CLIENT ='100' TASK_ID ='0000000136' TASK_KEY ='SUP_136' SUMMARY ='Maecenas tincidunt lacus at velit.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='In congue. Etiam justo. Etiam pretium iaculis justo.'
-ASSIGNEE ='0000000068' TYPE ='BUG' AUTHOR ='0000000063' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220806' SOLUTION ='UNRESOLVED' PRIORITY ='25' PRODUCT ='0160531161'  )
- ( CLIENT ='100' TASK_ID ='0000000137' TASK_KEY ='INT_137' SUMMARY ='Duis at velit eu est congue elementum.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut'
-ASSIGNEE ='0000000028' TYPE ='BUG' AUTHOR ='0000000040' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230217' SOLUTION ='UNRESOLVED' PRIORITY ='41' PRODUCT ='0441008003'  )
- ( CLIENT ='100' TASK_ID ='0000000138' TASK_KEY ='INT_138' SUMMARY ='In hac habitasse platea dictumst.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='In congue. Etiam justo. Etiam pretium iaculis justo.'
-ASSIGNEE ='0000000029' TYPE ='FEATURE' AUTHOR ='0000000100' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221114' SOLUTION ='UNRESOLVED' PRIORITY ='74' PRODUCT ='0583490425'  )
- ( CLIENT ='100' TASK_ID ='0000000139' TASK_KEY ='BW_139' SUMMARY ='Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.Curabitur gravida nisi at'
-ASSIGNEE ='0000000081' TYPE ='SUBTASK' AUTHOR ='0000000048' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221108' SOLUTION ='UNRESOLVED' PRIORITY ='48' PRODUCT ='0090979178'  )
- ( CLIENT ='100' TASK_ID ='0000000140' TASK_KEY ='SUP_140' SUMMARY ='Etiam vel augue.' STATUS ='INPROGRE' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.Curabitur gravida nisi at'
-ASSIGNEE ='0000000026' TYPE ='FEATURE' AUTHOR ='0000000016' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220406' SOLUTION ='UNRESOLVED' PRIORITY ='77' PRODUCT ='0026085005'  )
- ( CLIENT ='100' TASK_ID ='0000000141' TASK_KEY ='BW_141' SUMMARY ='Vivamus tortor.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque'
-ASSIGNEE ='0000000036' TYPE ='USERSTORY' AUTHOR ='0000000048' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20210927' SOLUTION ='RTFM' PRIORITY ='11' PRODUCT ='0380283059'  )
- ( CLIENT ='100' TASK_ID ='0000000142' TASK_KEY ='SUP_142' SUMMARY ='Duis bibendum.' STATUS ='INPROGRE' PROJECT ='0000000000'
-DESCRIPTION ='Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.Cras mi pede, malesuada in, imperdie'
-ASSIGNEE ='0000000098' TYPE ='BUG' AUTHOR ='0000000037' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211017' SOLUTION ='UNRESOLVED' PRIORITY ='83' PRODUCT ='0397016970'  )
- ( CLIENT ='100' TASK_ID ='0000000143' TASK_KEY ='BW4_143' SUMMARY ='Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum'
-ASSIGNEE ='0000000014' TYPE ='EPIC' AUTHOR ='0000000014' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221225' SOLUTION ='UNRESOLVED' PRIORITY ='31' PRODUCT ='0637817432'  )
- ( CLIENT ='100' TASK_ID ='0000000144' TASK_KEY ='SUP_144' SUMMARY ='Vestibulum ac est lacinia nisi venenatis tristique.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel s'
-ASSIGNEE ='0000000048' TYPE ='BUG' AUTHOR ='0000000072' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221113' SOLUTION ='UNRESOLVED' PRIORITY ='49' PRODUCT ='0076177275'  )
- ( CLIENT ='100' TASK_ID ='0000000145' TASK_KEY ='INT_145' SUMMARY ='Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.In sagittis dui vel nisl. Duis ac nibh. Fusce lacus'
-ASSIGNEE ='0000000026' TYPE ='EPIC' AUTHOR ='0000000037' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220629' SOLUTION ='UNRESOLVED' PRIORITY ='91' PRODUCT ='0780874798'  )
- ( CLIENT ='100' TASK_ID ='0000000146' TASK_KEY ='SUP_146' SUMMARY ='Nullam varius.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.Donec diam neque, vestibulum eg'
-ASSIGNEE ='0000000028' TYPE ='EPIC' AUTHOR ='0000000048' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220126' SOLUTION ='UNRESOLVED' PRIORITY ='11' PRODUCT ='0269112738'  )
- ( CLIENT ='100' TASK_ID ='0000000147' TASK_KEY ='INT_147' SUMMARY ='In est risus, auctor sed, tristique in, tempus sit amet, sem.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.Morbi non lectus. Aliquam sit am'
-ASSIGNEE ='0000000052' TYPE ='SUBTASK' AUTHOR ='0000000063' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211104' SOLUTION ='UNRESOLVED' PRIORITY ='85' PRODUCT ='0889995622'  )
- ( CLIENT ='100' TASK_ID ='0000000148' TASK_KEY ='MIG_148' SUMMARY ='Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu'
-ASSIGNEE ='0000000035' TYPE ='EPIC' AUTHOR ='0000000047' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221127' SOLUTION ='UNRESOLVED' PRIORITY ='5' PRODUCT ='0816353109'  )
- ( CLIENT ='100' TASK_ID ='0000000149' TASK_KEY ='MIG_149' SUMMARY ='Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.'
-ASSIGNEE ='0000000001' TYPE ='FEATURE' AUTHOR ='0000000054' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220420' SOLUTION ='UNRESOLVED' PRIORITY ='49' PRODUCT ='0177024211'  )
- ( CLIENT ='100' TASK_ID ='0000000150' TASK_KEY ='INT_150' SUMMARY ='Duis mattis egestas metus.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ip'
-ASSIGNEE ='0000000067' TYPE ='EPIC' AUTHOR ='0000000084' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221023' SOLUTION ='UNRESOLVED' PRIORITY ='61' PRODUCT ='0620315386'  )
- ( CLIENT ='100' TASK_ID ='0000000151' TASK_KEY ='BW_151' SUMMARY ='Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus'
-ASSIGNEE ='0000000080' TYPE ='TASK' AUTHOR ='0000000046' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220308' SOLUTION ='UNRESOLVED' PRIORITY ='31' PRODUCT ='0267155402'  )
- ( CLIENT ='100' TASK_ID ='0000000152' TASK_KEY ='BW4_152' SUMMARY ='Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.' STATUS ='CANCELED' PROJECT ='0000000004'
-DESCRIPTION ='Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer e'
-ASSIGNEE ='0000000067' TYPE ='BUG' AUTHOR ='0000000071' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230310' SOLUTION ='WONTFIX' PRIORITY ='44' PRODUCT ='0438629699'  )
- ( CLIENT ='100' TASK_ID ='0000000153' TASK_KEY ='INT_153' SUMMARY ='Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu'
-ASSIGNEE ='0000000034' TYPE ='BUG' AUTHOR ='0000000028' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220805' SOLUTION ='UNRESOLVED' PRIORITY ='25' PRODUCT ='0018371036'  )
- ( CLIENT ='100' TASK_ID ='0000000154' TASK_KEY ='INT_154' SUMMARY ='Donec quis orci eget orci vehicula condimentum.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, l'
-ASSIGNEE ='0000000012' TYPE ='EPIC' AUTHOR ='0000000038' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220927' SOLUTION ='DONE' PRIORITY ='15' PRODUCT ='0856057872'  )
- ( CLIENT ='100' TASK_ID ='0000000155' TASK_KEY ='MIG_155' SUMMARY ='Aenean sit amet justo.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.'
-ASSIGNEE ='0000000050' TYPE ='BUG' AUTHOR ='0000000050' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221229' SOLUTION ='UNRESOLVED' PRIORITY ='10' PRODUCT ='0063326892'  )
- ( CLIENT ='100' TASK_ID ='0000000156' TASK_KEY ='BW4_156' SUMMARY ='Maecenas rhoncus aliquam lacus.' STATUS ='RETEST' PROJECT ='0000000004'
-DESCRIPTION ='Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh l'
-ASSIGNEE ='0000000058' TYPE ='USERSTORY' AUTHOR ='0000000068' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211218' SOLUTION ='DONE' PRIORITY ='37' PRODUCT ='0222067243'  )
- ( CLIENT ='100' TASK_ID ='0000000157' TASK_KEY ='SUP_157' SUMMARY ='Praesent blandit.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.'
-ASSIGNEE ='0000000040' TYPE ='EPIC' AUTHOR ='0000000099' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220915' SOLUTION ='DONE' PRIORITY ='54' PRODUCT ='0759117891'  )
- ( CLIENT ='100' TASK_ID ='0000000158' TASK_KEY ='BW_158' SUMMARY ='In sagittis dui vel nisl.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.'
-ASSIGNEE ='0000000084' TYPE ='USERSTORY' AUTHOR ='0000000076' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211217' SOLUTION ='UNRESOLVED' PRIORITY ='42' PRODUCT ='0826928118'  )
- ( CLIENT ='100' TASK_ID ='0000000159' TASK_KEY ='SUP_159' SUMMARY ='Duis at velit eu est congue elementum.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit'
-ASSIGNEE ='0000000048' TYPE ='EPIC' AUTHOR ='0000000061' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220404' SOLUTION ='UNRESOLVED' PRIORITY ='68' PRODUCT ='0667020637'  )
- ( CLIENT ='100' TASK_ID ='0000000160' TASK_KEY ='SUP_160' SUMMARY ='Integer non velit.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.Cras mi pede, malesuada in, imperdie'
-ASSIGNEE ='0000000096' TYPE ='FEATURE' AUTHOR ='0000000083' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220120' SOLUTION ='UNRESOLVED' PRIORITY ='73' PRODUCT ='0442049237'  )
- ( CLIENT ='100' TASK_ID ='0000000161' TASK_KEY ='MIG_161' SUMMARY ='Nam tristique tortor eu pede.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.Donec diam neque, vestibulum eg'
-ASSIGNEE ='0000000048' TYPE ='SUBTASK' AUTHOR ='0000000078' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220408' SOLUTION ='UNRESOLVED' PRIORITY ='90' PRODUCT ='0838157318'  )
- ( CLIENT ='100' TASK_ID ='0000000162' TASK_KEY ='INT_162' SUMMARY ='Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.' STATUS ='RETEST' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.Curabitur gravida nisi at'
-ASSIGNEE ='0000000021' TYPE ='TASK' AUTHOR ='0000000047' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220318' SOLUTION ='DONE' PRIORITY ='8' PRODUCT ='0500966220'  )
- ( CLIENT ='100' TASK_ID ='0000000163' TASK_KEY ='BW4_163' SUMMARY ='Nulla nisl.' STATUS ='FIXED' PROJECT ='0000000004'
-DESCRIPTION ='Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tinci'
-ASSIGNEE ='0000000054' TYPE ='SUBTASK' AUTHOR ='0000000097' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220213' SOLUTION ='DUPLICATE' PRIORITY ='91' PRODUCT ='0372940778'  )
- ( CLIENT ='100' TASK_ID ='0000000164' TASK_KEY ='BW4_164' SUMMARY ='Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultr'
-ASSIGNEE ='0000000037' TYPE ='USERSTORY' AUTHOR ='0000000047' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211117' SOLUTION ='UNRESOLVED' PRIORITY ='46' PRODUCT ='0223302241'  )
- ( CLIENT ='100' TASK_ID ='0000000165' TASK_KEY ='BW_165' SUMMARY ='Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.Proin eu mi. Nulla ac enim. In tem'
-ASSIGNEE ='0000000056' TYPE ='USERSTORY' AUTHOR ='0000000041' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211003' SOLUTION ='UNRESOLVED' PRIORITY ='17' PRODUCT ='0729621464'  )
- ( CLIENT ='100' TASK_ID ='0000000166' TASK_KEY ='BW4_166' SUMMARY ='Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.Morbi porttitor lorem'
-ASSIGNEE ='0000000078' TYPE ='SUBTASK' AUTHOR ='0000000050' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220605' SOLUTION ='UNRESOLVED' PRIORITY ='7' PRODUCT ='0820166246'  )
- ( CLIENT ='100' TASK_ID ='0000000167' TASK_KEY ='BW4_167' SUMMARY ='Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.' STATUS ='NEW' PROJECT ='0000000004'
-DESCRIPTION ='Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa vol'
-ASSIGNEE ='0000000093' TYPE ='BUG' AUTHOR ='0000000004' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211224' SOLUTION ='UNRESOLVED' PRIORITY ='27' PRODUCT ='0790813413'  )
- ( CLIENT ='100' TASK_ID ='0000000168' TASK_KEY ='MIG_168' SUMMARY ='Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien'
-ASSIGNEE ='0000000098' TYPE ='BUG' AUTHOR ='0000000072' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211006' SOLUTION ='CANTREPOR' PRIORITY ='52' PRODUCT ='0247027231'  )
- ( CLIENT ='100' TASK_ID ='0000000169' TASK_KEY ='BW4_169' SUMMARY ='Pellentesque viverra pede ac diam.' STATUS ='FIXED' PROJECT ='0000000004'
-DESCRIPTION ='Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pell'
-ASSIGNEE ='0000000045' TYPE ='EPIC' AUTHOR ='0000000092' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211224' SOLUTION ='ASDESIGNED' PRIORITY ='46' PRODUCT ='0136309994'  )
- ( CLIENT ='100' TASK_ID ='0000000170' TASK_KEY ='SUP_170' SUMMARY ='Morbi non lectus.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.'
-ASSIGNEE ='0000000041' TYPE ='USERSTORY' AUTHOR ='0000000068' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220214' SOLUTION ='UNRESOLVED' PRIORITY ='8' PRODUCT ='0155853785'  )
- ( CLIENT ='100' TASK_ID ='0000000171' TASK_KEY ='SUP_171' SUMMARY ='Proin at turpis a pede posuere nonummy.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Phasellus in felis. Donec semper sapien a libero. Nam dui.Proin leo odio, porttitor id, consequat in, consequat ut, nu'
-ASSIGNEE ='0000000066' TYPE ='USERSTORY' AUTHOR ='0000000019' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220606' SOLUTION ='UNRESOLVED' PRIORITY ='21' PRODUCT ='0393918602'  )
- ( CLIENT ='100' TASK_ID ='0000000172' TASK_KEY ='SUP_172' SUMMARY ='Donec ut mauris eget massa tempor convallis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.Cras non velit nec nisi vulputate nonummy.'
-ASSIGNEE ='0000000037' TYPE ='FEATURE' AUTHOR ='0000000064' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230306' SOLUTION ='UNRESOLVED' PRIORITY ='41' PRODUCT ='0596080153'  )
- ( CLIENT ='100' TASK_ID ='0000000173' TASK_KEY ='MIG_173' SUMMARY ='Phasellus id sapien in sapien iaculis congue.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.'
-ASSIGNEE ='0000000099' TYPE ='FEATURE' AUTHOR ='0000000069' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230308' SOLUTION ='UNRESOLVED' PRIORITY ='5' PRODUCT ='0132725634'  )
- ( CLIENT ='100' TASK_ID ='0000000174' TASK_KEY ='BW_174' SUMMARY ='Integer tincidunt ante vel ipsum.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ip'
-ASSIGNEE ='0000000073' TYPE ='USERSTORY' AUTHOR ='0000000040' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220428' SOLUTION ='UNRESOLVED' PRIORITY ='58' PRODUCT ='0310216969'  )
- ( CLIENT ='100' TASK_ID ='0000000175' TASK_KEY ='BW_175' SUMMARY ='Nulla ut erat id mauris vulputate elementum.' STATUS ='INPROGRE' PROJECT ='0000000000'
-DESCRIPTION ='Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orc'
-ASSIGNEE ='0000000016' TYPE ='FEATURE' AUTHOR ='0000000016' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221220' SOLUTION ='UNRESOLVED' PRIORITY ='20' PRODUCT ='0285536048'  )
- ( CLIENT ='100' TASK_ID ='0000000176' TASK_KEY ='INT_176' SUMMARY ='Sed sagittis.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pell'
-ASSIGNEE ='0000000060' TYPE ='USERSTORY' AUTHOR ='0000000020' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220310' SOLUTION ='UNRESOLVED' PRIORITY ='51' PRODUCT ='0186158433'  )
- ( CLIENT ='100' TASK_ID ='0000000177' TASK_KEY ='BW4_177' SUMMARY ='Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.' STATUS ='FIXED' PROJECT ='0000000004'
-DESCRIPTION ='Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.Cras mi pede, malesuada in, imperdie'
-ASSIGNEE ='0000000066' TYPE ='FEATURE' AUTHOR ='0000000013' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221222' SOLUTION ='DUPLICATE' PRIORITY ='30' PRODUCT ='0546949860'  )
- ( CLIENT ='100' TASK_ID ='0000000178' TASK_KEY ='SUP_178' SUMMARY ='Aliquam sit amet diam in magna bibendum imperdiet.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tort'
-ASSIGNEE ='0000000011' TYPE ='BUG' AUTHOR ='0000000081' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230311' SOLUTION ='UNRESOLVED' PRIORITY ='24' PRODUCT ='0860094740'  )
- ( CLIENT ='100' TASK_ID ='0000000179' TASK_KEY ='INT_179' SUMMARY ='Suspendisse accumsan tortor quis turpis.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.Cras non velit nec nisi vulputate nonummy.'
-ASSIGNEE ='0000000035' TYPE ='FEATURE' AUTHOR ='0000000085' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220323' SOLUTION ='DONE' PRIORITY ='96' PRODUCT ='0642241092'  )
- ( CLIENT ='100' TASK_ID ='0000000180' TASK_KEY ='BW_180' SUMMARY ='Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS ='POSTPONE' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Du'
-ASSIGNEE ='0000000088' TYPE ='BUG' AUTHOR ='0000000092' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220901' SOLUTION ='UNRESOLVED' PRIORITY ='12' PRODUCT ='0253794647'  )
- ( CLIENT ='100' TASK_ID ='0000000181' TASK_KEY ='SUP_181' SUMMARY ='Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.'
-ASSIGNEE ='0000000017' TYPE ='EPIC' AUTHOR ='0000000083' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220903' SOLUTION ='UNRESOLVED' PRIORITY ='47' PRODUCT ='0647908490'  )
- ( CLIENT ='100' TASK_ID ='0000000182' TASK_KEY ='BW_182' SUMMARY ='Nullam molestie nibh in lectus.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.Maecenas ut massa quis augue luctus tin'
-ASSIGNEE ='0000000087' TYPE ='TASK' AUTHOR ='0000000087' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220405' SOLUTION ='UNRESOLVED' PRIORITY ='64' PRODUCT ='0690245070'  )
- ( CLIENT ='100' TASK_ID ='0000000183' TASK_KEY ='BW_183' SUMMARY ='Aliquam erat volutpat.' STATUS ='RETEST' PROJECT ='0000000000'
-DESCRIPTION ='Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.In sagittis dui vel nisl. Duis ac nibh. Fusce lacus'
-ASSIGNEE ='0000000093' TYPE ='EPIC' AUTHOR ='0000000054' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220118' SOLUTION ='DONE' PRIORITY ='79' PRODUCT ='0024675861'  )
- ( CLIENT ='100' TASK_ID ='0000000184' TASK_KEY ='INT_184' SUMMARY ='Morbi quis tortor id nulla ultrices aliquet.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.'
-ASSIGNEE ='0000000035' TYPE ='SUBTASK' AUTHOR ='0000000087' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20221103' SOLUTION ='UNRESOLVED' PRIORITY ='55' PRODUCT ='0131992831'  )
- ( CLIENT ='100' TASK_ID ='0000000185' TASK_KEY ='MIG_185' SUMMARY ='Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Fusce consequat. Nulla nisl. Nunc nisl.'
-ASSIGNEE ='0000000058' TYPE ='TASK' AUTHOR ='0000000082' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230320' SOLUTION ='UNRESOLVED' PRIORITY ='30' PRODUCT ='0329738194'  )
- ( CLIENT ='100' TASK_ID ='0000000186' TASK_KEY ='SUP_186' SUMMARY ='Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque'
-ASSIGNEE ='0000000063' TYPE ='SUBTASK' AUTHOR ='0000000081' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220221' SOLUTION ='UNRESOLVED' PRIORITY ='99' PRODUCT ='0344654719'  )
- ( CLIENT ='100' TASK_ID ='0000000187' TASK_KEY ='BW_187' SUMMARY ='Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ip'
-ASSIGNEE ='0000000048' TYPE ='USERSTORY' AUTHOR ='0000000047' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220203' SOLUTION ='UNRESOLVED' PRIORITY ='30' PRODUCT ='0996519913'  )
- ( CLIENT ='100' TASK_ID ='0000000188' TASK_KEY ='BW4_188' SUMMARY ='Fusce posuere felis sed lacus.' STATUS ='POSTPONE' PROJECT ='0000000004'
-DESCRIPTION ='Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut'
-ASSIGNEE ='0000000095' TYPE ='BUG' AUTHOR ='0000000097' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220709' SOLUTION ='UNRESOLVED' PRIORITY ='4' PRODUCT ='0194815302'  )
- ( CLIENT ='100' TASK_ID ='0000000189' TASK_KEY ='SUP_189' SUMMARY ='Sed sagittis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh l'
-ASSIGNEE ='0000000021' TYPE ='BUG' AUTHOR ='0000000032' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220526' SOLUTION ='UNRESOLVED' PRIORITY ='42' PRODUCT ='0625471689'  )
- ( CLIENT ='100' TASK_ID ='0000000190' TASK_KEY ='BW_190' SUMMARY ='Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.Mauris enim'
-ASSIGNEE ='0000000026' TYPE ='EPIC' AUTHOR ='0000000046' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20230212' SOLUTION ='ASDESIGNED' PRIORITY ='21' PRODUCT ='0352902214'  )
- ( CLIENT ='100' TASK_ID ='0000000191' TASK_KEY ='SUP_191' SUMMARY ='Curabitur in libero ut massa volutpat convallis.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.'
-ASSIGNEE ='0000000049' TYPE ='FEATURE' AUTHOR ='0000000017' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220519' SOLUTION ='UNRESOLVED' PRIORITY ='93' PRODUCT ='0090599864'  )
- ( CLIENT ='100' TASK_ID ='0000000192' TASK_KEY ='BW4_192' SUMMARY ='Aenean lectus.' STATUS ='POSTPONE' PROJECT ='0000000004'
-DESCRIPTION ='Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.Phasellus'
-ASSIGNEE ='0000000019' TYPE ='BUG' AUTHOR ='0000000040' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220426' SOLUTION ='UNRESOLVED' PRIORITY ='19' PRODUCT ='0602507592'  )
- ( CLIENT ='100' TASK_ID ='0000000193' TASK_KEY ='BW_193' SUMMARY ='Donec dapibus.' STATUS ='FIXED' PROJECT ='0000000000'
-DESCRIPTION ='Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat var'
-ASSIGNEE ='0000000086' TYPE ='SUBTASK' AUTHOR ='0000000077' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20211104' SOLUTION ='DUPLICATE' PRIORITY ='89' PRODUCT ='0769934740'  )
- ( CLIENT ='100' TASK_ID ='0000000194' TASK_KEY ='INT_194' SUMMARY ='Morbi porttitor lorem id ligula.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa vol'
-ASSIGNEE ='0000000047' TYPE ='BUG' AUTHOR ='0000000059' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220925' SOLUTION ='UNRESOLVED' PRIORITY ='67' PRODUCT ='0532966664'  )
- ( CLIENT ='100' TASK_ID ='0000000195' TASK_KEY ='SUP_195' SUMMARY ='Proin interdum mauris non ligula pellentesque ultrices.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer e'
-ASSIGNEE ='0000000042' TYPE ='SUBTASK' AUTHOR ='0000000009' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220404' SOLUTION ='UNRESOLVED' PRIORITY ='54' PRODUCT ='0223750318'  )
- ( CLIENT ='100' TASK_ID ='0000000196' TASK_KEY ='MIG_196' SUMMARY ='Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.'
-ASSIGNEE ='0000000090' TYPE ='TASK' AUTHOR ='0000000053' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220817' SOLUTION ='UNRESOLVED' PRIORITY ='39' PRODUCT ='0447224062'  )
- ( CLIENT ='100' TASK_ID ='0000000197' TASK_KEY ='BW_197' SUMMARY ='Aliquam sit amet diam in magna bibendum imperdiet.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.Praesent id massa id nisl venenatis lacinia'
-ASSIGNEE ='0000000037' TYPE ='BUG' AUTHOR ='0000000070' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220531' SOLUTION ='UNRESOLVED' PRIORITY ='60' PRODUCT ='0450045158'  )
- ( CLIENT ='100' TASK_ID ='0000000198' TASK_KEY ='INT_198' SUMMARY ='In hac habitasse platea dictumst.' STATUS ='NEW' PROJECT ='0000000000'
-DESCRIPTION ='Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit'
-ASSIGNEE ='0000000032' TYPE ='SUBTASK' AUTHOR ='0000000041' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220403' SOLUTION ='UNRESOLVED' PRIORITY ='65' PRODUCT ='0234390962'  )
- ( CLIENT ='100' TASK_ID ='0000000199' TASK_KEY ='INT_199' SUMMARY ='Nulla tempus.' STATUS ='FIXED' PROJECT ='0000000000'
-
-DESCRIPTION ='Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.Phasellus'
-ASSIGNEE ='0000000016' TYPE ='FEATURE' AUTHOR ='0000000070' CHANGED_AT ='0.0000000 ' CREATED_AT ='0.0000000 ' DUE_DATE ='20220923' SOLUTION ='RTFM' PRIORITY ='33' PRODUCT ='0560768634'  )
+data(tasks) = VALUE tt_zbc_tasks(
+( CLIENT = '100' TASK_KEY = 'INT-239' SUMMARY = 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'AGERGUS' TYPE = 'EPIC' AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211206' SOLUTION = 'UNRESOLVED' PRIORITY = '97' PRODUCT = '0372379284' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'R3N-200' SUMMARY = 'Summary' STATUS = '' PROJECT = '123' DESCRIPTION = '' ASSIGNEE = 'DB0E28' TYPE = '' AUTHOR = 'DB0EE28' CHANGED_AT = '20230202150806.4727840 ' CREATED_AT = '20230202150512.8776000 ' DUE_DATE = '20230226'
+SOLUTION = '' PRIORITY = '50' PRODUCT = '0000000123' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-472' SUMMARY = 'Integer ac leo.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'AGERGUS' TYPE = 'EPIC' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220408'
+SOLUTION = 'UNRESOLVED' PRIORITY = '19' PRODUCT = '0781582644' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-892' SUMMARY = 'Duis ac nibh.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D0000307552' TYPE = 'USERSTORY' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211012'
+SOLUTION = 'UNRESOLVED' PRIORITY = '60' PRODUCT = '0932253479' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-425' SUMMARY = 'Etiam vel augue.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AGERGUS' TYPE = 'EPIC' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211224'
+SOLUTION = 'UNRESOLVED' PRIORITY = '31' PRODUCT = '0395989119' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-78' SUMMARY = 'Morbi vel lectus in quam fringilla rhoncus.' STATUS = 'DELETED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'D0000307552' TYPE = 'BUG' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221224' SOLUTION = 'UNRESOLVED' PRIORITY = '85' PRODUCT = '0254130802' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-493' SUMMARY = 'Suspendisse potenti.' STATUS = 'DELETED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'D0000307552' TYPE = 'BUG' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220608'
+SOLUTION = 'UNRESOLVED' PRIORITY = '11' PRODUCT = '0135138412' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-629' SUMMARY = 'Aenean sit amet justo.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'AGERGUS' TYPE = 'EPIC' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220903'
+SOLUTION = 'UNRESOLVED' PRIORITY = '97' PRODUCT = '0860200507' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-697' SUMMARY = 'Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS = 'CANCELED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AGERGUS' TYPE = 'FEATURE' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220925' SOLUTION = 'RTFM' PRIORITY = '41' PRODUCT = '0744850820' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-214' SUMMARY = 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DB135E0' TYPE = 'SUBTASK' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221110' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0931774471' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-149' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Duis faucibus accumsan odio.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AGERGUS'
+TYPE = 'FEATURE' AUTHOR = 'KSOALL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220420' SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0177024211' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-151' SUMMARY = 'Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D000042034' TYPE = 'TASK' AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220308' SOLUTION = 'UNRESOLVED' PRIORITY = '31' PRODUCT = '0267155402' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-383' SUMMARY = 'Aenean auctor gravida sem.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'AGERGUS' TYPE = 'USERSTORY' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211129' SOLUTION = 'UNRESOLVED' PRIORITY = '55' PRODUCT = '0344470975' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-129' SUMMARY = 'Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AGERGUS' TYPE = 'SUBTASK' AUTHOR = 'MLANMEID'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220814' SOLUTION = 'DUPLICATE' PRIORITY = '92' PRODUCT = '0909777599' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-180' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D0000454359' TYPE = 'BUG' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220901' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0253794647' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-183' SUMMARY = 'Aliquam erat volutpat.' STATUS = 'RETEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'JBRANDEIS' TYPE = 'EPIC' AUTHOR = 'KSOALL' CHANGED_AT = '20230202151331.9851160 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220118' SOLUTION = 'DONE' PRIORITY = '79' PRODUCT = '0024675861' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-669' SUMMARY = 'Sed sagittis.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AHACHETTE' TYPE = 'TASK' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220718'
+SOLUTION = 'UNRESOLVED' PRIORITY = '80' PRODUCT = '0577911876' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-113' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AHACHETTE' TYPE = 'BUG' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221223'
+SOLUTION = 'UNRESOLVED' PRIORITY = '95' PRODUCT = '0631765695' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-598' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AHACHETTE' TYPE = 'TASK' AUTHOR = 'CHALLOWS'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20210925' SOLUTION = 'CANTREPOR' PRIORITY = '83' PRODUCT = '0946683244' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-589' SUMMARY = 'Donec semper sapien a libero.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AHACHETTE' TYPE = 'EPIC' AUTHOR = 'FMOWSDELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220212' SOLUTION = 'UNRESOLVED' PRIORITY = '26' PRODUCT = '0508977262' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-881' SUMMARY = 'Nulla mollis molestie lorem.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AHACHETTE' TYPE = 'EPIC' AUTHOR = 'GCARLONE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221029' SOLUTION = 'ASDESIGNED' PRIORITY = '86' PRODUCT = '0728531495' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-458' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AHACHETTE' TYPE = 'BUG' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220307' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0145938257' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-422' SUMMARY = 'Donec ut mauris eget massa tempor convallis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AHACHETTE' TYPE = 'SUBTASK' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230129' SOLUTION = 'UNRESOLVED' PRIORITY = '18' PRODUCT = '0533644166' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-407' SUMMARY = 'Nulla nisl.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'SUBTASK' AUTHOR = 'BBREARLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211119'
+SOLUTION = 'UNRESOLVED' PRIORITY = '74' PRODUCT = '0344341543' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-899' SUMMARY = 'Nulla suscipit ligula in lacus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'TASK' AUTHOR = 'BGUENY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211021'
+SOLUTION = 'UNRESOLVED' PRIORITY = '9' PRODUCT = '0496468582' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-400' SUMMARY = 'Nam dui.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'BUG' AUTHOR = 'CHOOLAGHAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230321'
+SOLUTION = 'UNRESOLVED' PRIORITY = '40' PRODUCT = '0508917823' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-651' SUMMARY = 'Vivamus in felis eu sapien cursus vestibulum.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'BUG' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220725' SOLUTION = 'DONE' PRIORITY = '44' PRODUCT = '0124763980' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-439' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'TASK' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230115' SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0700107316' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-389' SUMMARY = 'In congue.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'SUBTASK' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230120'
+SOLUTION = 'UNRESOLVED' PRIORITY = '61' PRODUCT = '0863158661' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-681' SUMMARY = 'Nulla ac enim.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'BUG' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220214'
+SOLUTION = 'UNRESOLVED' PRIORITY = '79' PRODUCT = '0875342095' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-208' SUMMARY = 'Duis ac nibh.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'BUG' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211230'
+SOLUTION = 'UNRESOLVED' PRIORITY = '33' PRODUCT = '0030239627' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-108' SUMMARY = 'Nulla ac enim.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'FEATURE' AUTHOR = 'FMOWSDELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230323'
+SOLUTION = 'UNRESOLVED' PRIORITY = '1' PRODUCT = '0435966009' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-653' SUMMARY = 'Etiam vel augue.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'FEATURE' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230118'
+SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0973454984' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-269' SUMMARY = 'Morbi ut odio.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'BUG' AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230202'
+SOLUTION = 'UNRESOLVED' PRIORITY = '18' PRODUCT = '0833509237' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-959' SUMMARY = 'Duis bibendum.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'FEATURE' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221023'
+SOLUTION = 'UNRESOLVED' PRIORITY = '39' PRODUCT = '0073655400' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-615' SUMMARY = 'Duis consequat dui nec nisi volutpat eleifend.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = 'USERSTORY' AUTHOR = 'MGLASHEEN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230328' SOLUTION = 'UNRESOLVED' PRIORITY = '25' PRODUCT = '0439273945' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-300' SUMMARY = 'Phasellus in felis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AJARMAINE' TYPE = 'SUBTASK' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220224'
+SOLUTION = 'UNRESOLVED' PRIORITY = '9' PRODUCT = '0440200044' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-863' SUMMARY = 'Cras pellentesque volutpat dui.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AJARMAINE' TYPE = 'USERSTORY' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220811' SOLUTION = 'DONE' PRIORITY = '98' PRODUCT = '0082471775' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-729' SUMMARY = 'Curabitur in libero ut massa volutpat convallis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AJARMAINE' TYPE = 'TASK' AUTHOR = 'GCARLONE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220721' SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0085618762' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-707' SUMMARY = 'Morbi non quam nec dui luctus rutrum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AJARMAINE' TYPE = 'EPIC' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211003' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0166103562' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-42' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'AJARMAINE' TYPE = 'EPIC' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230308' SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0016210570' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-613' SUMMARY = 'Nulla ac enim.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AJARMAINE' TYPE = 'FEATURE' AUTHOR = 'LPEPPER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220205'
+SOLUTION = 'UNRESOLVED' PRIORITY = '33' PRODUCT = '0588341108' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-404' SUMMARY = 'Aenean auctor gravida sem.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AJARMAINE' TYPE = 'USERSTORY' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220614' SOLUTION = 'UNRESOLVED' PRIORITY = '14' PRODUCT = '0588980254' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-700' SUMMARY = 'Integer tincidunt ante vel ipsum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AJARMAINE' TYPE = 'BUG' AUTHOR = 'RFRANZOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211123' SOLUTION = 'UNRESOLVED' PRIORITY = '71' PRODUCT = '0014010043' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-62' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'AJARMAINE' TYPE = 'USERSTORY' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220806' SOLUTION = 'UNRESOLVED' PRIORITY = '95' PRODUCT = '0907390890' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-670' SUMMARY = 'Donec ut mauris eget massa tempor convallis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'EPIC' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220827' SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0863318809' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-909' SUMMARY = 'Vivamus in felis eu sapien cursus vestibulum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'USERSTORY' AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220428' SOLUTION = 'UNRESOLVED' PRIORITY = '86' PRODUCT = '0112437837' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-805' SUMMARY = 'Duis at velit eu est congue elementum.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'USERSTORY' AUTHOR = 'BLAMANBY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220505' SOLUTION = 'UNRESOLVED' PRIORITY = '56' PRODUCT = '0243284120' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-223' SUMMARY = 'Suspendisse potenti.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'EPIC' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221202'
+SOLUTION = 'UNRESOLVED' PRIORITY = '22' PRODUCT = '0392204915' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-800' SUMMARY = 'Duis ac nibh.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'EPIC' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20210927'
+SOLUTION = 'UNRESOLVED' PRIORITY = '22' PRODUCT = '0591109562' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-475' SUMMARY = 'Aenean auctor gravida sem.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'USERSTORY' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220707' SOLUTION = 'DONE' PRIORITY = '49' PRODUCT = '0495152824' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-779' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'TASK' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220424' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0380479575' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-945' SUMMARY = 'Nulla suscipit ligula in lacus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'BUG' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221126'
+SOLUTION = 'UNRESOLVED' PRIORITY = '96' PRODUCT = '0865621339' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-218' SUMMARY = 'Phasellus in felis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'USERSTORY' AUTHOR = 'SIVANYUTIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230116'
+SOLUTION = 'UNRESOLVED' PRIORITY = '68' PRODUCT = '0191482976' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-126' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AROOSE' TYPE = 'USERSTORY' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221110' SOLUTION = 'UNRESOLVED' PRIORITY = '60' PRODUCT = '0914437378' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-281' SUMMARY = 'Nam nulla.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AWHERRY' TYPE = 'USERSTORY' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220222'
+SOLUTION = 'CANTREPOR' PRIORITY = '66' PRODUCT = '0009553686' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-116' SUMMARY = 'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AWHERRY' TYPE = 'USERSTORY' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211212' SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0560525011' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-776' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AWHERRY' TYPE = 'EPIC' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221204' SOLUTION = 'DONE' PRIORITY = '52' PRODUCT = '0967929441' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-503' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AWHERRY' TYPE = 'USERSTORY' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211109' SOLUTION = 'RTFM' PRIORITY = '38' PRODUCT = '0852336184' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-510' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'AWHERRY' TYPE = 'TASK' AUTHOR = 'SIVANYUTIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221110'
+SOLUTION = 'UNRESOLVED' PRIORITY = '53' PRODUCT = '0941269654' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-915' SUMMARY = 'Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'AWHERRY' TYPE = 'FEATURE' AUTHOR = 'TJERROMES'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230130' SOLUTION = 'UNRESOLVED' PRIORITY = '34' PRODUCT = '0168322714' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-634' SUMMARY = 'Duis bibendum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'EPIC' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220108'
+SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0901405684' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-983' SUMMARY = 'Pellentesque viverra pede ac diam.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'BUG' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211018' SOLUTION = 'UNRESOLVED' PRIORITY = '9' PRODUCT = '0723208893' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-127' SUMMARY = 'Mauris lacinia sapien quis libero.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'TASK' AUTHOR = 'DBRAMICH' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220524' SOLUTION = 'CANTREPOR' PRIORITY = '59' PRODUCT = '0785195757' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-291' SUMMARY = 'In congue.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'USERSTORY' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220107'
+SOLUTION = 'UNRESOLVED' PRIORITY = '91' PRODUCT = '0501384027' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-556' SUMMARY = 'Vivamus in felis eu sapien cursus vestibulum.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'EPIC' AUTHOR = 'FMOWSDELL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221020' SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0945773500' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-662' SUMMARY = 'In sagittis dui vel nisl.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'BUG' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220911'
+SOLUTION = 'UNRESOLVED' PRIORITY = '92' PRODUCT = '0704182157' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-595' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'BUG' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220928' SOLUTION = 'UNRESOLVED' PRIORITY = '54' PRODUCT = '0440111592' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-447' SUMMARY = 'Mauris ullamcorper purus sit amet nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'SUBTASK' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220922' SOLUTION = 'UNRESOLVED' PRIORITY = '56' PRODUCT = '0026410373' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-492' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'EPIC' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221121' SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0956847686' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-102' SUMMARY = 'Etiam pretium iaculis justo.' STATUS = 'RETEST' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'FEATURE' AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211125' SOLUTION = 'DONE' PRIORITY = '65' PRODUCT = '0516048693' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-483' SUMMARY = 'Suspendisse potenti.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'TASK' AUTHOR = 'POGILVIE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220506'
+SOLUTION = 'UNRESOLVED' PRIORITY = '99' PRODUCT = '0675504826' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-602' SUMMARY = 'Praesent id massa id nisl venenatis lacinia.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'USERSTORY' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220725' SOLUTION = 'DONE' PRIORITY = '60' PRODUCT = '0332708764' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-402' SUMMARY = 'Proin eu mi.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'BBAKESEF' TYPE = 'SUBTASK' AUTHOR = 'SSHANAHAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220715'
+SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0614365702' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-125' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'BBREARLEY' TYPE = 'USERSTORY' AUTHOR = 'FDESHON'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220901' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0616578842' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-978' SUMMARY = 'Proin risus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BBREARLEY' TYPE = 'FEATURE' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230130'
+SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0089984296' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-3' SUMMARY = 'Vivamus in felis eu sapien cursus vestibulum.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BBREARLEY' TYPE = 'USERSTORY' AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220601' SOLUTION = 'DONE' PRIORITY = '86' PRODUCT = '0486756270' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-538' SUMMARY = 'Nulla tempus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'BBREARLEY' TYPE = 'FEATURE' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211216'
+SOLUTION = 'UNRESOLVED' PRIORITY = '46' PRODUCT = '0429668363' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-643' SUMMARY = 'Donec dapibus.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'BBREARLEY' TYPE = 'SUBTASK' AUTHOR = 'LDRUMMOND' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220526'
+SOLUTION = 'UNRESOLVED' PRIORITY = '29' PRODUCT = '0086314911' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-317' SUMMARY = 'Pellentesque viverra pede ac diam.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'BBREARLEY' TYPE = 'EPIC' AUTHOR = 'SSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211222' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0615608287' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-474' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'BBREARLEY' TYPE = 'TASK' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220203' SOLUTION = 'RTFM' PRIORITY = '95' PRODUCT = '0545155389' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-917' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'EPIC' AUTHOR = 'CATTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220217' SOLUTION = 'RTFM' PRIORITY = '47' PRODUCT = '0638629281' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-457' SUMMARY = 'Nam nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'SUBTASK' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220726'
+SOLUTION = 'UNRESOLVED' PRIORITY = '43' PRODUCT = '0879807211' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-857' SUMMARY = 'Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'FEATURE' AUTHOR = 'CTREMATHACK'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211015' SOLUTION = 'UNRESOLVED' PRIORITY = '73' PRODUCT = '0866862771' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-393' SUMMARY = 'Morbi vel lectus in quam fringilla rhoncus.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'BUG' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220302' SOLUTION = 'DONE' PRIORITY = '67' PRODUCT = '0870331931' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-843' SUMMARY = 'Nunc nisl.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'USERSTORY' AUTHOR = 'EDONAGHY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220511'
+SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0602719879' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-762' SUMMARY = 'In est risus, auctor sed, tristique in, tempus sit amet, sem.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'TASK' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211018' SOLUTION = 'UNRESOLVED' PRIORITY = '38' PRODUCT = '0231806454' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-55' SUMMARY = 'Maecenas pulvinar lobortis est.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'USERSTORY' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220914' SOLUTION = 'DUPLICATE' PRIORITY = '15' PRODUCT = '0407470407' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-416' SUMMARY = 'Nulla tellus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'EPIC' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220107'
+SOLUTION = 'UNRESOLVED' PRIORITY = '68' PRODUCT = '0476524923' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-346' SUMMARY = 'Morbi a ipsum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'SUBTASK' AUTHOR = 'MKAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221202'
+SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0186723389' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-851' SUMMARY = 'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'BUG' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220921' SOLUTION = 'DONE' PRIORITY = '39' PRODUCT = '0550815208' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-731' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'SUBTASK' AUTHOR = 'OMENEGHI'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220202' SOLUTION = 'DONE' PRIORITY = '73' PRODUCT = '0808525415' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-718' SUMMARY = 'Sed sagittis.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BGUENY' TYPE = 'BUG' AUTHOR = 'SSHANAHAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211224'
+SOLUTION = 'WONTFIX' PRIORITY = '68' PRODUCT = '0960849737' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-467' SUMMARY = 'Nam nulla.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'BLAMANBY' TYPE = 'BUG' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230218'
+SOLUTION = 'UNRESOLVED' PRIORITY = '76' PRODUCT = '0239578094' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-568' SUMMARY = 'Suspendisse ornare consequat lectus.' STATUS = 'CANCELED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'BLAMANBY' TYPE = 'EPIC' AUTHOR = 'LDRUMMOND' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220811' SOLUTION = 'ASDESIGNED' PRIORITY = '15' PRODUCT = '0552055321' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-788' SUMMARY = 'Donec ut dolor.' STATUS = 'RETEST' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BLAMANBY' TYPE = 'USERSTORY' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230106'
+SOLUTION = 'DONE' PRIORITY = '81' PRODUCT = '0795908438' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-570' SUMMARY = 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'BLAMANBY' TYPE = 'TASK' AUTHOR = 'POGILVIE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221130' SOLUTION = 'UNRESOLVED' PRIORITY = '71' PRODUCT = '0718468903' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-286' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'BLAMANBY' TYPE = 'USERSTORY' AUTHOR = 'SPRENTY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230304' SOLUTION = 'UNRESOLVED' PRIORITY = '66' PRODUCT = '0597529587' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-783' SUMMARY = 'Nulla ac enim.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'BLAMANBY' TYPE = 'FEATURE' AUTHOR = 'VTWYFORD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220629'
+SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0249715738' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-808' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'BLAMANBY'
+TYPE = 'USERSTORY' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230227' SOLUTION = 'UNRESOLVED' PRIORITY = '20' PRODUCT = '0033883705' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-424' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'SUBTASK' AUTHOR = 'AGERGUS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220212' SOLUTION = 'UNRESOLVED' PRIORITY = '87' PRODUCT = '0272463739' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-678' SUMMARY = 'Pellentesque viverra pede ac diam.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'USERSTORY' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221125' SOLUTION = 'UNRESOLVED' PRIORITY = '44' PRODUCT = '0365221640' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-334' SUMMARY = 'Proin eu mi.' STATUS = 'CANCELED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'FEATURE' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220704'
+SOLUTION = 'WONTFIX' PRIORITY = '10' PRODUCT = '0124037746' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-282' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'EPIC' AUTHOR = 'CATTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220416' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0426066687' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-693' SUMMARY = 'Nullam molestie nibh in lectus.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'FEATURE' AUTHOR = 'JKARADZAS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221225' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0755775408' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-209' SUMMARY = 'Praesent blandit lacinia erat.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'USERSTORY' AUTHOR = 'KSOALL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211128' SOLUTION = 'UNRESOLVED' PRIORITY = '59' PRODUCT = '0906408897' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-5' SUMMARY = 'Nulla tellus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'USERSTORY' AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230111'
+SOLUTION = 'UNRESOLVED' PRIORITY = '31' PRODUCT = '0042656309' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-82' SUMMARY = 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'EPIC'
+AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220809' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0999524989' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-115' SUMMARY = 'Quisque id justo sit amet sapien dignissim vestibulum.' STATUS = 'CANCELED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'SUBTASK' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220307' SOLUTION = 'DUPLICATE' PRIORITY = '89' PRODUCT = '0969496693' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-178' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = 'BUG' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230311' SOLUTION = 'UNRESOLVED' PRIORITY = '24' PRODUCT = '0860094740' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-868' SUMMARY = 'Suspendisse potenti.' STATUS = 'CANCELED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CBENTHAM' TYPE = 'TASK' AUTHOR = 'BLAMANBY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211115'
+SOLUTION = 'WONTFIX' PRIORITY = '45' PRODUCT = '0227277112' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-397' SUMMARY = 'Suspendisse potenti.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CBENTHAM' TYPE = 'EPIC' AUTHOR = 'CATTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220803'
+SOLUTION = 'UNRESOLVED' PRIORITY = '3' PRODUCT = '0897143594' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-154' SUMMARY = 'Donec quis orci eget orci vehicula condimentum.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CBENTHAM' TYPE = 'EPIC' AUTHOR = 'GCARLONE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220927' SOLUTION = 'DONE' PRIORITY = '15' PRODUCT = '0856057872' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-399' SUMMARY = 'Vivamus tortor.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CBENTHAM' TYPE = 'USERSTORY' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211017'
+SOLUTION = 'UNRESOLVED' PRIORITY = '59' PRODUCT = '0513127811' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-795' SUMMARY = 'Nullam varius.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CBENTHAM' TYPE = 'USERSTORY' AUTHOR = 'TSEMAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220624'
+SOLUTION = 'UNRESOLVED' PRIORITY = '86' PRODUCT = '0267053646' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-532' SUMMARY = 'Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CBENTHAM' TYPE = 'EPIC' AUTHOR = 'VTWYFORD'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221026' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0733171826' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-222' SUMMARY = 'Cras in purus eu magna vulputate luctus.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CBENTHAM' TYPE = 'BUG' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220815' SOLUTION = 'DONE' PRIORITY = '83' PRODUCT = '0276979418' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-51' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CBISHELL' TYPE = 'USERSTORY' AUTHOR = 'BGUENY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221119' SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0693873417' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-453' SUMMARY = 'Maecenas pulvinar lobortis est.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CBISHELL' TYPE = 'SUBTASK' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230218' SOLUTION = 'UNRESOLVED' PRIORITY = '23' PRODUCT = '0682999242' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-585' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CBISHELL' TYPE = 'USERSTORY' AUTHOR = 'CHALLOWS'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220731' SOLUTION = 'UNRESOLVED' PRIORITY = '39' PRODUCT = '0822666803' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-694' SUMMARY = 'In quis justo.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CBISHELL' TYPE = 'TASK' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230118'
+SOLUTION = 'DONE' PRIORITY = '5' PRODUCT = '0769930223' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-792' SUMMARY = 'Pellentesque ultrices mattis odio.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CBISHELL' TYPE = 'TASK' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220113' SOLUTION = 'UNRESOLVED' PRIORITY = '88' PRODUCT = '0507751095' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-965' SUMMARY = 'Mauris lacinia sapien quis libero.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CBISHELL' TYPE = 'FEATURE' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220423' SOLUTION = 'UNRESOLVED' PRIORITY = '72' PRODUCT = '0916340015' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-333' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'TEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CBISHELL'
+TYPE = 'FEATURE' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230131' SOLUTION = 'DONE' PRIORITY = '2' PRODUCT = '0341928010' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-793' SUMMARY = 'Integer ac neque.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CBISHELL' TYPE = 'FEATURE' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221218'
+SOLUTION = 'DONE' PRIORITY = '13' PRODUCT = '0314939604' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-38' SUMMARY = 'Nulla facilisi.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CBISHELL' TYPE = 'EPIC' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220402'
+SOLUTION = 'UNRESOLVED' PRIORITY = '32' PRODUCT = '0037634082' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-600' SUMMARY = 'Praesent blandit.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CBISHELL' TYPE = 'BUG' AUTHOR = 'VTWYFORD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220926'
+SOLUTION = 'UNRESOLVED' PRIORITY = '28' PRODUCT = '0663193060' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-840' SUMMARY = 'Mauris sit amet eros.' STATUS = 'CANCELED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'SUBTASK' AUTHOR = 'AGERGUS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220216' SOLUTION = 'WONTFIX' PRIORITY = '45' PRODUCT = '0721161693' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-143' SUMMARY = 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'EPIC' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221225' SOLUTION = 'UNRESOLVED' PRIORITY = '31' PRODUCT = '0637817432' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-754' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'USERSTORY' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221104' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0526980071' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-403' SUMMARY = 'Nunc rhoncus dui vel sem.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'USERSTORY' AUTHOR = 'DBLUNT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230102'
+SOLUTION = 'UNRESOLVED' PRIORITY = '86' PRODUCT = '0712702919' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-739' SUMMARY = 'Morbi vel lectus in quam fringilla rhoncus.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'FEATURE' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220516' SOLUTION = 'UNRESOLVED' PRIORITY = '7' PRODUCT = '0835251784' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-204' SUMMARY = 'Proin interdum mauris non ligula pellentesque ultrices.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'FEATURE' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230220' SOLUTION = 'CANTREPOR' PRIORITY = '3' PRODUCT = '0371515295' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-904' SUMMARY = 'Pellentesque viverra pede ac diam.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'FEATURE' AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220704' SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0982921756' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-109' SUMMARY = 'Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'TASK' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211204' SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0153387097' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-982' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'BUG' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220903' SOLUTION = 'DUPLICATE' PRIORITY = '9' PRODUCT = '0088667566' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-609' SUMMARY = 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'EPIC' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220314' SOLUTION = 'DONE' PRIORITY = '78' PRODUCT = '0836609571' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-543' SUMMARY = 'Integer tincidunt ante vel ipsum.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CCROMLEY' TYPE = 'FEATURE' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220620' SOLUTION = 'UNRESOLVED' PRIORITY = '1' PRODUCT = '0413569915' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-730' SUMMARY = 'Nunc nisl.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON' TYPE = 'BUG' AUTHOR = 'AJARMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220830'
+SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0956841197' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-46' SUMMARY = 'Maecenas pulvinar lobortis est.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON' TYPE = 'TASK' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221212' SOLUTION = 'UNRESOLVED' PRIORITY = '16' PRODUCT = '0637157132' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-975' SUMMARY = 'In eleifend quam a odio.' STATUS = 'RETEST' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON' TYPE = 'USERSTORY' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220224' SOLUTION = 'DONE' PRIORITY = '70' PRODUCT = '0253169343' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-539' SUMMARY = 'Pellentesque ultrices mattis odio.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON' TYPE = 'USERSTORY' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220703' SOLUTION = 'UNRESOLVED' PRIORITY = '37' PRODUCT = '0078200207' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-740' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON' TYPE = 'BUG' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211120'
+SOLUTION = 'UNRESOLVED' PRIORITY = '39' PRODUCT = '0556128069' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-879' SUMMARY = 'Nunc nisl.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON' TYPE = 'USERSTORY' AUTHOR = 'KPREVOST' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220507'
+SOLUTION = 'DUPLICATE' PRIORITY = '66' PRODUCT = '0128202337' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-654' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Duis faucibus accumsan odio.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON'
+TYPE = 'EPIC' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220615' SOLUTION = 'DONE' PRIORITY = '81' PRODUCT = '0658906202' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-440' SUMMARY = 'Suspendisse potenti.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON' TYPE = 'TASK' AUTHOR = 'TSEMAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220405' SOLUTION = 'UNRESOLVED' PRIORITY = '75' PRODUCT = '0289851964' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-434' SUMMARY = 'Quisque ut erat.' STATUS = 'RETEST' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON' TYPE = 'BUG' AUTHOR = 'VTWYFORD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220102'
+SOLUTION = 'DONE' PRIORITY = '86' PRODUCT = '0052589876' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-951' SUMMARY = 'Curabitur in libero ut massa volutpat convallis.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CFEATHERSTON' TYPE = 'USERSTORY' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230314' SOLUTION = 'DONE' PRIORITY = '96' PRODUCT = '0757816384' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-481' SUMMARY = 'Morbi porttitor lorem id ligula.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CHALLOWS' TYPE = 'EPIC' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230122' SOLUTION = 'UNRESOLVED' PRIORITY = '95' PRODUCT = '0259518257' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-187' SUMMARY = 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D0000326286' TYPE = 'USERSTORY' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220203' SOLUTION = 'UNRESOLVED' PRIORITY = '30' PRODUCT = '0996519913' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-507' SUMMARY = 'Pellentesque eget nunc.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CHALLOWS' TYPE = 'EPIC' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230327'
+SOLUTION = 'UNRESOLVED' PRIORITY = '79' PRODUCT = '0757361685' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-199' SUMMARY = 'Nulla tempus.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CHALLOWS' TYPE = 'FEATURE' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220923'
+SOLUTION = 'RTFM' PRIORITY = '33' PRODUCT = '0560768634' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-117' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CHALLOWS' TYPE = 'BUG' AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220122' SOLUTION = 'UNRESOLVED' PRIORITY = '33' PRODUCT = '0288947123' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-513' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CHALLOWS' TYPE = 'USERSTORY' AUTHOR = 'PCOLING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220129' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0243149247' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-580' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CHALLOWS' TYPE = 'SUBTASK' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220524' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0798169798' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-990' SUMMARY = 'Aenean lectus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'FEATURE' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220415'
+SOLUTION = 'UNRESOLVED' PRIORITY = '26' PRODUCT = '0523774132' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-256' SUMMARY = 'Donec vitae nisi.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'SUBTASK' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211205' SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0813411965' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-118' SUMMARY = 'Cras in purus eu magna vulputate luctus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'FEATURE' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230218' SOLUTION = 'UNRESOLVED' PRIORITY = '63' PRODUCT = '0629467475' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-283' SUMMARY = 'Suspendisse potenti.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'EPIC' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220812'
+SOLUTION = 'WONTFIX' PRIORITY = '86' PRODUCT = '0654842026' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-350' SUMMARY = 'Pellentesque viverra pede ac diam.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'EPIC' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220416' SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0441364233' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-94' SUMMARY = 'Pellentesque at nulla.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'FEATURE' AUTHOR = 'KSOALL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220716'
+SOLUTION = 'UNRESOLVED' PRIORITY = '77' PRODUCT = '0472593389' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-733' SUMMARY = 'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'BUG' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220302' SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0494252696' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-325' SUMMARY = 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'TASK' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220224' SOLUTION = 'UNRESOLVED' PRIORITY = '92' PRODUCT = '0478231504' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-181' SUMMARY = 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'EPIC'
+AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220903' SOLUTION = 'UNRESOLVED' PRIORITY = '47' PRODUCT = '0647908490' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-607' SUMMARY = 'Vestibulum rutrum rutrum neque.' STATUS = 'RETEST' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CHOOLAGHAN' TYPE = 'BUG' AUTHOR = 'VTWYFORD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221203' SOLUTION = 'DONE' PRIORITY = '49' PRODUCT = '0238792262' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-850' SUMMARY = 'Suspendisse potenti.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'FEATURE' AUTHOR = 'CHOOLAGHAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221120' SOLUTION = 'DONE' PRIORITY = '96' PRODUCT = '0464406388' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-767' SUMMARY = 'Quisque id justo sit amet sapien dignissim vestibulum.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'TASK' AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230303' SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0889250712' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-855' SUMMARY = 'Pellentesque ultrices mattis odio.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'BUG' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211225' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0385482531' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-988' SUMMARY = 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'FEATURE' AUTHOR = 'LDRUMMOND'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211003' SOLUTION = 'UNRESOLVED' PRIORITY = '18' PRODUCT = '0227067744' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-45' SUMMARY = 'Proin eu mi.' STATUS = 'RETEST' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'SUBTASK' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220829'
+SOLUTION = 'DONE' PRIORITY = '93' PRODUCT = '0661282475' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-944' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'SUBTASK' AUTHOR = 'MGLASHEEN'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220115' SOLUTION = 'ASDESIGNED' PRIORITY = '35' PRODUCT = '0896357100' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-265' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'BUG' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230104' SOLUTION = 'UNRESOLVED' PRIORITY = '43' PRODUCT = '0424290846' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-781' SUMMARY = 'Fusce posuere felis sed lacus.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'EPIC' AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211011' SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0636562851' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-954' SUMMARY = 'Morbi a ipsum.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'TASK' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220918'
+SOLUTION = 'UNRESOLVED' PRIORITY = '30' PRODUCT = '0924319911' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-610' SUMMARY = 'Proin eu mi.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'BUG' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220121'
+SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0875446864' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-101' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'BUG' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211118' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0864120813' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-535' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CO''HALLAGAN' TYPE = 'BUG' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220115' SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0722863316' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-837' SUMMARY = 'In eleifend quam a odio.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CODGERS' TYPE = 'EPIC' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220807' SOLUTION = 'UNRESOLVED' PRIORITY = '66' PRODUCT = '0567523678' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-274' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CODGERS' TYPE = 'BUG' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220731'
+SOLUTION = 'UNRESOLVED' PRIORITY = '64' PRODUCT = '0340278490' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-390' SUMMARY = 'Integer ac neque.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CODGERS' TYPE = 'USERSTORY' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211109'
+SOLUTION = 'UNRESOLVED' PRIORITY = '38' PRODUCT = '0164167269' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-192' SUMMARY = 'Aenean lectus.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CODGERS' TYPE = 'BUG' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220426'
+SOLUTION = 'UNRESOLVED' PRIORITY = '19' PRODUCT = '0602507592' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-66' SUMMARY = 'Nulla justo.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CODGERS' TYPE = 'BUG' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221103'
+SOLUTION = 'RTFM' PRIORITY = '75' PRODUCT = '0967959293' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-266' SUMMARY = 'Aenean sit amet justo.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CODGERS' TYPE = 'EPIC' AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230107'
+SOLUTION = 'UNRESOLVED' PRIORITY = '26' PRODUCT = '0467021540' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-442' SUMMARY = 'Ut tellus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CODGERS' TYPE = 'SUBTASK' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230326'
+SOLUTION = 'UNRESOLVED' PRIORITY = '4' PRODUCT = '0106227907' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-500' SUMMARY = 'Proin risus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CODGERS' TYPE = 'FEATURE' AUTHOR = 'RFRANZOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220123'
+SOLUTION = 'UNRESOLVED' PRIORITY = '99' PRODUCT = '0494325850' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-928' SUMMARY = 'Curabitur in libero ut massa volutpat convallis.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CODGERS' TYPE = 'EPIC' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220401' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0142007159' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-995' SUMMARY = 'Curabitur at ipsum ac tellus semper interdum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CPROBACK' TYPE = 'SUBTASK' AUTHOR = 'BLAMANBY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211023' SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0403046990' ESTIMATED_EFFORT = '0.00 '  )
 ).
+
+data(tasks1) = VALUE tt_zbc_tasks(
+( CLIENT = '100' TASK_KEY = 'INT-770' SUMMARY = 'Pellentesque ultrices mattis odio.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CPROBACK' TYPE = 'EPIC' AUTHOR = 'MKAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211222' SOLUTION = 'UNRESOLVED' PRIORITY = '10' PRODUCT = '0602002255' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-796' SUMMARY = 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CPROBACK' TYPE = 'USERSTORY'
+AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220814' SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0126691711' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-496' SUMMARY = 'Vestibulum rutrum rutrum neque.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CPROBACK' TYPE = 'BUG' AUTHOR = 'PCOLING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20210927' SOLUTION = 'UNRESOLVED' PRIORITY = '18' PRODUCT = '0254101827' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-74' SUMMARY = 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CPROBACK' TYPE = 'EPIC' AUTHOR = 'SANTONOPOULO' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220208' SOLUTION = 'UNRESOLVED' PRIORITY = '29' PRODUCT = '0577394656' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-189' SUMMARY = 'Sed sagittis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CTREMATHACK' TYPE = 'BUG' AUTHOR = 'ELARAWAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220526'
+SOLUTION = 'UNRESOLVED' PRIORITY = '42' PRODUCT = '0625471689' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-705' SUMMARY = 'Nullam molestie nibh in lectus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'CTREMATHACK' TYPE = 'EPIC' AUTHOR = 'GCARLONE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220116' SOLUTION = 'UNRESOLVED' PRIORITY = '79' PRODUCT = '0187176463' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-551' SUMMARY = 'Nulla ac enim.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CTREMATHACK' TYPE = 'USERSTORY' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230305'
+SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0460650542' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-162' SUMMARY = 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.' STATUS = 'RETEST' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CTREMATHACK' TYPE = 'TASK' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220318' SOLUTION = 'DONE' PRIORITY = '8' PRODUCT = '0500966220' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-385' SUMMARY = 'Phasellus in felis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'CTREMATHACK' TYPE = 'FEATURE' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220404'
+SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0861949239' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-621' SUMMARY = 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'CTREMATHACK' TYPE = 'USERSTORY' AUTHOR = 'MELKINS'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220412' SOLUTION = 'CANTREPOR' PRIORITY = '57' PRODUCT = '0015136583' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-418' SUMMARY = 'Mauris ullamcorper purus sit amet nulla.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'CTREMATHACK' TYPE = 'EPIC' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220212' SOLUTION = 'UNRESOLVED' PRIORITY = '78' PRODUCT = '0594191228' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-2' SUMMARY = 'Nunc purus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'CTREMATHACK' TYPE = 'USERSTORY' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230224'
+SOLUTION = 'UNRESOLVED' PRIORITY = '76' PRODUCT = '0241852440' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-824' SUMMARY = 'Aenean sit amet justo.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'EPIC' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221029'
+SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0050521436' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-787' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'BUG' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220906' SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0987854207' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-427' SUMMARY = 'Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'FEATURE'
+AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221126' SOLUTION = 'DONE' PRIORITY = '20' PRODUCT = '0141459001' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-530' SUMMARY = 'Suspendisse potenti.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'SUBTASK' AUTHOR = 'KSOALL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20210930'
+SOLUTION = 'RTFM' PRIORITY = '82' PRODUCT = '0909651030' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-122' SUMMARY = 'Suspendisse ornare consequat lectus.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'SUBTASK' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211012' SOLUTION = 'RTFM' PRIORITY = '20' PRODUCT = '0317576014' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-908' SUMMARY = 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'TASK'
+AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211213' SOLUTION = 'UNRESOLVED' PRIORITY = '82' PRODUCT = '0318121940' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-748' SUMMARY = 'Donec semper sapien a libero.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'FEATURE' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220104' SOLUTION = 'UNRESOLVED' PRIORITY = '38' PRODUCT = '0619713419' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-315' SUMMARY = 'In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'BUG'
+AUTHOR = 'RHUNTING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221022' SOLUTION = 'DONE' PRIORITY = '21' PRODUCT = '0418579768' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-884' SUMMARY = 'Aenean lectus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'TASK' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230222'
+SOLUTION = 'UNRESOLVED' PRIORITY = '64' PRODUCT = '0993992549' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-460' SUMMARY = 'Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'TASK'
+AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221119' SOLUTION = 'UNRESOLVED' PRIORITY = '47' PRODUCT = '0006096920' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-617' SUMMARY = 'Nam tristique tortor eu pede.' STATUS = 'TEST' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'DBLUNT' TYPE = 'USERSTORY' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221208' SOLUTION = 'DONE' PRIORITY = '55' PRODUCT = '0831938684' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-847' SUMMARY = 'Nulla justo.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'EPIC' AUTHOR = 'BBREARLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220119'
+SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0890179290' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-220' SUMMARY = 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'EPIC' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230116' SOLUTION = 'UNRESOLVED' PRIORITY = '40' PRODUCT = '0446691761' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-784' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'USERSTORY' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221031' SOLUTION = 'UNRESOLVED' PRIORITY = '80' PRODUCT = '0647866610' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-647' SUMMARY = 'Nulla tempus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'BUG' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211115'
+SOLUTION = 'UNRESOLVED' PRIORITY = '52' PRODUCT = '0629401046' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-760' SUMMARY = 'Praesent blandit.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'USERSTORY' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221214'
+SOLUTION = 'UNRESOLVED' PRIORITY = '8' PRODUCT = '0923284343' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-846' SUMMARY = 'Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'SUBTASK' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230123' SOLUTION = 'DUPLICATE' PRIORITY = '48' PRODUCT = '0194317470' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-969' SUMMARY = 'Aenean lectus.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'TASK' AUTHOR = 'LDRUMMOND' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221016'
+SOLUTION = 'WONTFIX' PRIORITY = '7' PRODUCT = '0829456941' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-757' SUMMARY = 'In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'BUG'
+AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20210923' SOLUTION = 'UNRESOLVED' PRIORITY = '88' PRODUCT = '0601879441' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-766' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'EPIC'
+AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211114' SOLUTION = 'UNRESOLVED' PRIORITY = '98' PRODUCT = '0046252211' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-331' SUMMARY = 'Morbi non lectus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'FEATURE' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220730'
+SOLUTION = 'UNRESOLVED' PRIORITY = '34' PRODUCT = '0090570608' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-732' SUMMARY = 'Aenean lectus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DBRAMICH' TYPE = 'EPIC' AUTHOR = 'RHUNTING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230202'
+SOLUTION = 'UNRESOLVED' PRIORITY = '61' PRODUCT = '0605792726' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-588' SUMMARY = 'Aliquam quis turpis eget elit sodales scelerisque.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DHOWDEN' TYPE = 'EPIC' AUTHOR = 'CBENTHAM' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230316' SOLUTION = 'UNRESOLVED' PRIORITY = '32' PRODUCT = '0600569506' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-63' SUMMARY = 'Nullam porttitor lacus at turpis.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DHOWDEN' TYPE = 'BUG' AUTHOR = 'CTREMATHACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220307' SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0743839215' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-791' SUMMARY = 'Aliquam quis turpis eget elit sodales scelerisque.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DHOWDEN' TYPE = 'USERSTORY' AUTHOR = 'DBLUNT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230311' SOLUTION = 'UNRESOLVED' PRIORITY = '86' PRODUCT = '0160493724' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-640' SUMMARY = 'Donec quis orci eget orci vehicula condimentum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DHOWDEN' TYPE = 'BUG' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221026' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0653498784' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-450' SUMMARY = 'In quis justo.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DHOWDEN' TYPE = 'TASK' AUTHOR = 'PCOLING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220226'
+SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0064009623' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-622' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DHOWDEN' TYPE = 'TASK' AUTHOR = 'RHUNTING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230105'
+SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0008409527' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-275' SUMMARY = 'Nulla tempus.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DHOWDEN' TYPE = 'SUBTASK' AUTHOR = 'SSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230207'
+SOLUTION = 'UNRESOLVED' PRIORITY = '97' PRODUCT = '0368378319' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-242' SUMMARY = 'Ut tellus.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DKIFT' TYPE = 'USERSTORY' AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220223'
+SOLUTION = 'UNRESOLVED' PRIORITY = '99' PRODUCT = '0017172975' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-502' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DKIFT' TYPE = 'TASK' AUTHOR = 'CATTON'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220821' SOLUTION = 'UNRESOLVED' PRIORITY = '24' PRODUCT = '0278426640' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-135' SUMMARY = 'Phasellus in felis.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DKIFT' TYPE = 'TASK' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221107'
+SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0532268155' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-773' SUMMARY = 'Vestibulum sed magna at nunc commodo placerat.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DKIFT' TYPE = 'BUG' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211203' SOLUTION = 'DONE' PRIORITY = '36' PRODUCT = '0443940265' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-454' SUMMARY = 'Suspendisse potenti.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DKIFT' TYPE = 'BUG' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211024'
+SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0268462797' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-262' SUMMARY = 'Aenean fermentum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DKIFT' TYPE = 'TASK' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211231'
+SOLUTION = 'UNRESOLVED' PRIORITY = '11' PRODUCT = '0565590364' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-712' SUMMARY = 'Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DKIFT' TYPE = 'EPIC' AUTHOR = 'MGLASHEEN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220608' SOLUTION = 'UNRESOLVED' PRIORITY = '37' PRODUCT = '0305213339' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-158' SUMMARY = 'In sagittis dui vel nisl.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D000042034' TYPE = 'USERSTORY' AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211217' SOLUTION = 'UNRESOLVED' PRIORITY = '42' PRODUCT = '0826928118' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-92' SUMMARY = 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DKIFT' TYPE = 'USERSTORY' AUTHOR = 'TJERROMES' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220603' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0668857912' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-816' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'BUG' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220726' SOLUTION = 'UNRESOLVED' PRIORITY = '22' PRODUCT = '0567461702' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-140' SUMMARY = 'Etiam vel augue.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'FEATURE' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220406'
+SOLUTION = 'UNRESOLVED' PRIORITY = '77' PRODUCT = '0026085005' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-67' SUMMARY = 'Curabitur at ipsum ac tellus semper interdum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'TASK' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221228' SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0808935460' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-396' SUMMARY = 'Duis bibendum.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'TASK' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220727'
+SOLUTION = 'UNRESOLVED' PRIORITY = '57' PRODUCT = '0428140153' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-255' SUMMARY = 'Integer a nibh.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'FEATURE' AUTHOR = 'EDONAGHY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220922'
+SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0902814989' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-145' SUMMARY = 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'EPIC' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220629' SOLUTION = 'UNRESOLVED' PRIORITY = '91' PRODUCT = '0780874798' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-525' SUMMARY = 'Aliquam erat volutpat.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'SUBTASK' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211004' SOLUTION = 'UNRESOLVED' PRIORITY = '47' PRODUCT = '0861459013' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'NEW-12321' SUMMARY = 'Langtextfelder besser darstellen' STATUS = '' PROJECT = '' DESCRIPTION = '' ASSIGNEE = 'SELBER' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '20230202151805.3611700 '
+CREATED_AT = '20230202143419.9683790 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '99' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-201' SUMMARY = 'Sed accumsan felis.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'USERSTORY' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220528'
+SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0006766229' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-320' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'FEATURE' AUTHOR = 'RHUNTING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211029' SOLUTION = 'UNRESOLVED' PRIORITY = '16' PRODUCT = '0711680239' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-376' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'TASK' AUTHOR = 'TGEISTBECK' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211211' SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0682867510' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-898' SUMMARY = 'Donec quis orci eget orci vehicula condimentum.' STATUS = 'TEST' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DPETERI' TYPE = 'BUG' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211121' SOLUTION = 'DONE' PRIORITY = '42' PRODUCT = '0018256573' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-497' SUMMARY = 'Integer a nibh.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DSPLEVINS' TYPE = 'EPIC' AUTHOR = 'BGUENY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230218'
+SOLUTION = 'UNRESOLVED' PRIORITY = '71' PRODUCT = '0503595944' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-828' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DSPLEVINS' TYPE = 'USERSTORY' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211123' SOLUTION = 'UNRESOLVED' PRIORITY = '55' PRODUCT = '0764230126' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-882' SUMMARY = 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'DSPLEVINS' TYPE = 'FEATURE'
+AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221002' SOLUTION = 'DONE' PRIORITY = '93' PRODUCT = '0543654837' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-506' SUMMARY = 'Nulla tellus.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'DSPLEVINS' TYPE = 'EPIC' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220722'
+SOLUTION = 'RTFM' PRIORITY = '86' PRODUCT = '0179506182' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-650' SUMMARY = 'In eleifend quam a odio.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'DSPLEVINS' TYPE = 'FEATURE' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211224' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0052192851' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-469' SUMMARY = 'Pellentesque eget nunc.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DSPLEVINS' TYPE = 'USERSTORY' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230206'
+SOLUTION = 'UNRESOLVED' PRIORITY = '4' PRODUCT = '0989945604' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-276' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'DSPLEVINS' TYPE = 'TASK' AUTHOR = 'TJERROMES'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220313' SOLUTION = 'UNRESOLVED' PRIORITY = '85' PRODUCT = '0213514909' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-311' SUMMARY = 'Duis bibendum.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'EALYWEN' TYPE = 'EPIC' AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220112'
+SOLUTION = 'UNRESOLVED' PRIORITY = '24' PRODUCT = '0759240421' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-854' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'EALYWEN' TYPE = 'USERSTORY' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220409'
+SOLUTION = 'UNRESOLVED' PRIORITY = '74' PRODUCT = '0869273579' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-934' SUMMARY = 'Nulla ac enim.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'EALYWEN' TYPE = 'BUG' AUTHOR = 'ELARAWAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220713'
+SOLUTION = 'UNRESOLVED' PRIORITY = '22' PRODUCT = '0162895675' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-137' SUMMARY = 'Duis at velit eu est congue elementum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'EALYWEN' TYPE = 'BUG' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230217' SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0441008003' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-573' SUMMARY = 'Morbi non quam nec dui luctus rutrum.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'EALYWEN' TYPE = 'FEATURE' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221223' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0902502997' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-146' SUMMARY = 'Nullam varius.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'EALYWEN' TYPE = 'EPIC' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220126'
+SOLUTION = 'UNRESOLVED' PRIORITY = '11' PRODUCT = '0269112738' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-114' SUMMARY = 'Phasellus in felis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'EALYWEN' TYPE = 'FEATURE' AUTHOR = 'POGILVIE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220529'
+SOLUTION = 'UNRESOLVED' PRIORITY = '42' PRODUCT = '0597263976' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-728' SUMMARY = 'Sed accumsan felis.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'EALYWEN' TYPE = 'FEATURE' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220911'
+SOLUTION = 'UNRESOLVED' PRIORITY = '31' PRODUCT = '0581046597' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-714' SUMMARY = 'Morbi non lectus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'SUBTASK' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221007'
+SOLUTION = 'UNRESOLVED' PRIORITY = '74' PRODUCT = '0093618731' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-812' SUMMARY = 'Pellentesque eget nunc.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'EPIC' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20210923' SOLUTION = 'UNRESOLVED' PRIORITY = '74' PRODUCT = '0017600556' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-940' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'BUG' AUTHOR = 'CPROBACK'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211008' SOLUTION = 'UNRESOLVED' PRIORITY = '82' PRODUCT = '0919081657' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-489' SUMMARY = 'Duis at velit eu est congue elementum.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'SUBTASK' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220215' SOLUTION = 'DONE' PRIORITY = '13' PRODUCT = '0625517530' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-887' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'BUG' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211029' SOLUTION = 'UNRESOLVED' PRIORITY = '96' PRODUCT = '0954260256' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-327' SUMMARY = 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'USERSTORY'
+AUTHOR = 'KPREVOST' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220308' SOLUTION = 'UNRESOLVED' PRIORITY = '63' PRODUCT = '0465391350' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-558' SUMMARY = 'Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'TASK' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220309' SOLUTION = 'WONTFIX' PRIORITY = '53' PRODUCT = '0280047349' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-888' SUMMARY = 'In blandit ultrices enim.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'USERSTORY' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221016' SOLUTION = 'DUPLICATE' PRIORITY = '3' PRODUCT = '0505325593' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-34' SUMMARY = 'Mauris lacinia sapien quis libero.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'EPIC' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211219' SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0234229492' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-138' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'EBIASIOLI' TYPE = 'FEATURE' AUTHOR = 'ZMEADERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221114' SOLUTION = 'UNRESOLVED' PRIORITY = '74' PRODUCT = '0583490425' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-88' SUMMARY = 'Nulla ac enim.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'EDONAGHY' TYPE = 'FEATURE' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220222'
+SOLUTION = 'DONE' PRIORITY = '26' PRODUCT = '0100428216' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-25' SUMMARY = 'Aenean auctor gravida sem.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'EDONAGHY' TYPE = 'USERSTORY' AUTHOR = 'CBISHELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211220' SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0344405119' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-789' SUMMARY = 'Fusce posuere felis sed lacus.' STATUS = 'TEST' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'EDONAGHY' TYPE = 'BUG' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220904' SOLUTION = 'DONE' PRIORITY = '95' PRODUCT = '0088356427' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-217' SUMMARY = 'Donec ut dolor.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'EDONAGHY' TYPE = 'TASK' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220226'
+SOLUTION = 'UNRESOLVED' PRIORITY = '91' PRODUCT = '0857600270' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-782' SUMMARY = 'Duis ac nibh.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'EDONAGHY' TYPE = 'TASK' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211227'
+SOLUTION = 'DUPLICATE' PRIORITY = '86' PRODUCT = '0583216426' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-638' SUMMARY = 'Nullam molestie nibh in lectus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'EDONAGHY' TYPE = 'USERSTORY' AUTHOR = 'LDRUMMOND' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220614' SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0123351404' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-296' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'EDONAGHY' TYPE = 'BUG' AUTHOR = 'MD''AGUANNO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221203' SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0096980729' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-124' SUMMARY = 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'EDONAGHY' TYPE = 'SUBTASK' AUTHOR = 'MGLASHEEN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230202' SOLUTION = 'UNRESOLVED' PRIORITY = '59' PRODUCT = '0186369360' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-893' SUMMARY = 'Quisque id justo sit amet sapien dignissim vestibulum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'SUBTASK' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220101' SOLUTION = 'UNRESOLVED' PRIORITY = '60' PRODUCT = '0712708171' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-295' SUMMARY = 'Maecenas tincidunt lacus at velit.' STATUS = 'TEST' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'EPIC' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230325' SOLUTION = 'DONE' PRIORITY = '99' PRODUCT = '0312609516' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-14' SUMMARY = 'Morbi vel lectus in quam fringilla rhoncus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'EPIC' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220122' SOLUTION = 'UNRESOLVED' PRIORITY = '20' PRODUCT = '0476355680' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-99' SUMMARY = 'Phasellus in felis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'SUBTASK' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211101'
+SOLUTION = 'UNRESOLVED' PRIORITY = '96' PRODUCT = '0428115887' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-24' SUMMARY = 'Donec vitae nisi.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'USERSTORY' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211109'
+SOLUTION = 'CANTREPOR' PRIORITY = '65' PRODUCT = '0426549837' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-894' SUMMARY = 'Mauris lacinia sapien quis libero.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'SUBTASK' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220826' SOLUTION = 'UNRESOLVED' PRIORITY = '4' PRODUCT = '0119653067' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-829' SUMMARY = 'In est risus, auctor sed, tristique in, tempus sit amet, sem.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'SUBTASK' AUTHOR = 'JKARADZAS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221001' SOLUTION = 'UNRESOLVED' PRIORITY = '73' PRODUCT = '0027890747' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-723' SUMMARY = 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'USERSTORY' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211018' SOLUTION = 'UNRESOLVED' PRIORITY = '10' PRODUCT = '0515120792' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-43' SUMMARY = 'Aenean fermentum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'USERSTORY' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211209'
+SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0089490109' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-823' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'BUG' AUTHOR = 'LMILLETT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211116' SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0176875079' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-60' SUMMARY = 'Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.' STATUS = 'CANCELED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'EPIC' AUTHOR = 'MNOTON'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220313' SOLUTION = 'WONTFIX' PRIORITY = '53' PRODUCT = '0638626256' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-660' SUMMARY = 'Aenean sit amet justo.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'EGODMAR' TYPE = 'BUG' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220425'
+SOLUTION = 'UNRESOLVED' PRIORITY = '57' PRODUCT = '0293457517' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-642' SUMMARY = 'Morbi porttitor lorem id ligula.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'ELARAWAY' TYPE = 'FEATURE' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220330' SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0134808340' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-691' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Donec pharetra, magna vestibulum' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'ELARAWAY'
+TYPE = 'USERSTORY' AUTHOR = 'CTREMATHACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220521' SOLUTION = 'UNRESOLVED' PRIORITY = '70' PRODUCT = '0924096629' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-704' SUMMARY = 'Aenean fermentum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'ELARAWAY' TYPE = 'BUG' AUTHOR = 'EDONAGHY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211016'
+SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0088323224' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-198' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'ELARAWAY' TYPE = 'SUBTASK' AUTHOR = 'GKIWITZ' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220403' SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0234390962' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-938' SUMMARY = 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'ELARAWAY' TYPE = 'BUG' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221127' SOLUTION = 'UNRESOLVED' PRIORITY = '37' PRODUCT = '0469813998' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-476' SUMMARY = 'Morbi vel lectus in quam fringilla rhoncus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'ELARAWAY' TYPE = 'EPIC' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220210' SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0057579680' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-319' SUMMARY = 'Phasellus in felis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'ELARAWAY' TYPE = 'SUBTASK' AUTHOR = 'MKAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220529'
+SOLUTION = 'UNRESOLVED' PRIORITY = '24' PRODUCT = '0980189469' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-414' SUMMARY = 'Duis at velit eu est congue elementum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'FDESHON' TYPE = 'TASK' AUTHOR = 'CBENTHAM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220610' SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0611710486' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-490' SUMMARY = 'Curabitur convallis.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'FDESHON' TYPE = 'EPIC' AUTHOR = 'DBRAMICH' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220316'
+SOLUTION = 'UNRESOLVED' PRIORITY = '90' PRODUCT = '0587560297' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-848' SUMMARY = 'Duis at velit eu est congue elementum.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'FDESHON' TYPE = 'FEATURE' AUTHOR = 'FMOWSDELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220724' SOLUTION = 'UNRESOLVED' PRIORITY = '16' PRODUCT = '0022396067' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-378' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'FDESHON' TYPE = 'FEATURE' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230203' SOLUTION = 'UNRESOLVED' PRIORITY = '73' PRODUCT = '0769404339' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-710' SUMMARY = 'Donec quis orci eget orci vehicula condimentum.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'FDESHON' TYPE = 'SUBTASK' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220828' SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0441946978' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-768' SUMMARY = 'Donec quis orci eget orci vehicula condimentum.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'FDESHON' TYPE = 'FEATURE' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220611' SOLUTION = 'DONE' PRIORITY = '27' PRODUCT = '0599709852' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-50' SUMMARY = 'Integer tincidunt ante vel ipsum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FDESHON' TYPE = 'BUG' AUTHOR = 'KPREVOST' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230210' SOLUTION = 'UNRESOLVED' PRIORITY = '9' PRODUCT = '0527857683' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-646' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FDESHON' TYPE = 'USERSTORY' AUTHOR = 'TGEISTBECK' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211104' SOLUTION = 'UNRESOLVED' PRIORITY = '7' PRODUCT = '0015886405' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-549' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'FDESHON' TYPE = 'BUG' AUTHOR = 'TJERROMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230202' SOLUTION = 'UNRESOLVED' PRIORITY = '78' PRODUCT = '0720164472' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-153' SUMMARY = 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FLEMERLE' TYPE = 'BUG'
+AUTHOR = 'EALYWEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220805' SOLUTION = 'UNRESOLVED' PRIORITY = '25' PRODUCT = '0018371036' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-939' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'FLEMERLE' TYPE = 'BUG' AUTHOR = 'ELARAWAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220213'
+SOLUTION = 'UNRESOLVED' PRIORITY = '16' PRODUCT = '0612368197' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-612' SUMMARY = 'Donec quis orci eget orci vehicula condimentum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FLEMERLE' TYPE = 'BUG' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221102' SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0368952319' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-468' SUMMARY = 'Morbi ut odio.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FLEMERLE' TYPE = 'USERSTORY' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211222'
+SOLUTION = 'UNRESOLVED' PRIORITY = '32' PRODUCT = '0342525835' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-632' SUMMARY = 'In eleifend quam a odio.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FLEMERLE' TYPE = 'SUBTASK' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230319'
+SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0736386236' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-849' SUMMARY = 'Donec semper sapien a libero.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FLEMERLE' TYPE = 'BUG' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211218' SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0134259601' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-981' SUMMARY = 'Vestibulum rutrum rutrum neque.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FLEMERLE' TYPE = 'TASK' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221026' SOLUTION = 'UNRESOLVED' PRIORITY = '38' PRODUCT = '0642511870' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-410' SUMMARY = 'Curabitur convallis.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'FLEMERLE' TYPE = 'TASK' AUTHOR = 'SSHANAHAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220531'
+SOLUTION = 'UNRESOLVED' PRIORITY = '87' PRODUCT = '0140548370' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-273' SUMMARY = 'In congue.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D000030577' TYPE = 'USERSTORY' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220320'
+SOLUTION = 'ASDESIGNED' PRIORITY = '70' PRODUCT = '0073087894' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-834' SUMMARY = 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'BUG' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220815' SOLUTION = 'DONE' PRIORITY = '91' PRODUCT = '0282053292' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-270' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'USERSTORY' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230305' SOLUTION = 'UNRESOLVED' PRIORITY = '75' PRODUCT = '0005886378' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-907' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'TEST' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'USERSTORY' AUTHOR = 'EALYWEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220423' SOLUTION = 'DONE' PRIORITY = '37' PRODUCT = '0546381189' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-996' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'SUBTASK' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230106' SOLUTION = 'DONE' PRIORITY = '12' PRODUCT = '0465116728' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-148' SUMMARY = 'Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'EPIC' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221127' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0816353109' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-444' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'USERSTORY' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220420' SOLUTION = 'UNRESOLVED' PRIORITY = '44' PRODUCT = '0805293207' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-279' SUMMARY = 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'SUBTASK' AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211104' SOLUTION = 'UNRESOLVED' PRIORITY = '42' PRODUCT = '0255987389' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-348' SUMMARY = 'Proin eu mi.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'USERSTORY' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220111'
+SOLUTION = 'UNRESOLVED' PRIORITY = '66' PRODUCT = '0057494084' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-179' SUMMARY = 'Suspendisse accumsan tortor quis turpis.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'FEATURE' AUTHOR = 'SIVANYUTIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220323' SOLUTION = 'DONE' PRIORITY = '96' PRODUCT = '0642241092' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-184' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'SUBTASK' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221103' SOLUTION = 'UNRESOLVED' PRIORITY = '55' PRODUCT = '0131992831' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-702' SUMMARY = 'Morbi ut odio.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FMOWSDELL' TYPE = 'BUG' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221129'
+SOLUTION = 'UNRESOLVED' PRIORITY = '92' PRODUCT = '0447862661' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-134' SUMMARY = 'In quis justo.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'JBRANDEIS' TYPE = 'TASK' AUTHOR = 'MKAY' CHANGED_AT = '20230202154302.8589780 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221208'
+SOLUTION = 'UNRESOLVED' PRIORITY = '59' PRODUCT = '0968126575' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-895' SUMMARY = 'In est risus, auctor sed, tristique in, tempus sit amet, sem.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'FPATIFIELD' TYPE = 'SUBTASK' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220705' SOLUTION = 'CANTREPOR' PRIORITY = '17' PRODUCT = '0682406251' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-763' SUMMARY = 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FPATIFIELD' TYPE = 'EPIC' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220128' SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0246620715' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-667' SUMMARY = 'Phasellus sit amet erat.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FPATIFIELD' TYPE = 'BUG' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230212' SOLUTION = 'DONE' PRIORITY = '25' PRODUCT = '0274531826' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-799' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'FPATIFIELD' TYPE = 'SUBTASK' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220815' SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0209747934' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-432' SUMMARY = 'Nulla justo.' STATUS = 'DELETED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'D000042034' TYPE = 'SUBTASK' AUTHOR = 'BGUENY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220128'
+SOLUTION = 'UNRESOLVED' PRIORITY = '16' PRODUCT = '0237417871' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-746' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FPATIFIELD' TYPE = 'BUG' AUTHOR = 'LMILLETT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220721' SOLUTION = 'UNRESOLVED' PRIORITY = '87' PRODUCT = '0174412074' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-250' SUMMARY = 'Donec vitae nisi.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'USERSTORY' AUTHOR = 'AGERGUS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220705' SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0758954168' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-935' SUMMARY = 'Suspendisse potenti.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'FEATURE' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220110'
+SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0617928269' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-240' SUMMARY = 'In est risus, auctor sed, tristique in, tempus sit amet, sem.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'EPIC' AUTHOR = 'EDONAGHY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220809' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0126277204' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-307' SUMMARY = 'Pellentesque eget nunc.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'SUBTASK' AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220207' SOLUTION = 'UNRESOLVED' PRIORITY = '24' PRODUCT = '0773772559' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-164' SUMMARY = 'Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'USERSTORY'
+AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211117' SOLUTION = 'UNRESOLVED' PRIORITY = '46' PRODUCT = '0223302241' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-280' SUMMARY = 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'FEATURE'
+AUTHOR = 'KSOALL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220928' SOLUTION = 'UNRESOLVED' PRIORITY = '14' PRODUCT = '0671038037' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-172' SUMMARY = 'Donec ut mauris eget massa tempor convallis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'FEATURE' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230306' SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0596080153' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-332' SUMMARY = 'Etiam vel augue.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DB17460' TYPE = 'BUG' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220501'
+SOLUTION = 'UNRESOLVED' PRIORITY = '43' PRODUCT = '0784852895' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-473' SUMMARY = 'Integer a nibh.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'BUG' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220602'
+SOLUTION = 'UNRESOLVED' PRIORITY = '8' PRODUCT = '0136750158' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-335' SUMMARY = 'Morbi non lectus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'TASK' AUTHOR = 'POGILVIE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221029'
+SOLUTION = 'UNRESOLVED' PRIORITY = '25' PRODUCT = '0985744572' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-980' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'EPIC' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220623' SOLUTION = 'UNRESOLVED' PRIORITY = '37' PRODUCT = '0619439194' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-529' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'BUG' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221002'
+SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0037940840' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-859' SUMMARY = 'Praesent lectus.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'BUG' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220412'
+SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0218806559' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-552' SUMMARY = 'Etiam pretium iaculis justo.' STATUS = 'CANCELED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'FPEACHMENT' TYPE = 'SUBTASK' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211010' SOLUTION = 'WONTFIX' PRIORITY = '6' PRODUCT = '0431606073' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-318' SUMMARY = 'Aenean sit amet justo.' STATUS = 'RETEST' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'EPIC' AUTHOR = 'BLAMANBY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220808'
+SOLUTION = 'DONE' PRIORITY = '88' PRODUCT = '0467682625' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-820' SUMMARY = 'Morbi non lectus.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'FEATURE' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211012'
+SOLUTION = 'UNRESOLVED' PRIORITY = '15' PRODUCT = '0575765907' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-19' SUMMARY = 'Proin risus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'FEATURE' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230202'
+SOLUTION = 'UNRESOLVED' PRIORITY = '88' PRODUCT = '0992039185' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-69' SUMMARY = 'Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.' STATUS = 'RETEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'USERSTORY' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220308' SOLUTION = 'DONE' PRIORITY = '80' PRODUCT = '0580228167' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-637' SUMMARY = 'Suspendisse ornare consequat lectus.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'SUBTASK' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220826' SOLUTION = 'DONE' PRIORITY = '51' PRODUCT = '0340603841' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-644' SUMMARY = 'Morbi ut odio.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'BUG' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220323'
+SOLUTION = 'UNRESOLVED' PRIORITY = '90' PRODUCT = '0415153556' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-207' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'EPIC' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230102' SOLUTION = 'DONE' PRIORITY = '47' PRODUCT = '0176485768' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-948' SUMMARY = 'Vestibulum rutrum rutrum neque.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'SUBTASK' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220206' SOLUTION = 'ASDESIGNED' PRIORITY = '37' PRODUCT = '0770939631' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-106' SUMMARY = 'Sed accumsan felis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'EPIC' AUTHOR = 'OMCGRAFFIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211118'
+SOLUTION = 'UNRESOLVED' PRIORITY = '51' PRODUCT = '0634381134' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-943' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'TASK' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220630' SOLUTION = 'UNRESOLVED' PRIORITY = '26' PRODUCT = '0703818874' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-886' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Donec pharetra, magna vestibulum' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GCARLONE'
+TYPE = 'BUG' AUTHOR = 'SIVANYUTIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220624' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0864913956' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-971' SUMMARY = 'Nulla tempus.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'USERSTORY' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220629'
+SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0854188058' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-913' SUMMARY = 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'GCARLONE' TYPE = 'TASK' AUTHOR = 'SSHANAHAN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230330' SOLUTION = 'UNRESOLVED' PRIORITY = '27' PRODUCT = '0474679055' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-433' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'BUG' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220321' SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0354926964' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-287' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'BUG' AUTHOR = 'CBENTHAM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220305' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0001514383' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-384' SUMMARY = 'Curabitur convallis.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'EPIC' AUTHOR = 'CHOOLAGHAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220131'
+SOLUTION = 'UNRESOLVED' PRIORITY = '51' PRODUCT = '0605328627' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-463' SUMMARY = 'Praesent blandit.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'FEATURE' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211109'
+SOLUTION = 'UNRESOLVED' PRIORITY = '53' PRODUCT = '0798306718' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-902' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'BUG' AUTHOR = 'FPATIFIELD' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221222' SOLUTION = 'UNRESOLVED' PRIORITY = '47' PRODUCT = '0018229039' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-76' SUMMARY = 'Curabitur in libero ut massa volutpat convallis.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'FEATURE' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230223' SOLUTION = 'WONTFIX' PRIORITY = '83' PRODUCT = '0965242482' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-461' SUMMARY = 'Morbi non quam nec dui luctus rutrum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'EPIC' AUTHOR = 'LDRUMMOND' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220824' SOLUTION = 'UNRESOLVED' PRIORITY = '61' PRODUCT = '0374351033' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-867' SUMMARY = 'Vestibulum ac est lacinia nisi venenatis tristique.' STATUS = 'CANCELED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'FEATURE' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220220' SOLUTION = 'CANTREPOR' PRIORITY = '5' PRODUCT = '0822282515' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-392' SUMMARY = 'Praesent lectus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'TASK' AUTHOR = 'ZMEADERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220713'
+SOLUTION = 'UNRESOLVED' PRIORITY = '7' PRODUCT = '0681041827' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-586' SUMMARY = 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'TASK' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230322' SOLUTION = 'UNRESOLVED' PRIORITY = '36' PRODUCT = '0064849449' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-936' SUMMARY = 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'EPIC' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230110' SOLUTION = 'DONE' PRIORITY = '4' PRODUCT = '0451430808' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-550' SUMMARY = 'Nulla nisl.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'USERSTORY' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230103'
+SOLUTION = 'UNRESOLVED' PRIORITY = '33' PRODUCT = '0151540653' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-58' SUMMARY = 'Aliquam erat volutpat.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'SUBTASK' AUTHOR = 'PCOLING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220826'
+SOLUTION = 'UNRESOLVED' PRIORITY = '24' PRODUCT = '0798407570' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-36' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'FEATURE' AUTHOR = 'PO''LOONEY'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211210' SOLUTION = 'UNRESOLVED' PRIORITY = '96' PRODUCT = '0840223056' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-96' SUMMARY = 'Pellentesque viverra pede ac diam.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'BUG' AUTHOR = 'RFRANZOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220426' SOLUTION = 'UNRESOLVED' PRIORITY = '86' PRODUCT = '0858523099' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-932' SUMMARY = 'Ut at dolor quis odio consequat varius.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'SUBTASK' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211206' SOLUTION = 'UNRESOLVED' PRIORITY = '28' PRODUCT = '0980982510' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-901' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'BUG' AUTHOR = 'VTWYFORD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230125'
+SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0017115169' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-931' SUMMARY = 'Maecenas pulvinar lobortis est.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GGALLACCIO' TYPE = 'USERSTORY' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230307' SOLUTION = 'UNRESOLVED' PRIORITY = '77' PRODUCT = '0866062647' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-344' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'GHICKINBOTTO' TYPE = 'TASK' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230327'
+SOLUTION = 'UNRESOLVED' PRIORITY = '55' PRODUCT = '0549878750' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-591' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'GHICKINBOTTO' TYPE = 'SUBTASK' AUTHOR = 'DBRAMICH' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220821' SOLUTION = 'UNRESOLVED' PRIORITY = '52' PRODUCT = '0699037912' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-312' SUMMARY = 'Morbi non quam nec dui luctus rutrum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'GHICKINBOTTO' TYPE = 'FEATURE' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221130' SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0630004836' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-852' SUMMARY = 'Praesent lectus.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GHICKINBOTTO' TYPE = 'SUBTASK' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220121'
+SOLUTION = 'DONE' PRIORITY = '67' PRODUCT = '0521189269' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-323' SUMMARY = 'Ut at dolor quis odio consequat varius.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'GHICKINBOTTO' TYPE = 'BUG' AUTHOR = 'LPEPPER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220304' SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0000269021' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-304' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GHICKINBOTTO' TYPE = 'FEATURE' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221013'
+SOLUTION = 'UNRESOLVED' PRIORITY = '68' PRODUCT = '0882036016' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-541' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GHICKINBOTTO' TYPE = 'FEATURE' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221104' SOLUTION = 'UNRESOLVED' PRIORITY = '38' PRODUCT = '0477314151' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-157' SUMMARY = 'Praesent blandit.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GHICKINBOTTO' TYPE = 'EPIC' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220915'
+SOLUTION = 'DONE' PRIORITY = '54' PRODUCT = '0759117891' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-512' SUMMARY = 'Integer non velit.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GKIWITZ' TYPE = 'USERSTORY' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211125'
+SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0407590609' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-110' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'GKIWITZ' TYPE = 'TASK' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220109' SOLUTION = 'UNRESOLVED' PRIORITY = '19' PRODUCT = '0974304657' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-445' SUMMARY = 'Nam nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GKIWITZ' TYPE = 'USERSTORY' AUTHOR = 'LMILLETT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220612'
+SOLUTION = 'UNRESOLVED' PRIORITY = '20' PRODUCT = '0220393820' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-633' SUMMARY = 'Morbi vel lectus in quam fringilla rhoncus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GKIWITZ' TYPE = 'BUG' AUTHOR = 'LPEPPER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220302' SOLUTION = 'UNRESOLVED' PRIORITY = '32' PRODUCT = '0484211163' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-84' SUMMARY = 'Maecenas tincidunt lacus at velit.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GKIWITZ' TYPE = 'TASK' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221028' SOLUTION = 'CANTREPOR' PRIORITY = '80' PRODUCT = '0304875341' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-170' SUMMARY = 'Morbi non lectus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GKIWITZ' TYPE = 'USERSTORY' AUTHOR = 'MNOTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220214'
+SOLUTION = 'UNRESOLVED' PRIORITY = '8' PRODUCT = '0155853785' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-677' SUMMARY = 'Aenean lectus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'SUBTASK' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211123'
+SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0735504258' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-479' SUMMARY = 'In quis justo.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'FEATURE' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220909'
+SOLUTION = 'DONE' PRIORITY = '65' PRODUCT = '0860894394' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-195' SUMMARY = 'Proin interdum mauris non ligula pellentesque ultrices.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'SUBTASK' AUTHOR = 'BGUENY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220404' SOLUTION = 'UNRESOLVED' PRIORITY = '54' PRODUCT = '0223750318' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-658' SUMMARY = 'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'SUBTASK' AUTHOR = 'CFEATHERSTON'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220430' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0396283597' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-48' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'USERSTORY' AUTHOR = 'CODGERS'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220524' SOLUTION = 'DONE' PRIORITY = '30' PRODUCT = '0281786745' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-498' SUMMARY = 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'TASK' AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221210' SOLUTION = 'UNRESOLVED' PRIORITY = '98' PRODUCT = '0130067632' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-890' SUMMARY = 'Phasellus id sapien in sapien iaculis congue.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'EPIC' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220607' SOLUTION = 'UNRESOLVED' PRIORITY = '44' PRODUCT = '0000494214' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-572' SUMMARY = 'Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'FEATURE' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220411' SOLUTION = 'WONTFIX' PRIORITY = '1' PRODUCT = '0943317759' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-942' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'EPIC' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20210926' SOLUTION = 'ASDESIGNED' PRIORITY = '8' PRODUCT = '0066969378' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-363' SUMMARY = 'Donec posuere metus vitae ipsum.' STATUS = 'RETEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'BUG' AUTHOR = 'SPRENTY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221005' SOLUTION = 'DONE' PRIORITY = '20' PRODUCT = '0727657539' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-248' SUMMARY = 'In congue.' STATUS = 'CANCELED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'SUBTASK' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211208'
+SOLUTION = 'RTFM' PRIORITY = '88' PRODUCT = '0007705133' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-369' SUMMARY = 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'GPITKEATHLEY' TYPE = 'SUBTASK' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211203' SOLUTION = 'UNRESOLVED' PRIORITY = '68' PRODUCT = '0140720846' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-478' SUMMARY = 'Donec dapibus.' STATUS = 'TEST' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'HGALLEAR' TYPE = 'USERSTORY' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221122'
+SOLUTION = 'DONE' PRIORITY = '84' PRODUCT = '0632879471' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-53' SUMMARY = 'Nullam varius.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'HGALLEAR' TYPE = 'USERSTORY' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220810'
+SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0859973615' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-818' SUMMARY = 'Suspendisse accumsan tortor quis turpis.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HGALLEAR' TYPE = 'USERSTORY' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220712' SOLUTION = 'UNRESOLVED' PRIORITY = '79' PRODUCT = '0171576985' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-252' SUMMARY = 'Donec quis orci eget orci vehicula condimentum.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'HGALLEAR' TYPE = 'USERSTORY' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220215' SOLUTION = 'UNRESOLVED' PRIORITY = '76' PRODUCT = '0718087186' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-929' SUMMARY = 'Mauris ullamcorper purus sit amet nulla.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HGALLEAR' TYPE = 'TASK' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211116' SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0565076629' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-395' SUMMARY = 'Donec vitae nisi.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'HGALLEAR' TYPE = 'EPIC' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230111'
+SOLUTION = 'UNRESOLVED' PRIORITY = '73' PRODUCT = '0968798868' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-30' SUMMARY = 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'HGALLEAR' TYPE = 'FEATURE'
+AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220115' SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0458365469' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-989' SUMMARY = 'Quisque porta volutpat erat.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'HGALLEAR' TYPE = 'TASK' AUTHOR = 'RHUNTING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220604' SOLUTION = 'ASDESIGNED' PRIORITY = '96' PRODUCT = '0194080003' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-765' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Nulla dapibus dolor vel est.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HSICKERT' TYPE = 'USERSTORY'
+AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221030' SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0643333407' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-531' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'HSICKERT'
+TYPE = 'SUBTASK' AUTHOR = 'DBRAMICH' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220602' SOLUTION = 'UNRESOLVED' PRIORITY = '26' PRODUCT = '0674556762' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-738' SUMMARY = 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'HSICKERT' TYPE = 'FEATURE' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220714' SOLUTION = 'UNRESOLVED' PRIORITY = '63' PRODUCT = '0032393540' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-388' SUMMARY = 'In eleifend quam a odio.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HSICKERT' TYPE = 'USERSTORY' AUTHOR = 'FLEMERLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220921' SOLUTION = 'DUPLICATE' PRIORITY = '90' PRODUCT = '0434215353' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-809' SUMMARY = 'Vestibulum rutrum rutrum neque.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'HSICKERT' TYPE = 'FEATURE' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211107' SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0520377768' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-832' SUMMARY = 'Vivamus tortor.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'HSICKERT' TYPE = 'USERSTORY' AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211030'
+SOLUTION = 'UNRESOLVED' PRIORITY = '53' PRODUCT = '0470273695' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-328' SUMMARY = 'Phasellus id sapien in sapien iaculis congue.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'HSICKERT' TYPE = 'USERSTORY' AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220215' SOLUTION = 'UNRESOLVED' PRIORITY = '20' PRODUCT = '0073950648' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-753' SUMMARY = 'Etiam vel augue.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HSICKERT' TYPE = 'FEATURE' AUTHOR = 'SIVANYUTIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220522'
+SOLUTION = 'DONE' PRIORITY = '90' PRODUCT = '0189418017' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-656' SUMMARY = 'Praesent lectus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'HSICKERT' TYPE = 'FEATURE' AUTHOR = 'ZMEADERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220224'
+SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0138137929' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-819' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Nulla dapibus dolor vel est.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'TASK'
+AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220728' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0774882386' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-226' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'FEATURE' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230308' SOLUTION = 'UNRESOLVED' PRIORITY = '30' PRODUCT = '0714032662' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-299' SUMMARY = 'Ut at dolor quis odio consequat varius.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'BUG' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20210930' SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0079969906' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-972' SUMMARY = 'Proin at turpis a pede posuere nonummy.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'USERSTORY' AUTHOR = 'DBRAMICH' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211026' SOLUTION = 'UNRESOLVED' PRIORITY = '63' PRODUCT = '0721499894' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-611' SUMMARY = 'Vestibulum ac est lacinia nisi venenatis tristique.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'BUG' AUTHOR = 'EDONAGHY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211114' SOLUTION = 'UNRESOLVED' PRIORITY = '73' PRODUCT = '0453986684' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-464' SUMMARY = 'Praesent blandit lacinia erat.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'SUBTASK' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221022' SOLUTION = 'UNRESOLVED' PRIORITY = '54' PRODUCT = '0520961670' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-666' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'RETEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'TASK' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221124' SOLUTION = 'DONE' PRIORITY = '62' PRODUCT = '0450012657' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-225' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D0000307552' TYPE = 'USERSTORY' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211205' SOLUTION = 'UNRESOLVED' PRIORITY = '47' PRODUCT = '0257043734' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-652' SUMMARY = 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'SUBTASK' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230209' SOLUTION = 'UNRESOLVED' PRIORITY = '30' PRODUCT = '0354983123' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-806' SUMMARY = 'Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'BUG' AUTHOR = 'OMCGRAFFIN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230108' SOLUTION = 'UNRESOLVED' PRIORITY = '99' PRODUCT = '0320175226' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-260' SUMMARY = 'In blandit ultrices enim.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'BUG' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220126'
+SOLUTION = 'UNRESOLVED' PRIORITY = '75' PRODUCT = '0091212095' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-866' SUMMARY = 'Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'TASK' AUTHOR = 'TGEISTBECK'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211206' SOLUTION = 'UNRESOLVED' PRIORITY = '40' PRODUCT = '0470330639' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-169' SUMMARY = 'Pellentesque viverra pede ac diam.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'EPIC' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211224' SOLUTION = 'ASDESIGNED' PRIORITY = '46' PRODUCT = '0136309994' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-377' SUMMARY = 'Nullam porttitor lacus at turpis.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'BUG' AUTHOR = 'ZMEADERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220519' SOLUTION = 'WONTFIX' PRIORITY = '96' PRODUCT = '0807848351' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-906' SUMMARY = 'Nunc nisl.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'HWARDINGTON' TYPE = 'SUBTASK' AUTHOR = 'AGERGUS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221121'
+SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0440924339' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-900' SUMMARY = 'Proin eu mi.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'HWARDINGTON' TYPE = 'TASK' AUTHOR = 'CBISHELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211028'
+SOLUTION = 'UNRESOLVED' PRIORITY = '92' PRODUCT = '0735582788' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-571' SUMMARY = 'Mauris sit amet eros.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'HWARDINGTON' TYPE = 'USERSTORY' AUTHOR = 'FLEMERLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220414' SOLUTION = 'UNRESOLVED' PRIORITY = '22' PRODUCT = '0103984789' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-680' SUMMARY = 'Aliquam erat volutpat.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HWARDINGTON' TYPE = 'FEATURE' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221017'
+SOLUTION = 'UNRESOLVED' PRIORITY = '13' PRODUCT = '0154289711' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-856' SUMMARY = 'Nunc rhoncus dui vel sem.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HWARDINGTON' TYPE = 'TASK' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221028'
+SOLUTION = 'CANTREPOR' PRIORITY = '29' PRODUCT = '0380086918' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-13' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'JBYFIELD' TYPE = 'SUBTASK' AUTHOR = 'FPATIFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220329' SOLUTION = 'DONE' PRIORITY = '11' PRODUCT = '0919450998' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-688' SUMMARY = 'Curabitur in libero ut massa volutpat convallis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JBYFIELD' TYPE = 'TASK' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220220' SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0777915993' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-194' SUMMARY = 'Morbi porttitor lorem id ligula.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'JBYFIELD' TYPE = 'BUG' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220925' SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0532966664' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-33' SUMMARY = 'Nam tristique tortor eu pede.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JBYFIELD' TYPE = 'USERSTORY' AUTHOR = 'POGILVIE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220905' SOLUTION = 'UNRESOLVED' PRIORITY = '71' PRODUCT = '0705400704' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-862' SUMMARY = 'Vivamus tortor.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'JBYFIELD' TYPE = 'SUBTASK' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220821'
+SOLUTION = 'UNRESOLVED' PRIORITY = '97' PRODUCT = '0369124657' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-537' SUMMARY = 'Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'SUBTASK'
+AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230128' SOLUTION = 'UNRESOLVED' PRIORITY = '33' PRODUCT = '0792812392' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-359' SUMMARY = 'Etiam faucibus cursus urna.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'BUG' AUTHOR = 'CATTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220929'
+SOLUTION = 'UNRESOLVED' PRIORITY = '13' PRODUCT = '0955126296' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-626' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'SUBTASK' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211211' SOLUTION = 'DONE' PRIORITY = '4' PRODUCT = '0793059009' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-993' SUMMARY = 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'BUG' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211012' SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0854327387' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-685' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Donec pharetra, magna vestibulum' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JDAAL'
+TYPE = 'USERSTORY' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230326' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0195906246' ESTIMATED_EFFORT = '0.00 '  )
+).
+data(tasks3) = VALUE tt_zbc_tasks(
+( CLIENT = '100' TASK_KEY = 'BW-139' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Donec pharetra, magna vestibulum' STATUS = 'DELETED' PROJECT = 'dasdfdfgdg' DESCRIPTION = '' ASSIGNEE = 'D0000472203'
+TYPE = 'SUBTASK' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221108' SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0090979178' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-379' SUMMARY = 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.' STATUS = 'RETEST' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'USERSTORY' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220728' SOLUTION = 'DONE' PRIORITY = '14' PRODUCT = '0604296387' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-569' SUMMARY = 'Nullam porttitor lacus at turpis.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'FEATURE' AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230204' SOLUTION = 'UNRESOLVED' PRIORITY = '85' PRODUCT = '0134659362' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-749' SUMMARY = 'Nam dui.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'USERSTORY' AUTHOR = 'LMILLETT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211226'
+SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0484667893' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-159' SUMMARY = 'Duis at velit eu est congue elementum.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'EPIC' AUTHOR = 'MD''AGUANNO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220404' SOLUTION = 'UNRESOLVED' PRIORITY = '68' PRODUCT = '0667020637' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-144' SUMMARY = 'Vestibulum ac est lacinia nisi venenatis tristique.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'BUG' AUTHOR = 'OMCGRAFFIN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221113' SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0076177275' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-161' SUMMARY = 'Nam tristique tortor eu pede.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'SUBTASK' AUTHOR = 'POGILVIE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220408' SOLUTION = 'UNRESOLVED' PRIORITY = '90' PRODUCT = '0838157318' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-912' SUMMARY = 'Aliquam non mauris.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JDAAL' TYPE = 'TASK' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220206'
+SOLUTION = 'UNRESOLVED' PRIORITY = '53' PRODUCT = '0102993354' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-451' SUMMARY = 'Fusce posuere felis sed lacus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'BUG' AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211115' SOLUTION = 'UNRESOLVED' PRIORITY = '1' PRODUCT = '0040994729' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-861' SUMMARY = 'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'EPIC' AUTHOR = 'BBREARLEY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220811' SOLUTION = 'UNRESOLVED' PRIORITY = '63' PRODUCT = '0270405262' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-744' SUMMARY = 'Morbi a ipsum.' STATUS = 'RETEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'TASK' AUTHOR = 'CATTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220117'
+SOLUTION = 'DONE' PRIORITY = '87' PRODUCT = '0782233767' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-590' SUMMARY = 'Maecenas rhoncus aliquam lacus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'BUG' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230104' SOLUTION = 'UNRESOLVED' PRIORITY = '75' PRODUCT = '0823326650' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-191' SUMMARY = 'Curabitur in libero ut massa volutpat convallis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'FEATURE' AUTHOR = 'CHOOLAGHAN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220519' SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0090599864' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-741' SUMMARY = 'Morbi ut odio.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'BUG' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220613'
+SOLUTION = 'UNRESOLVED' PRIORITY = '71' PRODUCT = '0287521572' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-923' SUMMARY = 'Duis mattis egestas metus.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'EPIC' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220911' SOLUTION = 'DONE' PRIORITY = '86' PRODUCT = '0473191175' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-522' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'EPIC' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211202' SOLUTION = 'UNRESOLVED' PRIORITY = '36' PRODUCT = '0338341582' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-655' SUMMARY = 'Sed ante.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'BUG' AUTHOR = 'MKAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220928'
+SOLUTION = 'UNRESOLVED' PRIORITY = '14' PRODUCT = '0541021825' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-80' SUMMARY = 'Nunc purus.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'USERSTORY' AUTHOR = 'PGRISENTHWAI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230209'
+SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0190458820' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-584' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'SUBTASK' AUTHOR = 'SANTONOPOULO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220215' SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0544968646' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-956' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'JEALLES' TYPE = 'SUBTASK' AUTHOR = 'TGEISTBECK' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211008' SOLUTION = 'DONE' PRIORITY = '70' PRODUCT = '0656345339' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-263' SUMMARY = 'Curabitur at ipsum ac tellus semper interdum.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'Poly' TYPE = 'FEATURE' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221217' SOLUTION = 'DONE' PRIORITY = '52' PRODUCT = '0269784372' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-708' SUMMARY = 'Fusce consequat.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'FEATURE' AUTHOR = 'AGERGUS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211211'
+SOLUTION = 'UNRESOLVED' PRIORITY = '88' PRODUCT = '0218051818' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-620' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'CANCELED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'BUG' AUTHOR = 'AHACHETTE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211010' SOLUTION = 'ASDESIGNED' PRIORITY = '85' PRODUCT = '0790772575' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-953' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Nulla dapibus dolor vel est.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'FEATURE'
+AUTHOR = 'CBENTHAM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220206' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0854754887' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-31' SUMMARY = 'Proin eu mi.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'FEATURE' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221101'
+SOLUTION = 'UNRESOLVED' PRIORITY = '66' PRODUCT = '0746084841' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-309' SUMMARY = 'Sed vel enim sit amet nunc viverra dapibus.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'FEATURE' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220316' SOLUTION = 'RTFM' PRIORITY = '53' PRODUCT = '0735066319' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-606' SUMMARY = 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'TASK' AUTHOR = 'DBLUNT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220927' SOLUTION = 'UNRESOLVED' PRIORITY = '42' PRODUCT = '0931836161' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-962' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'BUG' AUTHOR = 'DBLUNT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221204' SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0362178847' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-910' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'TASK' AUTHOR = 'DBRAMICH' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211212' SOLUTION = 'DONE' PRIORITY = '88' PRODUCT = '0745786851' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-155' SUMMARY = 'Aenean sit amet justo.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'BUG' AUTHOR = 'JKARADZAS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221229'
+SOLUTION = 'UNRESOLVED' PRIORITY = '10' PRODUCT = '0063326892' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-605' SUMMARY = 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'SUBTASK' AUTHOR = 'JKARADZAS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230330' SOLUTION = 'UNRESOLVED' PRIORITY = '47' PRODUCT = '0850308838' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-864' SUMMARY = 'Nulla suscipit ligula in lacus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'USERSTORY' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220502' SOLUTION = 'UNRESOLVED' PRIORITY = '15' PRODUCT = '0721714208' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-903' SUMMARY = 'Integer ac leo.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'BUG' AUTHOR = 'LPEPPER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220812'
+SOLUTION = 'DONE' PRIORITY = '59' PRODUCT = '0675131879' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-241' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Nulla dapibus dolor vel est.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS'
+TYPE = 'USERSTORY' AUTHOR = 'TGEISTBECK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220531' SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0762046995' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-466' SUMMARY = 'Morbi ut odio.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'USERSTORY' AUTHOR = 'TGEISTBECK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221008'
+SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0192002827' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-104' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'EPIC' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221222' SOLUTION = 'UNRESOLVED' PRIORITY = '8' PRODUCT = '0026781073' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-321' SUMMARY = 'Suspendisse accumsan tortor quis turpis.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'JKARADZAS' TYPE = 'SUBTASK' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221219' SOLUTION = 'DONE' PRIORITY = '62' PRODUCT = '0312513336' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-577' SUMMARY = 'Maecenas pulvinar lobortis est.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'KDUMBRILL' TYPE = 'FEATURE' AUTHOR = 'CATTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211111' SOLUTION = 'UNRESOLVED' PRIORITY = '81' PRODUCT = '0562669637' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-272' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'KDUMBRILL' TYPE = 'TASK' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211101' SOLUTION = 'UNRESOLVED' PRIORITY = '72' PRODUCT = '0350610870' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-689' SUMMARY = 'Ut at dolor quis odio consequat varius.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'KDUMBRILL' TYPE = 'SUBTASK' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220114' SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0987549291' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-880' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'RETEST' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'KDUMBRILL' TYPE = 'SUBTASK' AUTHOR = 'CTREMATHACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230122' SOLUTION = 'DONE' PRIORITY = '62' PRODUCT = '0426518107' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-542' SUMMARY = 'Quisque id justo sit amet sapien dignissim vestibulum.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KDUMBRILL' TYPE = 'BUG' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220614' SOLUTION = 'UNRESOLVED' PRIORITY = '34' PRODUCT = '0848129119' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-515' SUMMARY = 'Maecenas tincidunt lacus at velit.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'KDUMBRILL' TYPE = 'TASK' AUTHOR = 'EDONAGHY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220309' SOLUTION = 'UNRESOLVED' PRIORITY = '66' PRODUCT = '0201243436' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-635' SUMMARY = 'Morbi vel lectus in quam fringilla rhoncus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'KDUMBRILL' TYPE = 'EPIC' AUTHOR = 'EDONAGHY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211107' SOLUTION = 'UNRESOLVED' PRIORITY = '71' PRODUCT = '0364681394' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-889' SUMMARY = 'Donec posuere metus vitae ipsum.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'KDUMBRILL' TYPE = 'FEATURE' AUTHOR = 'SANTONOPOULO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211024' SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0514921221' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-227' SUMMARY = 'Proin interdum mauris non ligula pellentesque ultrices.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'KDUMBRILL' TYPE = 'EPIC' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220502' SOLUTION = 'UNRESOLVED' PRIORITY = '97' PRODUCT = '0396385689' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-133' SUMMARY = 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'KPREVOST' TYPE = 'BUG' AUTHOR = 'HGALLEAR'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221003' SOLUTION = 'UNRESOLVED' PRIORITY = '60' PRODUCT = '0534013312' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-703' SUMMARY = 'Nulla tellus.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'KPREVOST' TYPE = 'EPIC' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211113'
+SOLUTION = 'UNRESOLVED' PRIORITY = '82' PRODUCT = '0597408684' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-147' SUMMARY = 'In est risus, auctor sed, tristique in, tempus sit amet, sem.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KPREVOST' TYPE = 'SUBTASK' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211104' SOLUTION = 'UNRESOLVED' PRIORITY = '85' PRODUCT = '0889995622' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-842' SUMMARY = 'Cras pellentesque volutpat dui.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KPREVOST' TYPE = 'TASK' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220723' SOLUTION = 'DONE' PRIORITY = '17' PRODUCT = '0804792472' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-528' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KPREVOST' TYPE = 'FEATURE' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211219' SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0437929571' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-210' SUMMARY = 'Vivamus vel nulla eget eros elementum pellentesque.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KPREVOST' TYPE = 'EPIC' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220609' SOLUTION = 'RTFM' PRIORITY = '52' PRODUCT = '0228672379' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-7' SUMMARY = 'Praesent blandit.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'KPREVOST' TYPE = 'BUG' AUTHOR = 'RHUNTING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20210928'
+SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0053743613' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-87' SUMMARY = 'Phasellus in felis.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'KPREVOST' TYPE = 'EPIC' AUTHOR = 'SIVANYUTIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220314'
+SOLUTION = 'DONE' PRIORITY = '3' PRODUCT = '0450810613' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-258' SUMMARY = 'Fusce posuere felis sed lacus.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'FEATURE' AUTHOR = 'AHACHETTE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221110' SOLUTION = 'UNRESOLVED' PRIORITY = '4' PRODUCT = '0743652110' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-232' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'EPIC' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211006' SOLUTION = 'UNRESOLVED' PRIORITY = '29' PRODUCT = '0038239095' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-790' SUMMARY = 'Nulla ac enim.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'USERSTORY' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220402'
+SOLUTION = 'UNRESOLVED' PRIORITY = '76' PRODUCT = '0330606837' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-555' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'SUBTASK' AUTHOR = 'BLAMANBY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220705' SOLUTION = 'DONE' PRIORITY = '46' PRODUCT = '0547061037' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-123' SUMMARY = 'Aenean fermentum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'BUG' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230111'
+SOLUTION = 'UNRESOLVED' PRIORITY = '13' PRODUCT = '0133374411' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-711' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'FEATURE' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220208' SOLUTION = 'UNRESOLVED' PRIORITY = '34' PRODUCT = '0238672926' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-916' SUMMARY = 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'TASK'
+AUTHOR = 'EALYWEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221006' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0659860757' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-71' SUMMARY = 'Proin at turpis a pede posuere nonummy.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'TASK' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220519' SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0907600660' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = '' SUMMARY = 'Wertehilfe Project Key' STATUS = 'DELETED' PROJECT = '' DESCRIPTION = 'Project Key mit Werthilfe anzeigen und dagegen prüfen' ASSIGNEE = 'ID01631' TYPE = '' AUTHOR = '' CHANGED_AT = '20230203083736.0285240 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-596' SUMMARY = 'Praesent lectus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'EPIC' AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220608'
+SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0563004732' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-429' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'FEATURE' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220131' SOLUTION = 'UNRESOLVED' PRIORITY = '70' PRODUCT = '0956791489' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-284' SUMMARY = 'Donec quis orci eget orci vehicula condimentum.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'BUG' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220617' SOLUTION = 'UNRESOLVED' PRIORITY = '11' PRODUCT = '0939926088' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-20' SUMMARY = 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'EPIC' AUTHOR = 'SANTONOPOULO' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221001' SOLUTION = 'UNRESOLVED' PRIORITY = '61' PRODUCT = '0008130905' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-175' SUMMARY = 'BLABLA' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D0000326286' TYPE = 'FEATURE' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221220'
+SOLUTION = 'UNRESOLVED' PRIORITY = '20' PRODUCT = '0285536048' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-865' SUMMARY = 'Mauris sit amet eros.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'KROBJOHNS' TYPE = 'EPIC' AUTHOR = 'TSEMAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220326'
+SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0528110024' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-245' SUMMARY = 'Ut tellus.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'KSOALL' TYPE = 'EPIC' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221105' SOLUTION = 'RTFM'
+PRIORITY = '33' PRODUCT = '0676477484' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-324' SUMMARY = 'In est risus, auctor sed, tristique in, tempus sit amet, sem.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KSOALL' TYPE = 'EPIC' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230220' SOLUTION = 'UNRESOLVED' PRIORITY = '71' PRODUCT = '0869575779' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-205' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'KSOALL' TYPE = 'FEATURE' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220602'
+SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0080007114' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-249' SUMMARY = 'Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'KSOALL' TYPE = 'TASK' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220122' SOLUTION = 'UNRESOLVED' PRIORITY = '42' PRODUCT = '0288946583' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = '132' SUMMARY = 'Test' STATUS = 'DELETED' PROJECT = '' DESCRIPTION = '' ASSIGNEE = 'CATTON' TYPE = '' AUTHOR = '' CHANGED_AT = '20230203090848.1102280 ' CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = ''
+PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-997' SUMMARY = 'Suspendisse accumsan tortor quis turpis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'KSOALL' TYPE = 'TASK' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220206' SOLUTION = 'UNRESOLVED' PRIORITY = '36' PRODUCT = '0976377103' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-163' SUMMARY = 'Nulla nisl.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'KSOALL' TYPE = 'SUBTASK' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220213'
+SOLUTION = 'DUPLICATE' PRIORITY = '91' PRODUCT = '0372940778' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-984' SUMMARY = 'Cras in purus eu magna vulputate luctus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'SUBTASK' AUTHOR = 'FLEMERLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220222' SOLUTION = 'UNRESOLVED' PRIORITY = '96' PRODUCT = '0976123655' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-29' SUMMARY = 'Suspendisse potenti.' STATUS = 'TEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'SUBTASK' AUTHOR = 'FMOWSDELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221009'
+SOLUTION = 'DONE' PRIORITY = '5' PRODUCT = '0887529302' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-121' SUMMARY = 'Morbi non lectus.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'BUG' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211129'
+SOLUTION = 'DUPLICATE' PRIORITY = '58' PRODUCT = '0249346473' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-362' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'TASK' AUTHOR = 'GKIWITZ' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220609' SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0351061420' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-243' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'SUBTASK' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230213' SOLUTION = 'DONE' PRIORITY = '6' PRODUCT = '0467706171' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-872' SUMMARY = 'Nullam porttitor lacus at turpis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'BUG' AUTHOR = 'OMCGRAFFIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220219' SOLUTION = 'UNRESOLVED' PRIORITY = '25' PRODUCT = '0861632701' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-764' SUMMARY = 'Morbi non lectus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'BUG' AUTHOR = 'PCOLING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221227'
+SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0232740447' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-421' SUMMARY = 'Praesent blandit.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'EPIC' AUTHOR = 'PO''LOONEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230103'
+SOLUTION = 'UNRESOLVED' PRIORITY = '29' PRODUCT = '0792205663' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-64' SUMMARY = 'Ut tellus.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'EPIC' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220108'
+SOLUTION = 'UNRESOLVED' PRIORITY = '53' PRODUCT = '0353340072' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-228' SUMMARY = 'Suspendisse potenti.' STATUS = 'CANCELED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'TASK' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211023'
+SOLUTION = 'WONTFIX' PRIORITY = '64' PRODUCT = '0055577231' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-827' SUMMARY = 'Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'FEATURE' AUTHOR = 'SSHANAHAN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220709' SOLUTION = 'UNRESOLVED' PRIORITY = '14' PRODUCT = '0613182569' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-771' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'FEATURE' AUTHOR = 'TJERROMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220523'
+SOLUTION = 'UNRESOLVED' PRIORITY = '31' PRODUCT = '0855262708' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-212' SUMMARY = 'Duis consequat dui nec nisi volutpat eleifend.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LCROAN' TYPE = 'EPIC' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230116' SOLUTION = 'UNRESOLVED' PRIORITY = '13' PRODUCT = '0067560327' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-413' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'BUG' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220804' SOLUTION = 'UNRESOLVED' PRIORITY = '59' PRODUCT = '0666666961' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-950' SUMMARY = 'Nullam varius.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'TASK' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220613'
+SOLUTION = 'UNRESOLVED' PRIORITY = '77' PRODUCT = '0336534328' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-578' SUMMARY = 'Quisque id justo sit amet sapien dignissim vestibulum.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'USERSTORY' AUTHOR = 'CHOOLAGHAN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220307' SOLUTION = 'WONTFIX' PRIORITY = '25' PRODUCT = '0781738928' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-289' SUMMARY = 'Integer tincidunt ante vel ipsum.' STATUS = 'RETEST' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'BUG' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221011' SOLUTION = 'DONE' PRIORITY = '7' PRODUCT = '0338436069' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'JHG' SUMMARY = '' STATUS = '' PROJECT = '' DESCRIPTION = '' ASSIGNEE = '' TYPE = '' AUTHOR = '' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000'
+ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-65' SUMMARY = 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'USERSTORY'
+AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230104' SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0571312669' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-875' SUMMARY = 'Donec vitae nisi.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'TASK' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220124'
+SOLUTION = 'UNRESOLVED' PRIORITY = '13' PRODUCT = '0411360995' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-367' SUMMARY = 'Quisque porta volutpat erat.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'TASK' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20210930' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0277530976' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-39' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'FEATURE' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220613' SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0853821166' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-743' SUMMARY = 'Maecenas rhoncus aliquam lacus.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'USERSTORY' AUTHOR = 'MNOTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220814' SOLUTION = 'DONE' PRIORITY = '48' PRODUCT = '0532645561' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-553' SUMMARY = 'Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LDRUMMOND' TYPE = 'EPIC' AUTHOR = 'TGERGELY'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220922' SOLUTION = 'UNRESOLVED' PRIORITY = '91' PRODUCT = '0532969570' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-563' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'BUG' AUTHOR = 'AHACHETTE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220424' SOLUTION = 'ASDESIGNED' PRIORITY = '98' PRODUCT = '0416937976' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-285' SUMMARY = 'Nullam varius.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'BUG' AUTHOR = 'AJARMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220904'
+SOLUTION = 'UNRESOLVED' PRIORITY = '57' PRODUCT = '0594485259' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-93' SUMMARY = 'Morbi porttitor lorem id ligula.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'TASK' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220707' SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0164270386' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-614' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'SUBTASK' AUTHOR = 'CTREMATHACK' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211129' SOLUTION = 'UNRESOLVED' PRIORITY = '3' PRODUCT = '0210582378' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-878' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'TASK' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220928' SOLUTION = 'RTFM' PRIORITY = '85' PRODUCT = '0387897947' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-720' SUMMARY = 'Pellentesque eget nunc.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'BUG' AUTHOR = 'EALYWEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220717'
+SOLUTION = 'UNRESOLVED' PRIORITY = '55' PRODUCT = '0415900090' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-724' SUMMARY = 'In blandit ultrices enim.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'TASK' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220701'
+SOLUTION = 'UNRESOLVED' PRIORITY = '22' PRODUCT = '0324556583' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-814' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'USERSTORY' AUTHOR = 'ELARAWAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230103' SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0661762715' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-455' SUMMARY = 'Vivamus vel nulla eget eros elementum pellentesque.' STATUS = 'CANCELED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'TASK' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211209' SOLUTION = 'WONTFIX' PRIORITY = '17' PRODUCT = '0050208199' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-23' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'FEATURE' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230120' SOLUTION = 'UNRESOLVED' PRIORITY = '72' PRODUCT = '0146961392' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-627' SUMMARY = 'Praesent id massa id nisl venenatis lacinia.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'TASK' AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220501' SOLUTION = 'ASDESIGNED' PRIORITY = '25' PRODUCT = '0971601595' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-288' SUMMARY = 'Morbi ut odio.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'TASK' AUTHOR = 'SIVANYUTIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220107'
+SOLUTION = 'CANTREPOR' PRIORITY = '93' PRODUCT = '0604677484' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-22' SUMMARY = 'Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LEDGLER' TYPE = 'EPIC' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211213' SOLUTION = 'UNRESOLVED' PRIORITY = '68' PRODUCT = '0213995050' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-224' SUMMARY = 'Pellentesque eget nunc.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LMILLETT' TYPE = 'TASK' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211030'
+SOLUTION = 'UNRESOLVED' PRIORITY = '34' PRODUCT = '0235741469' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-278' SUMMARY = 'Aenean auctor gravida sem.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LMILLETT' TYPE = 'EPIC' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211106' SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0826167703' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-356' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LMILLETT'
+TYPE = 'TASK' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220217' SOLUTION = 'WONTFIX' PRIORITY = '3' PRODUCT = '0065065912' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-366' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LMILLETT' TYPE = 'USERSTORY' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220222' SOLUTION = 'UNRESOLVED' PRIORITY = '4' PRODUCT = '0616805637' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-443' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LMILLETT' TYPE = 'TASK' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220104' SOLUTION = 'UNRESOLVED' PRIORITY = '54' PRODUCT = '0790314583' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-575' SUMMARY = 'Duis consequat dui nec nisi volutpat eleifend.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LMILLETT' TYPE = 'FEATURE' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221210' SOLUTION = 'WONTFIX' PRIORITY = '55' PRODUCT = '0972656850' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-28' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LMILLETT' TYPE = 'TASK' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230109'
+SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0278647057' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-156' SUMMARY = 'Maecenas rhoncus aliquam lacus.' STATUS = 'RETEST' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LMILLETT' TYPE = 'USERSTORY' AUTHOR = 'MNOTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211218' SOLUTION = 'DONE' PRIORITY = '37' PRODUCT = '0222067243' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-185' SUMMARY = 'Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LMILLETT' TYPE = 'TASK' AUTHOR = 'RHUNTING' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230320' SOLUTION = 'UNRESOLVED' PRIORITY = '30' PRODUCT = '0329738194' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-533' SUMMARY = 'Quisque id justo sit amet sapien dignissim vestibulum.' STATUS = 'RETEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LMILLETT' TYPE = 'USERSTORY' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230306' SOLUTION = 'DONE' PRIORITY = '19' PRODUCT = '0415558180' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-519' SUMMARY = 'Aliquam non mauris.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LMIXTURE' TYPE = 'SUBTASK' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220216'
+SOLUTION = 'UNRESOLVED' PRIORITY = '47' PRODUCT = '0510952826' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-364' SUMMARY = 'Ut tellus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LMIXTURE' TYPE = 'SUBTASK' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220208'
+SOLUTION = 'UNRESOLVED' PRIORITY = '70' PRODUCT = '0612584173' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-992' SUMMARY = 'Integer a nibh.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LMIXTURE' TYPE = 'FEATURE' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230204'
+SOLUTION = 'DONE' PRIORITY = '88' PRODUCT = '0410098457' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-845' SUMMARY = 'Nulla mollis molestie lorem.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LMIXTURE' TYPE = 'FEATURE' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220812' SOLUTION = 'UNRESOLVED' PRIORITY = '14' PRODUCT = '0333602982' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-244' SUMMARY = 'Curabitur in libero ut massa volutpat convallis.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LMIXTURE' TYPE = 'EPIC' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221017' SOLUTION = 'UNRESOLVED' PRIORITY = '54' PRODUCT = '0854807867' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-426' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LMIXTURE' TYPE = 'TASK' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220203' SOLUTION = 'UNRESOLVED' PRIORITY = '80' PRODUCT = '0392342525' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-826' SUMMARY = 'Pellentesque at nulla.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LMIXTURE' TYPE = 'TASK' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220719'
+SOLUTION = 'DONE' PRIORITY = '44' PRODUCT = '0294853105' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-905' SUMMARY = 'In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LMIXTURE' TYPE = 'TASK'
+AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220318' SOLUTION = 'UNRESOLVED' PRIORITY = '60' PRODUCT = '0166842241' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-676' SUMMARY = 'Nullam varius.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'EPIC' AUTHOR = 'BBREARLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220108'
+SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0318403005' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-815' SUMMARY = 'Morbi ut odio.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'USERSTORY' AUTHOR = 'BLAMANBY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211008'
+SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0115867051' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-494' SUMMARY = 'Suspendisse potenti.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'BUG' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220323'
+SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0853753851' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-176' SUMMARY = 'Sed sagittis.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'USERSTORY' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220310'
+SOLUTION = 'UNRESOLVED' PRIORITY = '51' PRODUCT = '0186158433' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-89' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Donec pharetra, magna vestibulum' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LPEPPER'
+TYPE = 'SUBTASK' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211030' SOLUTION = 'UNRESOLVED' PRIORITY = '51' PRODUCT = '0543696648' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-919' SUMMARY = 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'USERSTORY' AUTHOR = 'GHICKINBOTTO'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221108' SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0727509253' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-785' SUMMARY = 'Fusce posuere felis sed lacus.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'TASK' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221021' SOLUTION = 'DUPLICATE' PRIORITY = '77' PRODUCT = '0147834376' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-246' SUMMARY = 'Vivamus tortor.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'FEATURE' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220317'
+SOLUTION = 'DONE' PRIORITY = '9' PRODUCT = '0034185410' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-480' SUMMARY = 'Proin at turpis a pede posuere nonummy.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'FEATURE' AUTHOR = 'KSOALL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211025' SOLUTION = 'UNRESOLVED' PRIORITY = '9' PRODUCT = '0897946118' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-301' SUMMARY = 'Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'EPIC'
+AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221023' SOLUTION = 'UNRESOLVED' PRIORITY = '38' PRODUCT = '0754142117' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-797' SUMMARY = 'Duis bibendum.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'BUG' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220925'
+SOLUTION = 'ASDESIGNED' PRIORITY = '81' PRODUCT = '0677873884' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-597' SUMMARY = 'Etiam pretium iaculis justo.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'FEATURE' AUTHOR = 'PO''LOONEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220317' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0767597071' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-544' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'LPEPPER' TYPE = 'FEATURE' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221117' SOLUTION = 'UNRESOLVED' PRIORITY = '42' PRODUCT = '0633075265' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-976' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MD''AGUANNO' TYPE = 'TASK' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221230' SOLUTION = 'UNRESOLVED' PRIORITY = '44' PRODUCT = '0456653070' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-484' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MD''AGUANNO' TYPE = 'SUBTASK' AUTHOR = 'EALYWEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211209' SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0848931789' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-247' SUMMARY = 'Nulla tellus.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MD''AGUANNO' TYPE = 'USERSTORY' AUTHOR = 'GKIWITZ' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220415'
+SOLUTION = 'DUPLICATE' PRIORITY = '78' PRODUCT = '0397221409' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-70' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MD''AGUANNO' TYPE = 'FEATURE' AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230317'
+SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0481633016' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-839' SUMMARY = 'Etiam pretium iaculis justo.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MD''AGUANNO' TYPE = 'FEATURE' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220101' SOLUTION = 'UNRESOLVED' PRIORITY = '3' PRODUCT = '0433021390' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-438' SUMMARY = 'Praesent id massa id nisl venenatis lacinia.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MD''AGUANNO' TYPE = 'EPIC' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230205' SOLUTION = 'UNRESOLVED' PRIORITY = '97' PRODUCT = '0929616040' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-504' SUMMARY = 'Proin eu mi.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MD''AGUANNO' TYPE = 'SUBTASK' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211029'
+SOLUTION = 'DONE' PRIORITY = '1' PRODUCT = '0460050989' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-202' SUMMARY = 'Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.' STATUS = 'RETEST' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MDEHM' TYPE = 'USERSTORY'
+AUTHOR = 'AGERGUS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221014' SOLUTION = 'DONE' PRIORITY = '16' PRODUCT = '0125281072' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-77' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MDEHM' TYPE = 'SUBTASK' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230323' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0025135384' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-664' SUMMARY = 'Aenean auctor gravida sem.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MDEHM' TYPE = 'USERSTORY' AUTHOR = 'CTREMATHACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211127' SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0560040610' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-526' SUMMARY = 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MDEHM' TYPE = 'BUG'
+AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221111' SOLUTION = 'UNRESOLVED' PRIORITY = '9' PRODUCT = '0381923843' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-81' SUMMARY = 'Pellentesque at nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MDEHM' TYPE = 'USERSTORY' AUTHOR = 'LPEPPER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220529'
+SOLUTION = 'UNRESOLVED' PRIORITY = '46' PRODUCT = '0182382246' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-998' SUMMARY = 'Phasellus id sapien in sapien iaculis congue.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = '' TYPE = 'FEATURE' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211005' SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0774719522' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-310' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MDEHM' TYPE = 'FEATURE' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220706' SOLUTION = 'DONE' PRIORITY = '1' PRODUCT = '0410255055' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-941' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MDEHM' TYPE = 'EPIC' AUTHOR = 'TSEMAN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220829' SOLUTION = 'UNRESOLVED' PRIORITY = '8' PRODUCT = '0678700805' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-750' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MELKINS' TYPE = 'FEATURE' AUTHOR = 'DBLUNT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211219' SOLUTION = 'UNRESOLVED' PRIORITY = '13' PRODUCT = '0614368125' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-774' SUMMARY = 'Etiam vel augue.' STATUS = 'CANCELED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MELKINS' TYPE = 'SUBTASK' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230215' SOLUTION = 'WONTFIX' PRIORITY = '67' PRODUCT = '0947190206' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-696' SUMMARY = 'Nullam molestie nibh in lectus.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MELKINS' TYPE = 'FEATURE' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220401' SOLUTION = 'UNRESOLVED' PRIORITY = '8' PRODUCT = '0494084402' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-985' SUMMARY = 'Donec posuere metus vitae ipsum.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MELKINS' TYPE = 'USERSTORY' AUTHOR = 'LPEPPER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230220' SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0016436628' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-485' SUMMARY = 'Donec ut mauris eget massa tempor convallis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MELKINS' TYPE = 'BUG' AUTHOR = 'MD''AGUANNO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220226' SOLUTION = 'UNRESOLVED' PRIORITY = '61' PRODUCT = '0921234472' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-186' SUMMARY = 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MELKINS' TYPE = 'SUBTASK' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220221' SOLUTION = 'UNRESOLVED' PRIORITY = '99' PRODUCT = '0344654719' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-233' SUMMARY = 'Donec semper sapien a libero.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'BUG' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221110' SOLUTION = 'ASDESIGNED' PRIORITY = '29' PRODUCT = '0583455705' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-706' SUMMARY = 'Phasellus sit amet erat.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'USERSTORY' AUTHOR = 'AJARMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220915' SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0357035238' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-891' SUMMARY = 'In sagittis dui vel nisl.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'USERSTORY' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211206' SOLUTION = 'DUPLICATE' PRIORITY = '81' PRODUCT = '0661537178' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-358' SUMMARY = 'Cras pellentesque volutpat dui.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'TASK' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220509' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0182806967' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-835' SUMMARY = 'Nullam varius.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'BUG' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211014'
+SOLUTION = 'UNRESOLVED' PRIORITY = '57' PRODUCT = '0680185733' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-645' SUMMARY = 'Nunc nisl.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'BUG' AUTHOR = 'MGLASHEEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221211'
+SOLUTION = 'UNRESOLVED' PRIORITY = '26' PRODUCT = '0595983573' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-520' SUMMARY = 'Nulla tempus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'FEATURE' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20210926'
+SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0727254600' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-994' SUMMARY = 'Morbi non quam nec dui luctus rutrum.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'BUG' AUTHOR = 'SSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220612' SOLUTION = 'CANTREPOR' PRIORITY = '86' PRODUCT = '0950147532' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-1000' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'FEATURE' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220603' SOLUTION = 'UNRESOLVED' PRIORITY = '56' PRODUCT = '0221737485' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-722' SUMMARY = 'Phasellus in felis.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MEMANUELOV' TYPE = 'FEATURE' AUTHOR = 'TJERROMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230119' SOLUTION = 'UNRESOLVED' PRIORITY = '70' PRODUCT = '0074177221' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-79' SUMMARY = 'Integer non velit.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MGLASHEEN' TYPE = 'USERSTORY' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221116'
+SOLUTION = 'UNRESOLVED' PRIORITY = '29' PRODUCT = '0602222099' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-687' SUMMARY = 'In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MGLASHEEN' TYPE = 'BUG'
+AUTHOR = 'EALYWEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230128' SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0846998612' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-428' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MGLASHEEN' TYPE = 'EPIC' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220622' SOLUTION = 'RTFM' PRIORITY = '85' PRODUCT = '0769535541' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-370' SUMMARY = 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MGLASHEEN' TYPE = 'SUBTASK' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220704' SOLUTION = 'UNRESOLVED' PRIORITY = '16' PRODUCT = '0895012984' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-686' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MGLASHEEN' TYPE = 'BUG' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230131' SOLUTION = 'UNRESOLVED' PRIORITY = '44' PRODUCT = '0387418364' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-1' SUMMARY = 'Integer tincidunt ante vel ipsum.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MGLASHEEN' TYPE = 'TASK' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220203' SOLUTION = 'ASDESIGNED' PRIORITY = '69' PRODUCT = '0885707203' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-604' SUMMARY = 'Etiam faucibus cursus urna.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MGLASHEEN' TYPE = 'FEATURE' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211109' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0113806144' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-75' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MGLASHEEN' TYPE = 'SUBTASK' AUTHOR = 'WMONARD'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220708' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0051078191' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-314' SUMMARY = 'Phasellus id sapien in sapien iaculis congue.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'BUG' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220307' SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0248035380' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-177' SUMMARY = 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'FEATURE' AUTHOR = 'CBISHELL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221222' SOLUTION = 'DUPLICATE' PRIORITY = '30' PRODUCT = '0546949860' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-701' SUMMARY = 'Curabitur convallis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'EPIC' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230120'
+SOLUTION = 'UNRESOLVED' PRIORITY = '22' PRODUCT = '0355656432' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-755' SUMMARY = 'Nulla nisl.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'USERSTORY' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221013'
+SOLUTION = 'UNRESOLVED' PRIORITY = '66' PRODUCT = '0580659490' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-171' SUMMARY = 'Proin at turpis a pede posuere nonummy.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'USERSTORY' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220606' SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0393918602' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-56' SUMMARY = 'Pellentesque ultrices mattis odio.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'EPIC' AUTHOR = 'CPROBACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220817' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0801297159' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-801' SUMMARY = 'Nulla facilisi.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'TASK' AUTHOR = 'CTREMATHACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230127'
+SOLUTION = 'UNRESOLVED' PRIORITY = '15' PRODUCT = '0388795673' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-517' SUMMARY = 'In est risus, auctor sed, tristique in, tempus sit amet, sem.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'FEATURE' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221226' SOLUTION = 'DONE' PRIORITY = '29' PRODUCT = '0681960944' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-628' SUMMARY = 'Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'FEATURE' AUTHOR = 'FMOWSDELL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220208' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0236485721' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-673' SUMMARY = 'Suspendisse potenti.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'FEATURE' AUTHOR = 'FPATIFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221025'
+SOLUTION = 'UNRESOLVED' PRIORITY = '30' PRODUCT = '0451453749' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-639' SUMMARY = 'Maecenas pulvinar lobortis est.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'BUG' AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211230' SOLUTION = 'RTFM' PRIORITY = '21' PRODUCT = '0397158220' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-675' SUMMARY = 'Nullam varius.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'BUG' AUTHOR = 'MD''AGUANNO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221231'
+SOLUTION = 'UNRESOLVED' PRIORITY = '20' PRODUCT = '0831649822' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-98' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'EPIC' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221224' SOLUTION = 'DONE' PRIORITY = '25' PRODUCT = '0206129762' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-716' SUMMARY = 'Praesent id massa id nisl venenatis lacinia.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'FEATURE' AUTHOR = 'MGLASHEEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20210930' SOLUTION = 'ASDESIGNED' PRIORITY = '98' PRODUCT = '0200162247' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-924' SUMMARY = 'Sed sagittis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'USERSTORY' AUTHOR = 'PGRISENTHWAI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220322'
+SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0791715600' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-130' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MKAY' TYPE = 'USERSTORY' AUTHOR = 'PO''LOONEY'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220924' SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0432268835' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-219' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'BUG' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230329' SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0178720606' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-351' SUMMARY = 'Vestibulum sed magna at nunc commodo placerat.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'EPIC' AUTHOR = 'BGUENY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220910' SOLUTION = 'DONE' PRIORITY = '89' PRODUCT = '0026770389' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-405' SUMMARY = 'Nunc nisl.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'USERSTORY' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220202'
+SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0656117740' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-230' SUMMARY = 'In blandit ultrices enim.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'FEATURE' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220301' SOLUTION = 'UNRESOLVED' PRIORITY = '79' PRODUCT = '0187860097' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-349' SUMMARY = 'Cras in purus eu magna vulputate luctus.' STATUS = 'CANCELED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'TASK' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220325' SOLUTION = 'WONTFIX' PRIORITY = '96' PRODUCT = '0943781351' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-802' SUMMARY = 'Donec vitae nisi.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'FEATURE' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221201'
+SOLUTION = 'UNRESOLVED' PRIORITY = '44' PRODUCT = '0068264586' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-112' SUMMARY = 'Vestibulum sed magna at nunc commodo placerat.' STATUS = 'CANCELED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'TASK' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220220' SOLUTION = 'WONTFIX' PRIORITY = '64' PRODUCT = '0922363978' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-921' SUMMARY = 'Etiam vel augue.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'TASK' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211031'
+SOLUTION = 'UNRESOLVED' PRIORITY = '16' PRODUCT = '0198493599' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-966' SUMMARY = 'Donec quis orci eget orci vehicula condimentum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'BUG' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220519' SOLUTION = 'UNRESOLVED' PRIORITY = '91' PRODUCT = '0092522644' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-152' SUMMARY = 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.' STATUS = 'CANCELED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'BUG' AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230310' SOLUTION = 'WONTFIX' PRIORITY = '44' PRODUCT = '0438629699' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-752' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'EPIC' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211120'
+SOLUTION = 'UNRESOLVED' PRIORITY = '26' PRODUCT = '0459323706' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-150' SUMMARY = 'Duis mattis egestas metus.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MLANMEID' TYPE = 'EPIC' AUTHOR = 'SANTONOPOULO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221023' SOLUTION = 'UNRESOLVED' PRIORITY = '61' PRODUCT = '0620315386' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-90' SUMMARY = 'Vestibulum rutrum rutrum neque.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'BUG' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230305'
+SOLUTION = 'UNRESOLVED' PRIORITY = '92' PRODUCT = '0493897615' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-44' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'BUG' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220628' SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0300415649' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-357' SUMMARY = 'Nam dui.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'TASK' AUTHOR = 'CBISHELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220706'
+SOLUTION = 'UNRESOLVED' PRIORITY = '98' PRODUCT = '0988633211' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-794' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'FEATURE' AUTHOR = 'CHOOLAGHAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211231' SOLUTION = 'UNRESOLVED' PRIORITY = '78' PRODUCT = '0872186133' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-925' SUMMARY = 'Etiam faucibus cursus urna.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'SUBTASK' AUTHOR = 'CHOOLAGHAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211102' SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0603543388' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-838' SUMMARY = 'Vestibulum sed magna at nunc commodo placerat.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'BUG' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20210926' SOLUTION = 'UNRESOLVED' PRIORITY = '95' PRODUCT = '0001324663' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-869' SUMMARY = 'Aliquam erat volutpat.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'FEATURE' AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220604'
+SOLUTION = 'UNRESOLVED' PRIORITY = '87' PRODUCT = '0335812278' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-136' SUMMARY = 'Maecenas tincidunt lacus at velit.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'BUG' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220806' SOLUTION = 'UNRESOLVED' PRIORITY = '25' PRODUCT = '0160531161' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-298' SUMMARY = 'Nulla justo.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'EPIC' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220403'
+SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0741835685' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-524' SUMMARY = 'Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'TASK' AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220322' SOLUTION = 'UNRESOLVED' PRIORITY = '85' PRODUCT = '0573666439' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-742' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'TASK' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220406' SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0548487740' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-215' SUMMARY = 'Aenean lectus.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'EPIC' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230220'
+SOLUTION = 'DONE' PRIORITY = '13' PRODUCT = '0109425625' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-200' SUMMARY = 'Nulla tempus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MNOTON' TYPE = 'FEATURE' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211107'
+SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0731958707' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-858' SUMMARY = 'Nulla facilisi.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'MSPRITT' TYPE = 'FEATURE' AUTHOR = 'BBREARLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220905'
+SOLUTION = 'UNRESOLVED' PRIORITY = '90' PRODUCT = '0427719039' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-565' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MSPRITT' TYPE = 'TASK' AUTHOR = 'CBISHELL'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220816' SOLUTION = 'WONTFIX' PRIORITY = '73' PRODUCT = '0336344305' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-203' SUMMARY = 'Morbi a ipsum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MSPRITT' TYPE = 'SUBTASK' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211220'
+SOLUTION = 'UNRESOLVED' PRIORITY = '86' PRODUCT = '0648297670' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-216' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Donec pharetra, magna vestibulum' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'MSPRITT'
+TYPE = 'TASK' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220506' SOLUTION = 'RTFM' PRIORITY = '45' PRODUCT = '0963339677' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-830' SUMMARY = 'Morbi non quam nec dui luctus rutrum.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'MSPRITT' TYPE = 'BUG' AUTHOR = 'OMCGRAFFIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220310' SOLUTION = 'UNRESOLVED' PRIORITY = '11' PRODUCT = '0027752418' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-448' SUMMARY = 'Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'MSPRITT' TYPE = 'USERSTORY' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220210' SOLUTION = 'UNRESOLVED' PRIORITY = '27' PRODUCT = '0580240513' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-871' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'MSPRITT' TYPE = 'USERSTORY' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221109' SOLUTION = 'UNRESOLVED' PRIORITY = '95' PRODUCT = '0569462460' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-593' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'TASK'
+AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220407' SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0196663430' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-21' SUMMARY = 'Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'BUG' AUTHOR = 'CHOOLAGHAN'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220215' SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0750939647' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-303' SUMMARY = 'Nullam sit amet turpis elementum ligula vehicula consequat.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'EPIC' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220101' SOLUTION = 'UNRESOLVED' PRIORITY = '72' PRODUCT = '0448400460' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-430' SUMMARY = 'Curabitur convallis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'SUBTASK' AUTHOR = 'ELARAWAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220924'
+SOLUTION = 'UNRESOLVED' PRIORITY = '42' PRODUCT = '0527806052' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-59' SUMMARY = 'Vestibulum sed magna at nunc commodo placerat.' STATUS = 'CANCELED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'EPIC' AUTHOR = 'FLEMERLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211014' SOLUTION = 'WONTFIX' PRIORITY = '74' PRODUCT = '0943586868' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-804' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'BUG' AUTHOR = 'HSICKERT'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220427' SOLUTION = 'UNRESOLVED' PRIORITY = '66' PRODUCT = '0488135836' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-955' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'BUG' AUTHOR = 'PCOLING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220803' SOLUTION = 'UNRESOLVED' PRIORITY = '96' PRODUCT = '0661240909' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-420' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'CANCELED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'BUG' AUTHOR = 'POGILVIE'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220516' SOLUTION = 'WONTFIX' PRIORITY = '25' PRODUCT = '0168846859' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-822' SUMMARY = 'Praesent lectus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'FEATURE' AUTHOR = 'POGILVIE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211125'
+SOLUTION = 'UNRESOLVED' PRIORITY = '19' PRODUCT = '0513640095' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-120' SUMMARY = 'Ut tellus.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'EPIC' AUTHOR = 'SPRENTY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220313'
+SOLUTION = 'UNRESOLVED' PRIORITY = '14' PRODUCT = '0727849227' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-546' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'USERSTORY' AUTHOR = 'VTWYFORD' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220513' SOLUTION = 'UNRESOLVED' PRIORITY = '74' PRODUCT = '0440770823' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-449' SUMMARY = 'Morbi non quam nec dui luctus rutrum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'NPESSELT' TYPE = 'FEATURE' AUTHOR = 'ZMEADERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221129' SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0082383566' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-657' SUMMARY = 'Proin at turpis a pede posuere nonummy.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'USERSTORY' AUTHOR = 'CBISHELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220831' SOLUTION = 'DUPLICATE' PRIORITY = '24' PRODUCT = '0286582183' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-57' SUMMARY = 'Etiam justo.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'EPIC' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220620'
+SOLUTION = 'UNRESOLVED' PRIORITY = '47' PRODUCT = '0689716658' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-508' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'TASK' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220201' SOLUTION = 'UNRESOLVED' PRIORITY = '54' PRODUCT = '0431055998' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-83' SUMMARY = 'Etiam pretium iaculis justo.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'SUBTASK' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220603' SOLUTION = 'DONE' PRIORITY = '85' PRODUCT = '0625067925' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-725' SUMMARY = 'Nullam varius.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'FEATURE' AUTHOR = 'ELARAWAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220630'
+SOLUTION = 'UNRESOLVED' PRIORITY = '68' PRODUCT = '0656421236' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-516' SUMMARY = 'Morbi porttitor lorem id ligula.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'EPIC' AUTHOR = 'KPREVOST' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220725' SOLUTION = 'UNRESOLVED' PRIORITY = '61' PRODUCT = '0445265676' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-663' SUMMARY = 'In sagittis dui vel nisl.' STATUS = 'RETEST' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'SUBTASK' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220408' SOLUTION = 'DONE' PRIORITY = '17' PRODUCT = '0685984634' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-977' SUMMARY = 'Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.' STATUS = 'CANCELED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'TASK' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220331' SOLUTION = 'WONTFIX' PRIORITY = '48' PRODUCT = '0433966008' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-574' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'USERSTORY' AUTHOR = 'OMCGRAFFIN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220502' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0330566109' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-437' SUMMARY = 'Integer a nibh.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'USERSTORY' AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220710'
+SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0520732736' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-825' SUMMARY = 'Suspendisse potenti.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'BUG' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221005'
+SOLUTION = 'UNRESOLVED' PRIORITY = '1' PRODUCT = '0924559311' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-514' SUMMARY = 'Vestibulum rutrum rutrum neque.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'OALEBROOKE' TYPE = 'SUBTASK' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230206' SOLUTION = 'DONE' PRIORITY = '76' PRODUCT = '0952546089' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-347' SUMMARY = 'Praesent id massa id nisl venenatis lacinia.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'USERSTORY' AUTHOR = 'AJARMAINE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211013' SOLUTION = 'DONE' PRIORITY = '11' PRODUCT = '0350367292' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-625' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'FEATURE' AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211102'
+SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0770546427' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-459' SUMMARY = 'Morbi a ipsum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'SUBTASK' AUTHOR = 'BBREARLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221227'
+SOLUTION = 'UNRESOLVED' PRIORITY = '81' PRODUCT = '0816454816' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-511' SUMMARY = 'Vestibulum sed magna at nunc commodo placerat.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'BUG' AUTHOR = 'BGUENY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220622' SOLUTION = 'UNRESOLVED' PRIORITY = '13' PRODUCT = '0792733850' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-72' SUMMARY = 'Nam tristique tortor eu pede.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'FEATURE' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221018' SOLUTION = 'WONTFIX' PRIORITY = '94' PRODUCT = '0775741248' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-991' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'FEATURE' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211001' SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0054717174' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-860' SUMMARY = 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'TASK' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220810' SOLUTION = 'UNRESOLVED' PRIORITY = '56' PRODUCT = '0738811146' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-970' SUMMARY = 'Etiam faucibus cursus urna.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'BUG' AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211025' SOLUTION = 'UNRESOLVED' PRIORITY = '19' PRODUCT = '0273828127' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-401' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'BUG' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221002' SOLUTION = 'UNRESOLVED' PRIORITY = '92' PRODUCT = '0012092304' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-234' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'BUG' AUTHOR = 'LPEPPER'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220801' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0484459614' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-509' SUMMARY = 'Nullam porttitor lacus at turpis.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'SUBTASK' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220210' SOLUTION = 'DONE' PRIORITY = '20' PRODUCT = '0328075600' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-290' SUMMARY = 'Praesent blandit.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'SUBTASK' AUTHOR = 'MKAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230130'
+SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0351566789' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-391' SUMMARY = 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'TASK'
+AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230324' SOLUTION = 'UNRESOLVED' PRIORITY = '34' PRODUCT = '0334910209' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-692' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'EPIC' AUTHOR = 'MNOTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220803' SOLUTION = 'UNRESOLVED' PRIORITY = '31' PRODUCT = '0796741392' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-751' SUMMARY = 'Aliquam erat volutpat.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'TASK' AUTHOR = 'MNOTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230324'
+SOLUTION = 'DUPLICATE' PRIORITY = '81' PRODUCT = '0909810827' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-85' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'OMCGRAFFIN' TYPE = 'TASK' AUTHOR = 'POGILVIE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230302'
+SOLUTION = 'UNRESOLVED' PRIORITY = '9' PRODUCT = '0961572130' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-12' SUMMARY = 'Etiam vel augue.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'OMENEGHI' TYPE = 'EPIC' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220301'
+SOLUTION = 'DONE' PRIORITY = '12' PRODUCT = '0079108453' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SH_001' SUMMARY = 'Test SH' STATUS = 'OPEN' PROJECT = '1' DESCRIPTION = '' ASSIGNEE = 'SH' TYPE = 'NEW' AUTHOR = 'ID01631' CHANGED_AT = '20230202144030.8339670 ' CREATED_AT = '20230202144030.8339670 ' DUE_DATE = '20230202'
+SOLUTION = '1' PRIORITY = '1' PRODUCT = '0000000001' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-330' SUMMARY = 'Mauris lacinia sapien quis libero.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'OMENEGHI' TYPE = 'FEATURE' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221027' SOLUTION = 'DONE' PRIORITY = '58' PRODUCT = '0289130194' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-380' SUMMARY = 'Cras pellentesque volutpat dui.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'OMENEGHI' TYPE = 'SUBTASK' AUTHOR = 'MNOTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211229' SOLUTION = 'UNRESOLVED' PRIORITY = '26' PRODUCT = '0918603699' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-412' SUMMARY = 'Fusce consequat.' STATUS = 'CANCELED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'OMENEGHI' TYPE = 'EPIC' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220105'
+SOLUTION = 'WONTFIX' PRIORITY = '94' PRODUCT = '0249391735' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-415' SUMMARY = 'Nulla mollis molestie lorem.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'OMENEGHI' TYPE = 'TASK' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221030' SOLUTION = 'UNRESOLVED' PRIORITY = '74' PRODUCT = '0903657639' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-91' SUMMARY = 'Mauris ullamcorper purus sit amet nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'OMENEGHI' TYPE = 'FEATURE' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230201' SOLUTION = 'UNRESOLVED' PRIORITY = '98' PRODUCT = '0167048552' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-947' SUMMARY = 'Nam tristique tortor eu pede.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'OMENEGHI' TYPE = 'EPIC' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211216' SOLUTION = 'UNRESOLVED' PRIORITY = '98' PRODUCT = '0490998853' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-486' SUMMARY = 'Morbi non lectus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'USERSTORY' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220109'
+SOLUTION = 'UNRESOLVED' PRIORITY = '18' PRODUCT = '0634794149' ESTIMATED_EFFORT = '0.00 '  )
+).
+data(tasks4) = VALUE tt_zbc_tasks(
+( CLIENT = '100' TASK_KEY = 'SUP-337' SUMMARY = 'Morbi porttitor lorem id ligula.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'SUBTASK' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211027' SOLUTION = 'UNRESOLVED' PRIORITY = '75' PRODUCT = '0568419176' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-381' SUMMARY = 'Nulla nisl.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'SUBTASK' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220916'
+SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0915562737' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-254' SUMMARY = 'Integer a nibh.' STATUS = 'TEST' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'TASK' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211103'
+SOLUTION = 'DONE' PRIORITY = '62' PRODUCT = '0375647510' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-236' SUMMARY = 'Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'TASK'
+AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221025' SOLUTION = 'UNRESOLVED' PRIORITY = '26' PRODUCT = '0693225123' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-100' SUMMARY = 'Nulla suscipit ligula in lacus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'USERSTORY' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211107' SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0410358611' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-844' SUMMARY = 'Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'BUG'
+AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220203' SOLUTION = 'DONE' PRIORITY = '39' PRODUCT = '0416648831' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-257' SUMMARY = 'Proin eu mi.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'FEATURE' AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220725'
+SOLUTION = 'RTFM' PRIORITY = '65' PRODUCT = '0743089167' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-683' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Nulla dapibus dolor vel est.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'EPIC'
+AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211019' SOLUTION = 'CANTREPOR' PRIORITY = '87' PRODUCT = '0148371051' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-322' SUMMARY = 'Praesent blandit.' STATUS = 'CANCELED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PCOLING' TYPE = 'BUG' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220117'
+SOLUTION = 'CANTREPOR' PRIORITY = '91' PRODUCT = '0873286363' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-523' SUMMARY = 'Nulla tellus.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'PGRISENTHWAI' TYPE = 'BUG' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220829'
+SOLUTION = 'UNRESOLVED' PRIORITY = '24' PRODUCT = '0870576582' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-341' SUMMARY = 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PGRISENTHWAI' TYPE = 'EPIC'
+AUTHOR = 'DBLUNT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221017' SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0682528316' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-758' SUMMARY = 'Sed vel enim sit amet nunc viverra dapibus.' STATUS = 'TEST' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'PGRISENTHWAI' TYPE = 'USERSTORY' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220806' SOLUTION = 'DONE' PRIORITY = '70' PRODUCT = '0627664825' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-251' SUMMARY = 'Vestibulum rutrum rutrum neque.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PGRISENTHWAI' TYPE = 'EPIC' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220525' SOLUTION = 'UNRESOLVED' PRIORITY = '54' PRODUCT = '0233549891' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-937' SUMMARY = 'Etiam justo.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'PGRISENTHWAI' TYPE = 'USERSTORY' AUTHOR = 'RFRANZOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221217'
+SOLUTION = 'UNRESOLVED' PRIORITY = '76' PRODUCT = '0574679735' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-306' SUMMARY = 'Donec vitae nisi.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'PGRISENTHWAI' TYPE = 'SUBTASK' AUTHOR = 'VTWYFORD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220502'
+SOLUTION = 'UNRESOLVED' PRIORITY = '34' PRODUCT = '0619051173' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-343' SUMMARY = 'Morbi non quam nec dui luctus rutrum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'PGRISENTHWAI' TYPE = 'USERSTORY' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220410' SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0234706562' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-659' SUMMARY = 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PMAINE' TYPE = 'EPIC' AUTHOR = 'AJARMAINE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220812' SOLUTION = 'UNRESOLVED' PRIORITY = '55' PRODUCT = '0703413871' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-436' SUMMARY = 'Integer non velit.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'PMAINE' TYPE = 'USERSTORY' AUTHOR = 'CTREMATHACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221014'
+SOLUTION = 'UNRESOLVED' PRIORITY = '44' PRODUCT = '0536276948' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-810' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'PMAINE'
+TYPE = 'USERSTORY' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220424' SOLUTION = 'DONE' PRIORITY = '67' PRODUCT = '0110836994' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-920' SUMMARY = 'Donec vitae nisi.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PMAINE' TYPE = 'USERSTORY' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220429'
+SOLUTION = 'CANTREPOR' PRIORITY = '20' PRODUCT = '0599995877' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-238' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'PMAINE' TYPE = 'USERSTORY' AUTHOR = 'GCARLONE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220817'
+SOLUTION = 'UNRESOLVED' PRIORITY = '36' PRODUCT = '0152138115' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SH' SUMMARY = '' STATUS = 'A' PROJECT = '' DESCRIPTION = '' ASSIGNEE = 'ID01631' TYPE = '' AUTHOR = 'ID01631' CHANGED_AT = '20230203092547.6327550 ' CREATED_AT = '20230203092539.4229940 ' DUE_DATE = '00000000' SOLUTION = ''
+PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-918' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'PMAINE' TYPE = 'FEATURE' AUTHOR = 'HSICKERT'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221102' SOLUTION = 'UNRESOLVED' PRIORITY = '56' PRODUCT = '0880442194' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-927' SUMMARY = 'Sed vel enim sit amet nunc viverra dapibus.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PMAINE' TYPE = 'SUBTASK' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220205' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0036306129' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-10' SUMMARY = 'Aenean fermentum.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'PMAINE' TYPE = 'TASK' AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221202'
+SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0573504591' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-566' SUMMARY = 'Curabitur at ipsum ac tellus semper interdum.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PMAINE' TYPE = 'FEATURE' AUTHOR = 'TGEISTBECK' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220109' SOLUTION = 'UNRESOLVED' PRIORITY = '63' PRODUCT = '0406564917' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-259' SUMMARY = 'Duis consequat dui nec nisi volutpat eleifend.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'PO''LOONEY' TYPE = 'TASK' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230221' SOLUTION = 'UNRESOLVED' PRIORITY = '57' PRODUCT = '0766083733' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-336' SUMMARY = 'Aliquam non mauris.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'PO''LOONEY' TYPE = 'FEATURE' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230107'
+SOLUTION = 'UNRESOLVED' PRIORITY = '23' PRODUCT = '0923771960' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-368' SUMMARY = 'Morbi ut odio.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PO''LOONEY' TYPE = 'SUBTASK' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230130'
+SOLUTION = 'UNRESOLVED' PRIORITY = '44' PRODUCT = '0554857992' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-745' SUMMARY = 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'PO''LOONEY' TYPE = 'EPIC' AUTHOR = 'MDEHM' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221214' SOLUTION = 'DONE' PRIORITY = '67' PRODUCT = '0613483064' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-387' SUMMARY = 'Cras in purus eu magna vulputate luctus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PO''LOONEY' TYPE = 'TASK' AUTHOR = 'MGLASHEEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221027' SOLUTION = 'UNRESOLVED' PRIORITY = '46' PRODUCT = '0532940347' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-853' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'PO''LOONEY' TYPE = 'SUBTASK' AUTHOR = 'PGRISENTHWAI' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220808' SOLUTION = 'UNRESOLVED' PRIORITY = '25' PRODUCT = '0984816955' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-616' SUMMARY = 'Vivamus in felis eu sapien cursus vestibulum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'PO''LOONEY' TYPE = 'EPIC' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220723' SOLUTION = 'UNRESOLVED' PRIORITY = '43' PRODUCT = '0162838893' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-326' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'PO''LOONEY'
+TYPE = 'SUBTASK' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220411' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0756026355' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-465' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'FEATURE' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220604' SOLUTION = 'DONE' PRIORITY = '58' PRODUCT = '0290254876' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-221' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'TASK' AUTHOR = 'BLAMANBY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220708' SOLUTION = 'WONTFIX' PRIORITY = '26' PRODUCT = '0196644569' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-636' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'TASK' AUTHOR = 'CBENTHAM'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230303' SOLUTION = 'UNRESOLVED' PRIORITY = '73' PRODUCT = '0626772066' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-264' SUMMARY = 'Nulla facilisi.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'EPIC' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230111'
+SOLUTION = 'UNRESOLVED' PRIORITY = '23' PRODUCT = '0468231659' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-761' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'FEATURE' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220926' SOLUTION = 'UNRESOLVED' PRIORITY = '85' PRODUCT = '0366262607' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-582' SUMMARY = 'Proin at turpis a pede posuere nonummy.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'USERSTORY' AUTHOR = 'FLEMERLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211001' SOLUTION = 'UNRESOLVED' PRIORITY = '42' PRODUCT = '0586696526' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-441' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'BUG' AUTHOR = 'FPATIFIELD'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221224' SOLUTION = 'UNRESOLVED' PRIORITY = '15' PRODUCT = '0972535275' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-491' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'USERSTORY' AUTHOR = 'FPATIFIELD' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220402' SOLUTION = 'UNRESOLVED' PRIORITY = '96' PRODUCT = '0800646071' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-41' SUMMARY = 'Nulla suscipit ligula in lacus.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'USERSTORY' AUTHOR = 'GKIWITZ' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221005' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0216045400' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-213' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'EPIC' AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220926' SOLUTION = 'UNRESOLVED' PRIORITY = '30' PRODUCT = '0979965494' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-695' SUMMARY = 'Sed ante.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'EPIC' AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220910'
+SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0928717400' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-674' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'FEATURE' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220509' SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0878524395' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-52' SUMMARY = 'Nulla tellus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'EPIC' AUTHOR = 'JKARADZAS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220519'
+SOLUTION = 'UNRESOLVED' PRIORITY = '40' PRODUCT = '0490930716' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-166' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'SUBTASK' AUTHOR = 'JKARADZAS'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220605' SOLUTION = 'UNRESOLVED' PRIORITY = '7' PRODUCT = '0820166246' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-382' SUMMARY = 'Pellentesque eget nunc.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'FEATURE' AUTHOR = 'KSOALL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221124'
+SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0381944149' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-963' SUMMARY = 'Proin risus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'EPIC' AUTHOR = 'PCOLING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230116'
+SOLUTION = 'UNRESOLVED' PRIORITY = '70' PRODUCT = '0569421254' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-505' SUMMARY = 'Integer a nibh.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'POGILVIE' TYPE = 'FEATURE' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211221'
+SOLUTION = 'UNRESOLVED' PRIORITY = '36' PRODUCT = '0739928821' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-237' SUMMARY = 'Suspendisse potenti.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RDOYLE' TYPE = 'TASK' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220615'
+SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0788114519' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-372' SUMMARY = 'Donec dapibus.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RDOYLE' TYPE = 'SUBTASK' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220131'
+SOLUTION = 'UNRESOLVED' PRIORITY = '87' PRODUCT = '0017605585' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-47' SUMMARY = 'Nam tristique tortor eu pede.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'RDOYLE' TYPE = 'SUBTASK' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220319' SOLUTION = 'UNRESOLVED' PRIORITY = '18' PRODUCT = '0158831210' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-974' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RDOYLE' TYPE = 'FEATURE' AUTHOR = 'GCARLONE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221122' SOLUTION = 'WONTFIX' PRIORITY = '4' PRODUCT = '0313875806' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-567' SUMMARY = 'Duis at velit eu est congue elementum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RDOYLE' TYPE = 'EPIC' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220711' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0938170585' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-717' SUMMARY = 'Vivamus in felis eu sapien cursus vestibulum.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RDOYLE' TYPE = 'USERSTORY' AUTHOR = 'SSAGE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221025' SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0856547625' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-534' SUMMARY = 'Ut at dolor quis odio consequat varius.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'RDOYLE' TYPE = 'USERSTORY' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230330' SOLUTION = 'UNRESOLVED' PRIORITY = '27' PRODUCT = '0778704025' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-594' SUMMARY = 'Duis at velit eu est congue elementum.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RFRANZOTTO' TYPE = 'EPIC' AUTHOR = 'DSPLEVINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220415' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0234835900' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'ARIBA' SUMMARY = '' STATUS = '' PROJECT = '' DESCRIPTION = '' ASSIGNEE = 'ID01631' TYPE = 'ENTW' AUTHOR = 'DB000001' CHANGED_AT = '20230203100749.0185710 ' CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = 'SOFTWARE'
+PRIORITY = '1' PRODUCT = '0000123456' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-679' SUMMARY = 'Proin risus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RFRANZOTTO' TYPE = 'TASK' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220830'
+SOLUTION = 'UNRESOLVED' PRIORITY = '28' PRODUCT = '0923048194' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-105' SUMMARY = 'Morbi ut odio.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RFRANZOTTO' TYPE = 'TASK' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221109'
+SOLUTION = 'UNRESOLVED' PRIORITY = '10' PRODUCT = '0190289008' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-373' SUMMARY = 'Praesent blandit lacinia erat.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RFRANZOTTO' TYPE = 'TASK' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220529' SOLUTION = 'UNRESOLVED' PRIORITY = '14' PRODUCT = '0954694173' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-999' SUMMARY = 'Das ist ein wichtiges Projekt' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = '' TYPE = '' AUTHOR = 'D0000468033' CHANGED_AT = '20221208141335.4386710 ' CREATED_AT = '20221208140555.3392190 '
+DUE_DATE = '20221209' SOLUTION = '' PRIORITY = '24' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-813' SUMMARY = 'Phasellus in felis.' STATUS = 'RETEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RFRANZOTTO' TYPE = 'SUBTASK' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230221'
+SOLUTION = 'DONE' PRIORITY = '37' PRODUCT = '0388371454' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-540' SUMMARY = 'Integer tincidunt ante vel ipsum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RGEBHARDT' TYPE = 'EPIC' AUTHOR = 'BLAMANBY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211021' SOLUTION = 'UNRESOLVED' PRIORITY = '25' PRODUCT = '0943796626' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-305' SUMMARY = 'Suspendisse potenti.' STATUS = 'RETEST' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RGEBHARDT' TYPE = 'EPIC' AUTHOR = 'CBISHELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221126'
+SOLUTION = 'DONE' PRIORITY = '14' PRODUCT = '0078158264' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-777' SUMMARY = 'In quis justo.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RGEBHARDT' TYPE = 'SUBTASK' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220208'
+SOLUTION = 'DONE' PRIORITY = '99' PRODUCT = '0625880406' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-RBR-1000' SUMMARY = '' STATUS = 'NEW' PROJECT = '' DESCRIPTION = '' ASSIGNEE = 'DB178D2' TYPE = '' AUTHOR = '' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0'
+PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-292' SUMMARY = 'Phasellus in felis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'RGEBHARDT' TYPE = 'EPIC' AUTHOR = 'MD''AGUANNO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230316'
+SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0735963781' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-37' SUMMARY = 'Aliquam non mauris.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RGEBHARDT' TYPE = 'EPIC' AUTHOR = 'RGEBHARDT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220110'
+SOLUTION = 'UNRESOLVED' PRIORITY = '35' PRODUCT = '0307190109' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-964' SUMMARY = 'Donec posuere metus vitae ipsum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RGEBHARDT' TYPE = 'EPIC' AUTHOR = 'TSEMAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230323' SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0504523080' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-682' SUMMARY = 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RGEBHARDT' TYPE = 'USERSTORY' AUTHOR = 'ZMEADERS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220615' SOLUTION = 'UNRESOLVED' PRIORITY = '46' PRODUCT = '0397158202' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-987' SUMMARY = 'Vestibulum sed magna at nunc commodo placerat.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RGEBHARDT' TYPE = 'TASK' AUTHOR = 'ZMEADERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221203' SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0522690724' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-719' SUMMARY = 'In blandit ultrices enim.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'RHUNTING' TYPE = 'SUBTASK' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220707' SOLUTION = 'UNRESOLVED' PRIORITY = '40' PRODUCT = '0152581896' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-649' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'RHUNTING' TYPE = 'TASK' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220613' SOLUTION = 'UNRESOLVED' PRIORITY = '10' PRODUCT = '0407602082' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-521' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RHUNTING' TYPE = 'FEATURE' AUTHOR = 'EDONAGHY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220331' SOLUTION = 'UNRESOLVED' PRIORITY = '60' PRODUCT = '0645335092' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-411' SUMMARY = 'Curabitur convallis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RHUNTING' TYPE = 'EPIC' AUTHOR = 'FPATIFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221106'
+SOLUTION = 'UNRESOLVED' PRIORITY = '78' PRODUCT = '0410265179' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-482' SUMMARY = 'Integer non velit.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'TASK' AUTHOR = 'FMOWSDELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211228'
+SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0935820242' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-374' SUMMARY = 'Vivamus in felis eu sapien cursus vestibulum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'TASK' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211008' SOLUTION = 'UNRESOLVED' PRIORITY = '80' PRODUCT = '0936854896' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-197' SUMMARY = 'Aliquam sit amet diam in magna bibendum imperdiet.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DB0E7E5' TYPE = 'BUG' AUTHOR = 'NPESSELT' CHANGED_AT = '20230203135642.5963870 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220531' SOLUTION = 'UNRESOLVED' PRIORITY = '60' PRODUCT = '0450045158' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-361' SUMMARY = 'Mauris ullamcorper purus sit amet nulla.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'EPIC' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220301' SOLUTION = 'UNRESOLVED' PRIORITY = '97' PRODUCT = '0738131761' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-798' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'BUG' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211201' SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0237490572' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-562' SUMMARY = 'Integer ac leo.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'FEATURE' AUTHOR = 'MGLASHEEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220402'
+SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0358849378' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-6' SUMMARY = 'Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'TASK' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211025' SOLUTION = 'UNRESOLVED' PRIORITY = '37' PRODUCT = '0184122275' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-536' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'USERSTORY' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220809' SOLUTION = 'UNRESOLVED' PRIORITY = '14' PRODUCT = '0547781441' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-986' SUMMARY = 'Nulla tempus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'FEATURE' AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211221'
+SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0263133902' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-408' SUMMARY = 'Nam tristique tortor eu pede.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'TASK' AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230111'
+SOLUTION = 'UNRESOLVED' PRIORITY = '78' PRODUCT = '0846111653' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-911' SUMMARY = 'Etiam pretium iaculis justo.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'BUG' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221003'
+SOLUTION = 'UNRESOLVED' PRIORITY = '85' PRODUCT = '0253188043' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-690' SUMMARY = 'Aliquam quis turpis eget elit sodales scelerisque.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'TASK' AUTHOR = 'SPRENTY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230204' SOLUTION = 'DONE' PRIORITY = '29' PRODUCT = '0371764924' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-111' SUMMARY = 'Nullam porttitor lacus at turpis.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'BUG' AUTHOR = 'SSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230127' SOLUTION = 'UNRESOLVED' PRIORITY = '88' PRODUCT = '0547546521' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-759' SUMMARY = 'Nulla ut erat id mauris vulputate elementum.' STATUS = 'CANCELED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'EPIC' AUTHOR = 'TGERGELY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220307' SOLUTION = 'RTFM' PRIORITY = '40' PRODUCT = '0713572017' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-778' SUMMARY = 'Vivamus in felis eu sapien cursus vestibulum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RSAGE' TYPE = 'BUG' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211205' SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0963715117' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-394' SUMMARY = 'Aliquam non mauris.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'USERSTORY' AUTHOR = 'AGERGUS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211112' SOLUTION = 'DONE' PRIORITY = '32' PRODUCT = '0164379993' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-786' SUMMARY = 'Nulla suscipit ligula in lacus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'SUBTASK' AUTHOR = 'BBAKESEF' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221003' SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0586931030' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-386' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'BUG' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221224' SOLUTION = 'DONE' PRIORITY = '44' PRODUCT = '0531897168' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-968' SUMMARY = 'Ut tellus.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'TASK' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220608'
+SOLUTION = 'DONE' PRIORITY = '13' PRODUCT = '0834487587' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-9' SUMMARY = 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'BUG' AUTHOR = 'HGALLEAR' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220501' SOLUTION = 'UNRESOLVED' PRIORITY = '76' PRODUCT = '0342390183' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-355' SUMMARY = 'Etiam pretium iaculis justo.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'TASK' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211211' SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0176342418' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-933' SUMMARY = 'Nulla facilisi.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'EPIC' AUTHOR = 'MELKINS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220517'
+SOLUTION = 'UNRESOLVED' PRIORITY = '79' PRODUCT = '0275740166' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-68' SUMMARY = 'Nulla nisl.' STATUS = 'CANCELED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'BUG' AUTHOR = 'MLANMEID' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221006'
+SOLUTION = 'RTFM' PRIORITY = '44' PRODUCT = '0814211826' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-174' SUMMARY = 'Integer tincidunt ante vel ipsum.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DB135E0' TYPE = 'USERSTORY' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220428' SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0310216969' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-32' SUMMARY = 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'TASK' AUTHOR = 'RGEBHARDT'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220423' SOLUTION = 'UNRESOLVED' PRIORITY = '53' PRODUCT = '0294705482' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-518' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'EPIC' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220905' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0715502629' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-131' SUMMARY = 'Donec ut mauris eget massa tempor convallis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'EPIC' AUTHOR = 'TGEISTBECK' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230305' SOLUTION = 'UNRESOLVED' PRIORITY = '60' PRODUCT = '0209746827' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-49' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SANTONOPOULO' TYPE = 'SUBTASK' AUTHOR = 'TJERROMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220314' SOLUTION = 'UNRESOLVED' PRIORITY = '41' PRODUCT = '0585129904' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-960' SUMMARY = 'Nullam porttitor lacus at turpis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN' TYPE = 'FEATURE' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221203' SOLUTION = 'UNRESOLVED' PRIORITY = '4' PRODUCT = '0161294563' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-342' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Nulla dapibus dolor vel est.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN'
+TYPE = 'USERSTORY' AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220405' SOLUTION = 'UNRESOLVED' PRIORITY = '10' PRODUCT = '0094806820' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-631' SUMMARY = 'Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN' TYPE = 'USERSTORY' AUTHOR = 'CPROBACK'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220502' SOLUTION = 'UNRESOLVED' PRIORITY = '44' PRODUCT = '0830253276' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-431' SUMMARY = 'Phasellus sit amet erat.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN' TYPE = 'EPIC' AUTHOR = 'FLEMERLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220425'
+SOLUTION = 'UNRESOLVED' PRIORITY = '31' PRODUCT = '0581485532' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-329' SUMMARY = 'Duis bibendum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN' TYPE = 'SUBTASK' AUTHOR = 'FPATIFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230320'
+SOLUTION = 'UNRESOLVED' PRIORITY = '2' PRODUCT = '0556699278' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-398' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN' TYPE = 'EPIC' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230310' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0284073365' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-579' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN' TYPE = 'USERSTORY' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230105'
+SOLUTION = 'UNRESOLVED' PRIORITY = '52' PRODUCT = '0813404747' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-554' SUMMARY = 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN' TYPE = 'FEATURE' AUTHOR = 'SANTONOPOULO'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220116' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0838367011' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-375' SUMMARY = 'Proin at turpis a pede posuere nonummy.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN' TYPE = 'BUG' AUTHOR = 'SIVANYUTIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230130' SOLUTION = 'UNRESOLVED' PRIORITY = '96' PRODUCT = '0209611902' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-926' SUMMARY = 'Morbi non lectus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SIVANYUTIN' TYPE = 'BUG' AUTHOR = 'TJERROMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220927'
+SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0529675480' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-409' SUMMARY = 'Nulla mollis molestie lorem.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SPRENTY' TYPE = 'BUG' AUTHOR = 'BLAMANBY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230324' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0591821599' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-737' SUMMARY = 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SPRENTY' TYPE = 'TASK' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221230' SOLUTION = 'UNRESOLVED' PRIORITY = '16' PRODUCT = '0015737435' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-973' SUMMARY = 'Donec vitae nisi.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SPRENTY' TYPE = 'USERSTORY' AUTHOR = 'ELARAWAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230222'
+SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0152736068' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-193' SUMMARY = 'Donec dapibus.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SPRENTY' TYPE = 'SUBTASK' AUTHOR = 'PO''LOONEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211104'
+SOLUTION = 'DUPLICATE' PRIORITY = '89' PRODUCT = '0769934740' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-132' SUMMARY = 'Donec semper sapien a libero.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SPRENTY' TYPE = 'USERSTORY' AUTHOR = 'RFRANZOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220604' SOLUTION = 'UNRESOLVED' PRIORITY = '97' PRODUCT = '0673877328' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-470' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'CANCELED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SPRENTY' TYPE = 'TASK' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220601' SOLUTION = 'ASDESIGNED' PRIORITY = '73' PRODUCT = '0921478793' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-949' SUMMARY = 'Vivamus vel nulla eget eros elementum pellentesque.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SPRENTY' TYPE = 'FEATURE' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220902' SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0701446876' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-630' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SPRENTY' TYPE = 'USERSTORY' AUTHOR = 'TSEMAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220630' SOLUTION = 'UNRESOLVED' PRIORITY = '18' PRODUCT = '0370610009' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-365' SUMMARY = 'Aenean auctor gravida sem.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SRIDGES' TYPE = 'SUBTASK' AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220605' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0301023354' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-340' SUMMARY = 'Integer ac leo.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'SRIDGES' TYPE = 'TASK' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211027'
+SOLUTION = 'UNRESOLVED' PRIORITY = '30' PRODUCT = '0181039159' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-715' SUMMARY = 'In quis justo.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SRIDGES' TYPE = 'FEATURE' AUTHOR = 'LCROAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220712'
+SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0778690370' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-182' SUMMARY = 'Nullam molestie nibh in lectus.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D0000326286' TYPE = 'TASK' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220405' SOLUTION = 'UNRESOLVED' PRIORITY = '64' PRODUCT = '0690245070' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-665' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Duis faucibus accumsan odio.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SRIDGES' TYPE = 'USERSTORY'
+AUTHOR = 'TGEISTBECK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220408' SOLUTION = 'UNRESOLVED' PRIORITY = '50' PRODUCT = '0488235621' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-235' SUMMARY = 'Nulla suscipit ligula in lacus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SRIDGES' TYPE = 'BUG' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221118' SOLUTION = 'UNRESOLVED' PRIORITY = '72' PRODUCT = '0179659693' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-896' SUMMARY = 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'TASK' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211029' SOLUTION = 'UNRESOLVED' PRIORITY = '22' PRODUCT = '0021653573' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-817' SUMMARY = 'Morbi quis tortor id nulla ultrices aliquet.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'USERSTORY' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220205' SOLUTION = 'UNRESOLVED' PRIORITY = '81' PRODUCT = '0188644546' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-775' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Nulla dapibus dolor vel est.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'FEATURE'
+AUTHOR = 'FLEMERLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220707' SOLUTION = 'UNRESOLVED' PRIORITY = '25' PRODUCT = '0299614417' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-128' SUMMARY = 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'BUG' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211203' SOLUTION = 'UNRESOLVED' PRIORITY = '24' PRODUCT = '0459091098' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-713' SUMMARY = 'Nulla ac enim.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'TASK' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211117'
+SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0723942408' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-338' SUMMARY = 'Curabitur convallis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'TASK' AUTHOR = 'KSOALL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221218'
+SOLUTION = 'UNRESOLVED' PRIORITY = '82' PRODUCT = '0212311991' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-930' SUMMARY = 'Proin eu mi.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'USERSTORY' AUTHOR = 'LMILLETT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221222'
+SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0226358793' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-961' SUMMARY = 'Pellentesque at nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'TASK' AUTHOR = 'PCOLING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220424'
+SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0072898280' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-277' SUMMARY = 'Pellentesque at nulla.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'FEATURE' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211217'
+SOLUTION = 'UNRESOLVED' PRIORITY = '63' PRODUCT = '0445463100' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-18' SUMMARY = 'Phasellus sit amet erat.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = 'Hallo' ASSIGNEE = 'DB0E7E5' TYPE = 'TASK' AUTHOR = 'RDOYLE' CHANGED_AT = '20230203135703.3108460 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220619' SOLUTION = 'UNRESOLVED' PRIORITY = '74' PRODUCT = '0926165798' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-914' SUMMARY = 'Vestibulum sed magna at nunc commodo placerat.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SSAGE' TYPE = 'BUG' AUTHOR = 'TSEMAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220127' SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0140111834' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-339' SUMMARY = 'Integer ac leo.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'SSHANAHAN' TYPE = 'FEATURE' AUTHOR = 'CATTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220922'
+SOLUTION = 'UNRESOLVED' PRIORITY = '52' PRODUCT = '0542779380' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-313' SUMMARY = 'Aliquam quis turpis eget elit sodales scelerisque.' STATUS = 'INPROGRE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SSHANAHAN' TYPE = 'USERSTORY' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211003' SOLUTION = 'UNRESOLVED' PRIORITY = '64' PRODUCT = '0759361895' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-545' SUMMARY = 'Donec semper sapien a libero.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'SSHANAHAN' TYPE = 'BUG' AUTHOR = 'OALEBROOKE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230314' SOLUTION = 'UNRESOLVED' PRIORITY = '40' PRODUCT = '0996229298' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-952' SUMMARY = 'Morbi a ipsum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'SSHANAHAN' TYPE = 'SUBTASK' AUTHOR = 'SSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220827'
+SOLUTION = 'UNRESOLVED' PRIORITY = '20' PRODUCT = '0857832244' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-211' SUMMARY = 'Pellentesque ultrices mattis odio.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'SSHANAHAN' TYPE = 'TASK' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220326' SOLUTION = 'UNRESOLVED' PRIORITY = '3' PRODUCT = '0617183487' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-592' SUMMARY = 'Aliquam quis turpis eget elit sodales scelerisque.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'TASK' AUTHOR = 'BBREARLEY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221008' SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0364106627' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-967' SUMMARY = 'In sagittis dui vel nisl.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'TASK' AUTHOR = 'CBENTHAM' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211117' SOLUTION = 'UNRESOLVED' PRIORITY = '75' PRODUCT = '0426800041' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-668' SUMMARY = 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'USERSTORY' AUTHOR = 'CBISHELL'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220625' SOLUTION = 'CANTREPOR' PRIORITY = '27' PRODUCT = '0850396110' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-462' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'FEATURE' AUTHOR = 'DBRAMICH' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221111' SOLUTION = 'UNRESOLVED' PRIORITY = '60' PRODUCT = '0330319996' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-807' SUMMARY = 'Suspendisse potenti.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'SUBTASK' AUTHOR = 'DHOWDEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220609'
+SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0347101178' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-561' SUMMARY = 'Cras pellentesque volutpat dui.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'BUG' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230125' SOLUTION = 'UNRESOLVED' PRIORITY = '95' PRODUCT = '0936892365' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-360' SUMMARY = 'Pellentesque eget nunc.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'BUG' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221005' SOLUTION = 'DONE' PRIORITY = '53' PRODUCT = '0634384022' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-73' SUMMARY = 'Mauris sit amet eros.' STATUS = 'INPROGRE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'EPIC' AUTHOR = 'HSICKERT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220423' SOLUTION = 'UNRESOLVED' PRIORITY = '1' PRODUCT = '0647155955' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-870' SUMMARY = 'Integer ac neque.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'FEATURE' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220607'
+SOLUTION = 'DONE' PRIORITY = '58' PRODUCT = '0373993880' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-196' SUMMARY = 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'TASK' AUTHOR = 'KROBJOHNS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220817' SOLUTION = 'UNRESOLVED' PRIORITY = '39' PRODUCT = '0447224062' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-811' SUMMARY = 'Aliquam erat volutpat.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'SUBTASK' AUTHOR = 'MGLASHEEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220827' SOLUTION = 'UNRESOLVED' PRIORITY = '95' PRODUCT = '0686761936' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-229' SUMMARY = 'Sed accumsan felis.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'EPIC' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220819'
+SOLUTION = 'UNRESOLVED' PRIORITY = '24' PRODUCT = '0910211024' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-599' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'BUG' AUTHOR = 'NPESSELT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220514' SOLUTION = 'UNRESOLVED' PRIORITY = '38' PRODUCT = '0244127689' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-641' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'TASK' AUTHOR = 'OMENEGHI'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220430' SOLUTION = 'UNRESOLVED' PRIORITY = '43' PRODUCT = '0183449624' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-624' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'FEATURE' AUTHOR = 'RSAGE'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221106' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0856870089' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-721' SUMMARY = 'Sed accumsan felis.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TGEISTBECK' TYPE = 'BUG' AUTHOR = 'SSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211025'
+SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0334651973' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-618' SUMMARY = 'Donec ut dolor.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'TASK' AUTHOR = 'CATTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230119'
+SOLUTION = 'CANTREPOR' PRIORITY = '81' PRODUCT = '0077178719' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-699' SUMMARY = 'Donec posuere metus vitae ipsum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'SUBTASK' AUTHOR = 'CATTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220507' SOLUTION = 'UNRESOLVED' PRIORITY = '76' PRODUCT = '0181604122' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-456' SUMMARY = 'Nullam porttitor lacus at turpis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'FEATURE' AUTHOR = 'CBISHELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221214' SOLUTION = 'UNRESOLVED' PRIORITY = '92' PRODUCT = '0690017621' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-423' SUMMARY = 'Nullam varius.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'EPIC' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221222'
+SOLUTION = 'UNRESOLVED' PRIORITY = '68' PRODUCT = '0321060864' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-772' SUMMARY = 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'USERSTORY'
+AUTHOR = 'CTREMATHACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220707' SOLUTION = 'UNRESOLVED' PRIORITY = '53' PRODUCT = '0841455724' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-27' SUMMARY = 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'USERSTORY'
+AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220808' SOLUTION = 'UNRESOLVED' PRIORITY = '52' PRODUCT = '0121109742' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-979' SUMMARY = 'Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'BUG'
+AUTHOR = 'JKARADZAS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221130' SOLUTION = 'UNRESOLVED' PRIORITY = '88' PRODUCT = '0993415221' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-623' SUMMARY = 'Pellentesque at nulla.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'USERSTORY' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220925'
+SOLUTION = 'UNRESOLVED' PRIORITY = '6' PRODUCT = '0212797334' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-477' SUMMARY = 'Etiam vel augue.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'SUBTASK' AUTHOR = 'LMIXTURE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220622'
+SOLUTION = 'UNRESOLVED' PRIORITY = '95' PRODUCT = '0434750648' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-747' SUMMARY = 'Maecenas pulvinar lobortis est.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'EPIC' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221106' SOLUTION = 'UNRESOLVED' PRIORITY = '40' PRODUCT = '0412056509' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-353' SUMMARY = 'Aenean lectus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'BUG' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221208'
+SOLUTION = 'UNRESOLVED' PRIORITY = '36' PRODUCT = '0027870202' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-727' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'TGERGELY' TYPE = 'SUBTASK' AUTHOR = 'TJERROMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230115' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0326788356' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-873' SUMMARY = 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TGROVEN' TYPE = 'SUBTASK' AUTHOR = 'AGERGUS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230103' SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0421918298' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-452' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Duis faucibus accumsan odio.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'TGROVEN' TYPE = 'TASK'
+AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220716' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0846006409' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-40' SUMMARY = 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'TGROVEN' TYPE = 'BUG' AUTHOR = 'EGODMAR' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211212' SOLUTION = 'UNRESOLVED' PRIORITY = '31' PRODUCT = '0610975438' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-648' SUMMARY = 'Etiam pretium iaculis justo.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'TGROVEN' TYPE = 'TASK' AUTHOR = 'FMOWSDELL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221207' SOLUTION = 'UNRESOLVED' PRIORITY = '90' PRODUCT = '0552553751' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-587' SUMMARY = 'Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'TGROVEN' TYPE = 'EPIC' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230111' SOLUTION = 'UNRESOLVED' PRIORITY = '49' PRODUCT = '0889265988' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-26' SUMMARY = 'Cras in purus eu magna vulputate luctus.' STATUS = 'RETEST' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'TGROVEN' TYPE = 'USERSTORY' AUTHOR = 'ZMEADERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211225' SOLUTION = 'DONE' PRIORITY = '87' PRODUCT = '0351053862' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-833' SUMMARY = 'In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TJERROMES' TYPE = 'TASK'
+AUTHOR = 'AGERGUS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220824' SOLUTION = 'CANTREPOR' PRIORITY = '69' PRODUCT = '0083910784' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-167' SUMMARY = 'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TJERROMES' TYPE = 'BUG' AUTHOR = 'AJARMAINE' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211224' SOLUTION = 'UNRESOLVED' PRIORITY = '27' PRODUCT = '0790813413' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-352' SUMMARY = 'Duis bibendum.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'TJERROMES' TYPE = 'SUBTASK' AUTHOR = 'CCROMLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211128'
+SOLUTION = 'UNRESOLVED' PRIORITY = '39' PRODUCT = '0845155497' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-736' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'TJERROMES' TYPE = 'USERSTORY' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211215' SOLUTION = 'ASDESIGNED' PRIORITY = '58' PRODUCT = '0266795553' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-877' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TJERROMES'
+TYPE = 'USERSTORY' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220404' SOLUTION = 'UNRESOLVED' PRIORITY = '58' PRODUCT = '0902672828' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-821' SUMMARY = 'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.' STATUS = 'CANCELED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TJERROMES' TYPE = 'USERSTORY' AUTHOR = 'GPITKEATHLEY'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211116' SOLUTION = 'CANTREPOR' PRIORITY = '74' PRODUCT = '0780584854' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-61' SUMMARY = 'Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'TJERROMES' TYPE = 'FEATURE' AUTHOR = 'JDAAL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211231' SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0558532082' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-302' SUMMARY = 'Sed ante.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'DB0E7E5' TYPE = 'USERSTORY' AUTHOR = 'TGROVEN' CHANGED_AT = '20230203140026.4173230 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221213' SOLUTION = 'DUPLICATE' PRIORITY = '53' PRODUCT = '0231376999' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-417' SUMMARY = 'Nulla tellus.' STATUS = 'INPROGRE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'TJERROMES' TYPE = 'FEATURE' AUTHOR = 'WGYRGORWICX' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220228'
+SOLUTION = 'UNRESOLVED' PRIORITY = '73' PRODUCT = '0487160516' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-446' SUMMARY = 'Cras pellentesque volutpat dui.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TSEMAN' TYPE = 'TASK' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221203' SOLUTION = 'UNRESOLVED' PRIORITY = '79' PRODUCT = '0283513106' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-885' SUMMARY = 'Suspendisse potenti.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TSEMAN' TYPE = 'FEATURE' AUTHOR = 'AHULMES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211013'
+SOLUTION = 'UNRESOLVED' PRIORITY = '28' PRODUCT = '0936049822' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-107' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TSEMAN' TYPE = 'FEATURE' AUTHOR = 'BLAMANBY'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220309' SOLUTION = 'UNRESOLVED' PRIORITY = '8' PRODUCT = '0876140266' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-4' SUMMARY = 'Etiam vel augue.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TSEMAN' TYPE = 'TASK' AUTHOR = 'GCARLONE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220518'
+SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0729215637' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-354' SUMMARY = 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'TSEMAN' TYPE = 'SUBTASK'
+AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221004' SOLUTION = 'UNRESOLVED' PRIORITY = '78' PRODUCT = '0766610246' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-297' SUMMARY = 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'TSEMAN' TYPE = 'TASK' AUTHOR = 'MNOTON' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211217' SOLUTION = 'RTFM' PRIORITY = '75' PRODUCT = '0805608914' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-419' SUMMARY = 'Cras in purus eu magna vulputate luctus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'TSEMAN' TYPE = 'BUG' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221113' SOLUTION = 'UNRESOLVED' PRIORITY = '52' PRODUCT = '0602135222' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-499' SUMMARY = 'Nulla suscipit ligula in lacus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'TSEMAN' TYPE = 'BUG' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221231'
+SOLUTION = 'UNRESOLVED' PRIORITY = '7' PRODUCT = '0371450889' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-958' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'EPIC' AUTHOR = 'BGUENY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221102' SOLUTION = 'UNRESOLVED' PRIORITY = '21' PRODUCT = '0045281417' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-769' SUMMARY = 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'BUG' AUTHOR = 'CATTON'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220610' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0324307839' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-345' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'EPIC' AUTHOR = 'DKIFT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220721' SOLUTION = 'UNRESOLVED' PRIORITY = '59' PRODUCT = '0514170974' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-8' SUMMARY = 'Sed accumsan felis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'EPIC' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211220'
+SOLUTION = 'UNRESOLVED' PRIORITY = '95' PRODUCT = '0620372377' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-841' SUMMARY = 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'USERSTORY' AUTHOR = 'EDONAGHY' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20221115' SOLUTION = 'UNRESOLVED' PRIORITY = '94' PRODUCT = '0536388827' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-0199' SUMMARY = 'Test' STATUS = 'DELETED' PROJECT = '' DESCRIPTION = '' ASSIGNEE = 'AHULMES' TYPE = '' AUTHOR = 'BATMAN' CHANGED_AT = '20230203141034.7827840 ' CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = ''
+PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-874' SUMMARY = 'In blandit ultrices enim.' STATUS = 'FIXED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'BUG' AUTHOR = 'GPITKEATHLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211122' SOLUTION = 'WONTFIX' PRIORITY = '75' PRODUCT = '0901019961' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-735' SUMMARY = 'Sed accumsan felis.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'SUBTASK' AUTHOR = 'HVEL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220721'
+SOLUTION = 'UNRESOLVED' PRIORITY = '1' PRODUCT = '0349507875' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-547' SUMMARY = 'Praesent blandit.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'USERSTORY' AUTHOR = 'MKAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230309'
+SOLUTION = 'UNRESOLVED' PRIORITY = '33' PRODUCT = '0551404194' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-922' SUMMARY = 'Praesent blandit.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'BUG' AUTHOR = 'PMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230122'
+SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0997295732' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-803' SUMMARY = 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.' STATUS = 'TEST' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'USERSTORY' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220516' SOLUTION = 'DONE' PRIORITY = '58' PRODUCT = '0472064193' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-188' SUMMARY = 'Fusce posuere felis sed lacus.' STATUS = 'POSTPONE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'VTWYFORD' TYPE = 'BUG' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220709' SOLUTION = 'UNRESOLVED' PRIORITY = '4' PRODUCT = '0194815302' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-756' SUMMARY = 'Praesent id massa id nisl venenatis lacinia.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'TASK' AUTHOR = 'AJARMAINE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230312' SOLUTION = 'UNRESOLVED' PRIORITY = '75' PRODUCT = '0893945604' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-897' SUMMARY = 'Phasellus sit amet erat.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'BUG' AUTHOR = 'AROOSE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220301'
+SOLUTION = 'ASDESIGNED' PRIORITY = '93' PRODUCT = '0045055153' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-548' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'EPIC' AUTHOR = 'BBREARLEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211218' SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0816836691' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-253' SUMMARY = 'Nulla facilisi.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'EPIC' AUTHOR = 'CFEATHERSTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221021'
+SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0910648539' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-619' SUMMARY = 'Maecenas rhoncus aliquam lacus.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'USERSTORY' AUTHOR = 'CHOOLAGHAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220807' SOLUTION = 'UNRESOLVED' PRIORITY = '69' PRODUCT = '0959660702' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-488' SUMMARY = 'Mauris ullamcorper purus sit amet nulla.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'TASK' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220228' SOLUTION = 'UNRESOLVED' PRIORITY = '36' PRODUCT = '0939097297' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-406' SUMMARY = 'Nulla justo.' STATUS = 'POSTPONE' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'BUG' AUTHOR = 'JBYFIELD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220420'
+SOLUTION = 'UNRESOLVED' PRIORITY = '34' PRODUCT = '0114963440' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-709' SUMMARY = 'Integer a nibh.' STATUS = 'FIXED' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'USERSTORY' AUTHOR = 'JEALLES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230123'
+SOLUTION = 'RTFM' PRIORITY = '41' PRODUCT = '0643278551' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-97' SUMMARY = 'Vivamus vestibulum sagittis sapien.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'TASK' AUTHOR = 'PO''LOONEY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220707' SOLUTION = 'DUPLICATE' PRIORITY = '74' PRODUCT = '0293855653' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-160' SUMMARY = 'Integer non velit.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'FEATURE' AUTHOR = 'RSAGE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220120'
+SOLUTION = 'UNRESOLVED' PRIORITY = '73' PRODUCT = '0442049237' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-206' SUMMARY = 'Nulla tellus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'EPIC' AUTHOR = 'VTWYFORD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230123'
+SOLUTION = 'UNRESOLVED' PRIORITY = '74' PRODUCT = '0017144266' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-495' SUMMARY = 'Vivamus in felis eu sapien cursus vestibulum.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'TASK' AUTHOR = 'VTWYFORD' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211122' SOLUTION = 'UNRESOLVED' PRIORITY = '39' PRODUCT = '0147222865' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-581' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'WGYRGORWICX' TYPE = 'FEATURE' AUTHOR = 'ZFERRERS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211031' SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0035427632' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-15' SUMMARY = 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = 'Hier steht der Langtext' ASSIGNEE = 'AWHERRY' TYPE = 'USERSTORY' AUTHOR = 'LCROAN'
+CHANGED_AT = '20230203141229.7777190 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220503' SOLUTION = 'UNRESOLVED' PRIORITY = '63' PRODUCT = '0704305949' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-293' SUMMARY = 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'WMONARD' TYPE = 'FEATURE' AUTHOR = 'AROOSE'
+CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211006' SOLUTION = 'UNRESOLVED' PRIORITY = '73' PRODUCT = '0266571815' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-876' SUMMARY = 'Cras non velit nec nisi vulputate nonummy.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'WMONARD' TYPE = 'BUG' AUTHOR = 'AWHERRY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220109' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0172572736' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-560' SUMMARY = 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'WMONARD' TYPE = 'SUBTASK'
+AUTHOR = 'FLEMERLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220711' SOLUTION = 'UNRESOLVED' PRIORITY = '23' PRODUCT = '0938035493' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-661' SUMMARY = 'Morbi ut odio.' STATUS = 'CANCELED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'WMONARD' TYPE = 'EPIC' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221013'
+SOLUTION = 'WONTFIX' PRIORITY = '79' PRODUCT = '0423457249' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-11' SUMMARY = 'Quisque ut erat.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'WMONARD' TYPE = 'EPIC' AUTHOR = 'GHICKINBOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211124'
+SOLUTION = 'UNRESOLVED' PRIORITY = '93' PRODUCT = '0328294458' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-576' SUMMARY = 'Integer a nibh.' STATUS = 'FIXED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'WMONARD' TYPE = 'FEATURE' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221212'
+SOLUTION = 'CANTREPOR' PRIORITY = '10' PRODUCT = '0966128255' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-501' SUMMARY = 'Nulla mollis molestie lorem.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'WMONARD' TYPE = 'USERSTORY' AUTHOR = 'LMILLETT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220520' SOLUTION = 'UNRESOLVED' PRIORITY = '4' PRODUCT = '0927386434' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-780' SUMMARY = 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'WMONARD'
+TYPE = 'EPIC' AUTHOR = 'LMILLETT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220912' SOLUTION = 'UNRESOLVED' PRIORITY = '61' PRODUCT = '0334864445' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-316' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'WMONARD' TYPE = 'EPIC' AUTHOR = 'RDOYLE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211117' SOLUTION = 'UNRESOLVED' PRIORITY = '81' PRODUCT = '0287230028' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-672' SUMMARY = 'Quisque id justo sit amet sapien dignissim vestibulum.' STATUS = 'FIXED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'FEATURE' AUTHOR = 'CBISHELL' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220221' SOLUTION = 'DONE' PRIORITY = '97' PRODUCT = '0640725031' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-836' SUMMARY = 'Nulla mollis molestie lorem.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'FEATURE' AUTHOR = 'CHALLOWS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220109' SOLUTION = 'UNRESOLVED' PRIORITY = '97' PRODUCT = '0131192107' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-268' SUMMARY = 'Donec posuere metus vitae ipsum.' STATUS = 'POSTPONE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'EPIC' AUTHOR = 'CTREMATHACK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230211' SOLUTION = 'UNRESOLVED' PRIORITY = '25' PRODUCT = '0194997681' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-142' SUMMARY = 'Duis bibendum.' STATUS = 'INPROGRE' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'BUG' AUTHOR = 'FPEACHMENT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211017'
+SOLUTION = 'UNRESOLVED' PRIORITY = '83' PRODUCT = '0397016970' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-734' SUMMARY = 'Vestibulum rutrum rutrum neque.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'USERSTORY' AUTHOR = 'GCARLONE' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20221227' SOLUTION = 'UNRESOLVED' PRIORITY = '34' PRODUCT = '0171008088' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-261' SUMMARY = 'Praesent lectus.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'BUG' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20230104'
+SOLUTION = 'UNRESOLVED' PRIORITY = '48' PRODUCT = '0609942506' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-559' SUMMARY = 'Duis at velit eu est congue elementum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'BUG' AUTHOR = 'HWARDINGTON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20211102' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0462486090' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-54' SUMMARY = 'Phasellus id sapien in sapien iaculis congue.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'TASK' AUTHOR = 'JKARADZAS' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220616' SOLUTION = 'UNRESOLVED' PRIORITY = '17' PRODUCT = '0518654464' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-726' SUMMARY = 'Ut tellus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'SUBTASK' AUTHOR = 'KDUMBRILL' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220824'
+SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0392789927' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-684' SUMMARY = 'Morbi ut odio.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'SUBTASK' AUTHOR = 'MKAY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220101'
+SOLUTION = 'UNRESOLVED' PRIORITY = '51' PRODUCT = '0182664435' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-608' SUMMARY = 'Duis bibendum.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'USERSTORY' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211027'
+SOLUTION = 'UNRESOLVED' PRIORITY = '4' PRODUCT = '0547021529' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-168' SUMMARY = 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.' STATUS = 'FIXED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'BUG'
+AUTHOR = 'OMCGRAFFIN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211006' SOLUTION = 'CANTREPOR' PRIORITY = '52' PRODUCT = '0247027231' ESTIMATED_EFFORT = '0.00 '  )
+).
+data(tasks5) = VALUE tt_zbc_tasks(
+( CLIENT = '100' TASK_KEY = 'BW4-883' SUMMARY = 'Donec ut dolor.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'SUBTASK' AUTHOR = 'OMENEGHI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220225'
+SOLUTION = 'UNRESOLVED' PRIORITY = '32' PRODUCT = '0031215477' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-583' SUMMARY = 'Curabitur gravida nisi at nibh.' STATUS = 'POSTPONE' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'TASK' AUTHOR = 'RHUNTING' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220211' SOLUTION = 'UNRESOLVED' PRIORITY = '72' PRODUCT = '0060670565' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-95' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'EPIC' AUTHOR = 'SRIDGES' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220704' SOLUTION = 'UNRESOLVED' PRIORITY = '27' PRODUCT = '0705739672' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-564' SUMMARY = 'Maecenas ut massa quis augue luctus tincidunt.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'YGULLICK' TYPE = 'SUBTASK' AUTHOR = 'YGULLICK' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230225' SOLUTION = 'UNRESOLVED' PRIORITY = '92' PRODUCT = '0182617050' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-831' SUMMARY = 'Morbi vel lectus in quam fringilla rhoncus.' STATUS = 'CANCELED' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'ZFERRERS' TYPE = 'USERSTORY' AUTHOR = 'CODGERS' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20211019' SOLUTION = 'ASDESIGNED' PRIORITY = '88' PRODUCT = '0644941742' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-86' SUMMARY = 'Maecenas pulvinar lobortis est.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'ZFERRERS' TYPE = 'BUG' AUTHOR = 'DBRAMICH' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220521' SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0549601677' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-671' SUMMARY = 'In est risus, auctor sed, tristique in, tempus sit amet, sem.' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = '' ASSIGNEE = 'ZFERRERS' TYPE = 'TASK' AUTHOR = 'EBIASIOLI' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230113' SOLUTION = 'UNRESOLVED' PRIORITY = '55' PRODUCT = '0908852129' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-294' SUMMARY = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.' STATUS = 'POSTPONE' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'ZFERRERS' TYPE = 'USERSTORY' AUTHOR = 'LEDGLER' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230220' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0807835802' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-487' SUMMARY = 'In hac habitasse platea dictumst.' STATUS = 'INPROGRE' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'ZFERRERS' TYPE = 'FEATURE' AUTHOR = 'MEMANUELOV' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230206' SOLUTION = 'UNRESOLVED' PRIORITY = '67' PRODUCT = '0134154087' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-173' SUMMARY = 'Phasellus id sapien in sapien iaculis congue.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'ZFERRERS' TYPE = 'FEATURE' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230308' SOLUTION = 'UNRESOLVED' PRIORITY = '5' PRODUCT = '0132725634' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-557' SUMMARY = 'Quisque id justo sit amet sapien dignissim vestibulum.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'ZFERRERS' TYPE = 'USERSTORY' AUTHOR = 'MSPRITT' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20230315' SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0476349298' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-601' SUMMARY = 'Suspendisse accumsan tortor quis turpis.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'ZFERRERS' TYPE = 'EPIC' AUTHOR = 'RFRANZOTTO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220418' SOLUTION = 'UNRESOLVED' PRIORITY = '76' PRODUCT = '0310501426' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-ISI REL_12' SUMMARY = '' STATUS = '' PROJECT = '' DESCRIPTION = 'BW-ISI REL_12 2022' ASSIGNEE = '' TYPE = '' AUTHOR = '' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = ''
+PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+).
+data(tasks6) = VALUE tt_zbc_tasks(
+( CLIENT = '100' TASK_KEY = 'BW4-603' SUMMARY = 'Praesent id massa id nisl venenatis lacinia.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'ZMEADERS' TYPE = 'TASK' AUTHOR = 'CO''HALLAGAN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230330' SOLUTION = 'UNRESOLVED' PRIORITY = '72' PRODUCT = '0261241487' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-35' SUMMARY = 'Vestibulum sed magna at nunc commodo placerat.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'ZMEADERS' TYPE = 'BUG' AUTHOR = 'DBLUNT' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230208' SOLUTION = 'UNRESOLVED' PRIORITY = '9' PRODUCT = '0450893020' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-957' SUMMARY = 'Maecenas pulvinar lobortis est.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'ZMEADERS' TYPE = 'SUBTASK' AUTHOR = 'DPETERI' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20230220' SOLUTION = 'UNRESOLVED' PRIORITY = '12' PRODUCT = '0028140656' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-946' SUMMARY = 'Ut tellus.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'ZMEADERS' TYPE = 'FEATURE' AUTHOR = 'FDESHON' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20211226'
+SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0223218871' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'MIG-527' SUMMARY = 'Integer ac neque.' STATUS = 'NEW' PROJECT = 'MIG' DESCRIPTION = '' ASSIGNEE = 'ZMEADERS' TYPE = 'TASK' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20220903'
+SOLUTION = 'UNRESOLVED' PRIORITY = '65' PRODUCT = '0236549215' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-271' SUMMARY = 'Integer ac leo.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D0000307552' TYPE = 'USERSTORY' AUTHOR = 'LDRUMMOND' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221001'
+SOLUTION = 'UNRESOLVED' PRIORITY = '45' PRODUCT = '0588445261' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-471' SUMMARY = 'Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.' STATUS = 'NEW' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'ZMEADERS' TYPE = 'USERSTORY' AUTHOR = 'TGEISTBECK' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220602' SOLUTION = 'UNRESOLVED' PRIORITY = '99' PRODUCT = '0892051927' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-698' SUMMARY = 'Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.' STATUS = 'NEW' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'ZMEADERS' TYPE = 'TASK' AUTHOR = 'WMONARD' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220813' SOLUTION = 'UNRESOLVED' PRIORITY = '84' PRODUCT = '0041790200' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW4-435' SUMMARY = 'Proin interdum mauris non ligula pellentesque ultrices.' STATUS = 'DELETED' PROJECT = 'BW4' DESCRIPTION = '' ASSIGNEE = 'AGERGUS' TYPE = 'SUBTASK' AUTHOR = 'PCOLING' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220929' SOLUTION = 'UNRESOLVED' PRIORITY = '63' PRODUCT = '0857363704' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SHRIKEN' SUMMARY = 'HANA Migration' STATUS = 'NEW' PROJECT = 'ISI' DESCRIPTION = 'Golive' ASSIGNEE = '' TYPE = '' AUTHOR = '' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = ''
+PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-3345' SUMMARY = 'Task summery' STATUS = 'NEW' PROJECT = '' DESCRIPTION = '' ASSIGNEE = '' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = ''
+PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-500' SUMMARY = '' STATUS = 'DELETED' PROJECT = '' DESCRIPTION = '' ASSIGNEE = 'D0000468033' TYPE = '' AUTHOR = '' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0'
+PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-308' SUMMARY = 'Nulla facilisi.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D0000307552' TYPE = 'FEATURE' AUTHOR = 'BGUENY' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221205'
+SOLUTION = 'DONE' PRIORITY = '20' PRODUCT = '0709331374' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-600' SUMMARY = 'Eine Aufgabe' STATUS = 'DELETED' PROJECT = '' DESCRIPTION = '' ASSIGNEE = 'D0000468033' TYPE = '' AUTHOR = 'D0000468033' CHANGED_AT = '20221207142501.0000000 ' CREATED_AT = '20221207142309.8038050 '
+DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'R3N-100' SUMMARY = 'Task R3N Schulung' STATUS = '' PROJECT = '' DESCRIPTION = '' ASSIGNEE = 'DB0EE28' TYPE = '' AUTHOR = 'DB0EE28' CHANGED_AT = '20230202144955.0000000 ' CREATED_AT = '20230202145008.0000000 '
+DUE_DATE = '20230204' SOLUTION = 'AAA' PRIORITY = '10' PRODUCT = '0000000123' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1001' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'EALYWEN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-267' SUMMARY = 'Fusce posuere felis sed lacus.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'D0000326286' TYPE = 'USERSTORY' AUTHOR = 'TGROVEN' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220514' SOLUTION = 'UNRESOLVED' PRIORITY = '99' PRODUCT = '0900469833' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-16' SUMMARY = 'Cras in purus eu magna vulputate luctus.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'ID01A10' TYPE = 'USERSTORY' AUTHOR = 'HGALLEAR' CHANGED_AT = '20230202150229.1928960 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '20220103' SOLUTION = 'UNRESOLVED' PRIORITY = '62' PRODUCT = '0634408481' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1002' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'YGULLICK' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1003' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'SANTONOPOULO' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1004' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'PGRISENTHWAI' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1005' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'HWARDINGTON' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1006' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CATTON' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1007' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'GPITKEATHLEY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1008' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'TGROVEN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1009' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'MELKINS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1010' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'HSICKERT' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1011' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'GGALLACCIO' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1012' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CBENTHAM' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1013' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'MDEHM' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1014' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CBISHELL' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1015' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'EBIASIOLI' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1016' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'PCOLING' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1017' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'EDONAGHY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1018' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'DSPLEVINS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1019' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'OMENEGHI' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1020' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'MD''AGUANNO' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1022' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'MLANMEID' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1023' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'DPETERI' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1024' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'JEALLES' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1025' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'FMOWSDELL' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1026' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'RHUNTING' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1027' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'OMCGRAFFIN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1028' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'BBAKESEF' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1029' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'BGUENY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1030' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'DKIFT' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1031' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'MNOTON' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1032' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'MGLASHEEN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1033' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'POGILVIE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1034' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'LCROAN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1035' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'SIVANYUTIN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1036' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CODGERS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1037' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'OALEBROOKE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1038' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'MSPRITT' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1039' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'DBRAMICH' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1040' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'GCARLONE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1041' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'FPATIFIELD' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1042' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CO''HALLAGAN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1043' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'HVEL' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1044' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CCROMLEY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1045' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'TJERROMES' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1046' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'KSOALL' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1047' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'FLEMERLE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1048' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'AHULMES' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1049' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'LMIXTURE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1050' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'KDUMBRILL' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1051' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'FPEACHMENT' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1052' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'RGEBHARDT' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1053' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'RSAGE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1054' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'AWHERRY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1055' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'EGODMAR' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1056' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CPROBACK' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1057' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'SPRENTY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1058' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'PO''LOONEY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1059' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'RFRANZOTTO' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1060' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'BBREARLEY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1061' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CTREMATHACK' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1062' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'DHOWDEN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1063' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'SSHANAHAN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1064' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CHALLOWS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1065' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'JDAAL' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1066' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'KROBJOHNS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1067' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'JKARADZAS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1068' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'BLAMANBY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1069' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'TGEISTBECK' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1070' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'SSAGE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1071' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'GKIWITZ' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1072' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'LDRUMMOND' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1073' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'TSEMAN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1074' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'KPREVOST' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1075' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'MEMANUELOV' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1076' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CHOOLAGHAN' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1077' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'TGERGELY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1078' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'ZMEADERS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1079' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'GHICKINBOTTO' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1080' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'MKAY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1081' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'DBLUNT' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1082' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'PMAINE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1083' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'HGALLEAR' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1084' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'ZFERRERS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1085' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'RDOYLE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1086' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'NPESSELT' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1087' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'VTWYFORD' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1088' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'AGERGUS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1089' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'CFEATHERSTON' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1090' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'WMONARD' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1091' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'JBYFIELD' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1092' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'ELARAWAY' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1093' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'LMILLETT' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1094' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'SRIDGES' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1095' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'AROOSE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1096' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'AJARMAINE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1097' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'LEDGLER' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1098' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'WGYRGORWICX' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1099' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'LPEPPER' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1100' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'AHACHETTE' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1101' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'JBRANDEIS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1102' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'HMOHABBAT' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1103' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'DB007MB' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1104' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'SHRI' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1105' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'D0000472203' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1106' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'HBRANDEIS' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1107' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'NEW' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'D0000307552' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'INT-1021' SUMMARY = 'Bitte Urlaubsplanung für 2023 erstellen' STATUS = 'DELETED' PROJECT = 'INT' DESCRIPTION = 'Siehe Summary' ASSIGNEE = 'D0000472203' TYPE = '' AUTHOR = 'D0000472203' CHANGED_AT = '0.0000000 '
+CREATED_AT = '0.0000000 ' DUE_DATE = '00000000' SOLUTION = '' PRIORITY = '0' PRODUCT = '0000000000' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'SUP-999' SUMMARY = 'Praesent lectus.' STATUS = 'DELETED' PROJECT = 'SUP' DESCRIPTION = '' ASSIGNEE = 'DB135E0' TYPE = 'FEATURE' AUTHOR = 'GGALLACCIO' CHANGED_AT = '0.0000000 ' CREATED_AT = '0.0000000 ' DUE_DATE = '20221018'
+SOLUTION = 'UNRESOLVED' PRIORITY = '99' PRODUCT = '0924881275' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-17' SUMMARY = 'Sed ante.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = 'Hier steht langtext' ASSIGNEE = 'AROOSE' TYPE = 'USERSTORY' AUTHOR = 'LMIXTURE' CHANGED_AT = '20230203141546.3187510 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220506' SOLUTION = 'UNRESOLVED' PRIORITY = '89' PRODUCT = '0484508054' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-141' SUMMARY = 'Vivamus tortor.' STATUS = 'DELETED' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'RHUNTING' TYPE = 'USERSTORY' AUTHOR = 'JDAAL' CHANGED_AT = '20230203141647.7519440 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20210927' SOLUTION = 'RTFM' PRIORITY = '11' PRODUCT = '0380283059' ESTIMATED_EFFORT = '0.00 '  )
+( CLIENT = '100' TASK_KEY = 'BW-231' SUMMARY = 'Duis aliquam convallis nunc.' STATUS = 'NEW' PROJECT = 'BW' DESCRIPTION = '' ASSIGNEE = 'HVEL' TYPE = 'FEATURE' AUTHOR = 'GGALLACCIO' CHANGED_AT = '20230203142457.8069310 ' CREATED_AT = '0.0000000 '
+DUE_DATE = '20220406' SOLUTION = 'UNRESOLVED' PRIORITY = '70' PRODUCT = '0078963150' ESTIMATED_EFFORT = '0.00 '  )
+ ).
+
      insert  zbc_tasks from table @tasks.
+     insert  zbc_tasks from table @tasks1.
+     insert  zbc_tasks from table @tasks3.
+     insert  zbc_tasks from table @tasks4.
+     insert  zbc_tasks from table @tasks5.
+     insert  zbc_tasks from table @tasks6.
 
   ENDMETHOD.
 
 
   METHOD if_oo_adt_classrun~main.
-   "delete_data( ).
-    "generate_tasks( ).
-    "select_tasks( out ).
-  fill_status_text( ).
-  ENDMETHOD.
+   delete_data( ).
+   generate_tasks( ).
+   generate_users( ).
 
-
-  METHOD select_tasks.
-    SELECT task_id,
-           status,
-           solution
-      FROM zbc_tasks
-      INTO TABLE @DATA(tasks).
-
-    out->write( tasks ).
+   fill_status_text( ).
 
   ENDMETHOD.
+
 
 
   METHOD delete_data.
@@ -675,4 +2325,111 @@ ASSIGNEE ='0000000016' TYPE ='FEATURE' AUTHOR ='0000000070' CHANGED_AT ='0.00000
     DELETE from zbc_status_text.
     insert zbc_status_text from table @texts.
   ENDMETHOD.
+  METHOD GENERATE_USERS.
+     types tt_zbc_users type STANDARD TABLE OF zbc_users with default key.
+     data(lt_users) = VALUE tt_zbc_users(
+( CLIENT = '100' USER_ID = 'EALYWEN' FIRSTNAME = 'Emmye' LASTNAME = 'Alywen' EMAIL = 'ealywen0@alexa.com' GENDER = 'F' DATE_OF_BIRTH = '19760516' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'YGULLICK' FIRSTNAME = 'Yolande' LASTNAME = 'Gullick' EMAIL = 'ygullick1@biglobe.ne.jp' GENDER = 'F' DATE_OF_BIRTH = '19680218' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'SANTONOPOULO' FIRSTNAME = 'Stavro' LASTNAME = 'Antonopoulos' EMAIL = 'santonopoulos2@histats.com' GENDER = 'M' DATE_OF_BIRTH = '20000916' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'PGRISENTHWAI' FIRSTNAME = 'Peyter' LASTNAME = 'Grisenthwaite' EMAIL = 'pgrisenthwaite3@bizjournals.com' GENDER = 'M' DATE_OF_BIRTH = '19661029' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'HWARDINGTON' FIRSTNAME = 'Heidi' LASTNAME = 'Wardington' EMAIL = 'hwardington4@myspace.com' GENDER = 'F' DATE_OF_BIRTH = '19970630' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CATTON' FIRSTNAME = 'Constantina' LASTNAME = 'Atton' EMAIL = 'catton5@taobao.com' GENDER = 'F' DATE_OF_BIRTH = '19730317' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'GPITKEATHLEY' FIRSTNAME = 'Gonzalo' LASTNAME = 'Pitkeathley' EMAIL = 'gpitkeathley6@ft.com' GENDER = 'M' DATE_OF_BIRTH = '19621025' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'TGROVEN' FIRSTNAME = 'Thibaut' LASTNAME = 'Groven' EMAIL = 'tgroven7@europa.eu' GENDER = 'M' DATE_OF_BIRTH = '19870829' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'MELKINS' FIRSTNAME = 'Martica' LASTNAME = 'Elkins' EMAIL = 'melkins8@pen.io' GENDER = 'F' DATE_OF_BIRTH = '19960102' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'HSICKERT' FIRSTNAME = 'Hewitt' LASTNAME = 'Sickert' EMAIL = 'hsickert9@patch.com' GENDER = 'M' DATE_OF_BIRTH = '19820219' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'GGALLACCIO' FIRSTNAME = 'Gus' LASTNAME = 'Gallaccio' EMAIL = 'ggallaccioa@patch.com' GENDER = 'M' DATE_OF_BIRTH = '19910302' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CBENTHAM' FIRSTNAME = 'Casie' LASTNAME = 'Bentham' EMAIL = 'cbenthamb@irs.gov' GENDER = 'F' DATE_OF_BIRTH = '19740621' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'MDEHM' FIRSTNAME = 'Miriam' LASTNAME = 'Dehm' EMAIL = 'mdehmc@mediafire.com' GENDER = 'F' DATE_OF_BIRTH = '19940328' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CBISHELL' FIRSTNAME = 'Clemente' LASTNAME = 'Bishell' EMAIL = 'cbishelld@jiathis.com' GENDER = 'M' DATE_OF_BIRTH = '19930808' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'EBIASIOLI' FIRSTNAME = 'Ettie' LASTNAME = 'Biasioli' EMAIL = 'ebiasiolie@ustream.tv' GENDER = 'F' DATE_OF_BIRTH = '19860319' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'PCOLING' FIRSTNAME = 'Prince' LASTNAME = 'Coling' EMAIL = 'pcolingf@arizona.edu' GENDER = 'M' DATE_OF_BIRTH = '19840623' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'EDONAGHY' FIRSTNAME = 'Eve' LASTNAME = 'Donaghy' EMAIL = 'edonaghyg@naver.com' GENDER = 'F' DATE_OF_BIRTH = '19790817' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'DSPLEVINS' FIRSTNAME = 'Diane' LASTNAME = 'Splevins' EMAIL = 'dsplevinsh@accuweather.com' GENDER = 'F' DATE_OF_BIRTH = '19820723' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'OMENEGHI' FIRSTNAME = 'Oswald' LASTNAME = 'Meneghi' EMAIL = 'omeneghii@dot.gov' GENDER = 'M' DATE_OF_BIRTH = '19830101' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'MD''AGUANNO' FIRSTNAME = 'Massimiliano' LASTNAME = 'D''Aguanno' EMAIL = 'mdaguannoj@gnu.org' GENDER = 'M' DATE_OF_BIRTH = '19680508' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'FDESHON' FIRSTNAME = 'Freeman' LASTNAME = 'Deshon' EMAIL = 'fdeshonk@angelfire.com' GENDER = 'M' DATE_OF_BIRTH = '19980712' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'MLANMEID' FIRSTNAME = 'Moll' LASTNAME = 'Lanmeid' EMAIL = 'mlanmeidl@addthis.com' GENDER = 'F' DATE_OF_BIRTH = '19700228' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'DPETERI' FIRSTNAME = 'Daven' LASTNAME = 'Peteri' EMAIL = 'dpeterim@prnewswire.com' GENDER = 'M' DATE_OF_BIRTH = '19830615' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'JEALLES' FIRSTNAME = 'Julee' LASTNAME = 'Ealles' EMAIL = 'jeallesn@a8.net' GENDER = 'F' DATE_OF_BIRTH = '19821003' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'FMOWSDELL' FIRSTNAME = 'Flin' LASTNAME = 'Mowsdell' EMAIL = 'fmowsdello@acquirethisname.com' GENDER = 'M' DATE_OF_BIRTH = '19700609' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'RHUNTING' FIRSTNAME = 'Romola' LASTNAME = 'Hunting' EMAIL = 'rhuntingp@rakuten.co.jp' GENDER = 'F' DATE_OF_BIRTH = '19970111' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'OMCGRAFFIN' FIRSTNAME = 'Olivier' LASTNAME = 'McGraffin' EMAIL = 'omcgraffinq@tiny.cc' GENDER = 'M' DATE_OF_BIRTH = '19880423' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'BBAKESEF' FIRSTNAME = 'Bud' LASTNAME = 'Bakesef' EMAIL = 'bbakesefr@omniture.com' GENDER = 'M' DATE_OF_BIRTH = '19630403' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'BGUENY' FIRSTNAME = 'Beverly' LASTNAME = 'Gueny' EMAIL = 'bguenys@hc360.com' GENDER = 'F' DATE_OF_BIRTH = '19950423' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'DKIFT' FIRSTNAME = 'Dredi' LASTNAME = 'Kift' EMAIL = 'dkiftt@forbes.com' GENDER = 'F' DATE_OF_BIRTH = '19840111' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'MNOTON' FIRSTNAME = 'Marla' LASTNAME = 'Noton' EMAIL = 'mnotonu@yelp.com' GENDER = 'F' DATE_OF_BIRTH = '19950412' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'MGLASHEEN' FIRSTNAME = 'Matti' LASTNAME = 'Glasheen' EMAIL = 'mglasheenv@360.cn' GENDER = 'F' DATE_OF_BIRTH = '19601231' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'POGILVIE' FIRSTNAME = 'Percy' LASTNAME = 'Ogilvie' EMAIL = 'pogilview@amazon.co.uk' GENDER = 'M' DATE_OF_BIRTH = '20010501' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'LCROAN' FIRSTNAME = 'Lilyan' LASTNAME = 'Croan' EMAIL = 'lcroanx@engadget.com' GENDER = 'F' DATE_OF_BIRTH = '19710401' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'SIVANYUTIN' FIRSTNAME = 'Suzie' LASTNAME = 'Ivanyutin' EMAIL = 'sivanyutiny@merriam-webster.com' GENDER = 'F' DATE_OF_BIRTH = '19720729' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CODGERS' FIRSTNAME = 'Chelsie' LASTNAME = 'Odgers' EMAIL = 'codgersz@comsenz.com' GENDER = 'F' DATE_OF_BIRTH = '19821119' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'OALEBROOKE' FIRSTNAME = 'Orland' LASTNAME = 'Alebrooke' EMAIL = 'oalebrooke10@github.io' GENDER = 'M' DATE_OF_BIRTH = '19840213' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'MSPRITT' FIRSTNAME = 'Maire' LASTNAME = 'Spritt' EMAIL = 'mspritt11@washington.edu' GENDER = 'F' DATE_OF_BIRTH = '19761010' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'DBRAMICH' FIRSTNAME = 'Demetris' LASTNAME = 'Bramich' EMAIL = 'dbramich12@marriott.com' GENDER = 'M' DATE_OF_BIRTH = '19730416' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'GCARLONE' FIRSTNAME = 'Gertrud' LASTNAME = 'Carlone' EMAIL = 'gcarlone13@va.gov' GENDER = 'F' DATE_OF_BIRTH = '19610520' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'FPATIFIELD' FIRSTNAME = 'Fanchette' LASTNAME = 'Patifield' EMAIL = 'fpatifield14@cornell.edu' GENDER = 'F' DATE_OF_BIRTH = '19980920' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CO''HALLAGAN' FIRSTNAME = 'Consuelo' LASTNAME = 'O''Hallagan' EMAIL = 'cohallagan15@aboutads.info' GENDER = 'F' DATE_OF_BIRTH = '19650531' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'HVEL' FIRSTNAME = 'Hermann' LASTNAME = 'Vel' EMAIL = 'hvel16@studiopress.com' GENDER = 'M' DATE_OF_BIRTH = '19870407' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CCROMLEY' FIRSTNAME = 'Cletis' LASTNAME = 'Cromley' EMAIL = 'ccromley17@ucla.edu' GENDER = 'M' DATE_OF_BIRTH = '19901021' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'TJERROMES' FIRSTNAME = 'Troy' LASTNAME = 'Jerromes' EMAIL = 'tjerromes18@usgs.gov' GENDER = 'M' DATE_OF_BIRTH = '19700306' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'KSOALL' FIRSTNAME = 'Kiersten' LASTNAME = 'Soall' EMAIL = 'ksoall19@amazonaws.com' GENDER = 'F' DATE_OF_BIRTH = '19940317' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'FLEMERLE' FIRSTNAME = 'Faustina' LASTNAME = 'Lemerle' EMAIL = 'flemerle1a@go.com' GENDER = 'F' DATE_OF_BIRTH = '19940523' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'AHULMES' FIRSTNAME = 'Avigdor' LASTNAME = 'Hulmes' EMAIL = 'ahulmes1b@sogou.com' GENDER = 'M' DATE_OF_BIRTH = '19661103' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'LMIXTURE' FIRSTNAME = 'Lucas' LASTNAME = 'Mixture' EMAIL = 'lmixture1c@clickbank.net' GENDER = 'M' DATE_OF_BIRTH = '19770116' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'KDUMBRILL' FIRSTNAME = 'Kylen' LASTNAME = 'Dumbrill' EMAIL = 'kdumbrill1d@istockphoto.com' GENDER = 'F' DATE_OF_BIRTH = '19691113' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'FPEACHMENT' FIRSTNAME = 'Forester' LASTNAME = 'Peachment' EMAIL = 'fpeachment1e@theatlantic.com' GENDER = 'M' DATE_OF_BIRTH = '19980901' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'RGEBHARDT' FIRSTNAME = 'Ruddie' LASTNAME = 'Gebhardt' EMAIL = 'rgebhardt1f@dagondesign.com' GENDER = 'M' DATE_OF_BIRTH = '19980511' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'RSAGE' FIRSTNAME = 'Robenia' LASTNAME = 'Sage' EMAIL = 'rsage1g@webnode.com' GENDER = 'F' DATE_OF_BIRTH = '19650225' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'AWHERRY' FIRSTNAME = 'Abie' LASTNAME = 'Wherry' EMAIL = 'awherry1h@salon.com' GENDER = 'M' DATE_OF_BIRTH = '19911105' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'EGODMAR' FIRSTNAME = 'Edie' LASTNAME = 'Godmar' EMAIL = 'egodmar1i@bbc.co.uk' GENDER = 'F' DATE_OF_BIRTH = '19870529' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CPROBACK' FIRSTNAME = 'Cross' LASTNAME = 'Proback' EMAIL = 'cproback1j@xing.com' GENDER = 'M' DATE_OF_BIRTH = '19980601' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'SPRENTY' FIRSTNAME = 'Sheila' LASTNAME = 'Prenty' EMAIL = 'sprenty1k@go.com' GENDER = 'F' DATE_OF_BIRTH = '19951023' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'PO''LOONEY' FIRSTNAME = 'Pet' LASTNAME = 'O''Looney' EMAIL = 'polooney1l@senate.gov' GENDER = 'F' DATE_OF_BIRTH = '19850608' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'RFRANZOTTO' FIRSTNAME = 'Rae' LASTNAME = 'Franzotto' EMAIL = 'rfranzotto1m@mac.com' GENDER = 'F' DATE_OF_BIRTH = '19660508' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'BBREARLEY' FIRSTNAME = 'Barbra' LASTNAME = 'Brearley' EMAIL = 'bbrearley1n@hc360.com' GENDER = 'F' DATE_OF_BIRTH = '19960725' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CTREMATHACK' FIRSTNAME = 'Cornell' LASTNAME = 'Tremathack' EMAIL = 'ctremathack1o@biblegateway.com' GENDER = 'M' DATE_OF_BIRTH = '19941110' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'DHOWDEN' FIRSTNAME = 'Dickie' LASTNAME = 'Howden' EMAIL = 'dhowden1p@mapy.cz' GENDER = 'M' DATE_OF_BIRTH = '19811103' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'SSHANAHAN' FIRSTNAME = 'Sella' LASTNAME = 'Shanahan' EMAIL = 'sshanahan1q@123-reg.co.uk' GENDER = 'F' DATE_OF_BIRTH = '19920920' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CHALLOWS' FIRSTNAME = 'Celestia' LASTNAME = 'Hallows' EMAIL = 'challows1r@sciencedaily.com' GENDER = 'F' DATE_OF_BIRTH = '19750322' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'JDAAL' FIRSTNAME = 'Jaymie' LASTNAME = 'Daal' EMAIL = 'jdaal1s@google.pl' GENDER = 'M' DATE_OF_BIRTH = '19801116' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'KROBJOHNS' FIRSTNAME = 'Karola' LASTNAME = 'Robjohns' EMAIL = 'krobjohns1t@fc2.com' GENDER = 'F' DATE_OF_BIRTH = '19691112' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'JKARADZAS' FIRSTNAME = 'Jacobo' LASTNAME = 'Karadzas' EMAIL = 'jkaradzas1u@wp.com' GENDER = 'M' DATE_OF_BIRTH = '19800819' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'BLAMANBY' FIRSTNAME = 'Binky' LASTNAME = 'Lamanby' EMAIL = 'blamanby1v@spotify.com' GENDER = 'M' DATE_OF_BIRTH = '19801202' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'TGEISTBECK' FIRSTNAME = 'Terrie' LASTNAME = 'Geistbeck' EMAIL = 'tgeistbeck1w@imageshack.us' GENDER = 'F' DATE_OF_BIRTH = '19621005' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'SSAGE' FIRSTNAME = 'Sid' LASTNAME = 'Sage' EMAIL = 'ssage1x@cbsnews.com' GENDER = 'M' DATE_OF_BIRTH = '19700513' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'GKIWITZ' FIRSTNAME = 'Gard' LASTNAME = 'Kiwitz' EMAIL = 'gkiwitz1y@boston.com' GENDER = 'M' DATE_OF_BIRTH = '20010903' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'LDRUMMOND' FIRSTNAME = 'Lil' LASTNAME = 'Drummond' EMAIL = 'ldrummond1z@soup.io' GENDER = 'F' DATE_OF_BIRTH = '19760627' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'TSEMAN' FIRSTNAME = 'Theodor' LASTNAME = 'Seman' EMAIL = 'tseman20@indiatimes.com' GENDER = 'M' DATE_OF_BIRTH = '19851016' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'KPREVOST' FIRSTNAME = 'Katerine' LASTNAME = 'Prevost' EMAIL = 'kprevost21@g.co' GENDER = 'F' DATE_OF_BIRTH = '20000606' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'MEMANUELOV' FIRSTNAME = 'Mohammed' LASTNAME = 'Emanuelov' EMAIL = 'memanuelov22@cargocollective.com' GENDER = 'M' DATE_OF_BIRTH = '19770426' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CHOOLAGHAN' FIRSTNAME = 'Coleman' LASTNAME = 'Hoolaghan' EMAIL = 'choolaghan23@huffingtonpost.com' GENDER = 'M' DATE_OF_BIRTH = '19641005' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'TGERGELY' FIRSTNAME = 'Thorny' LASTNAME = 'Gergely' EMAIL = 'tgergely24@nydailynews.com' GENDER = 'M' DATE_OF_BIRTH = '19970421' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'ZMEADERS' FIRSTNAME = 'Zacherie' LASTNAME = 'Meaders' EMAIL = 'zmeaders25@cbsnews.com' GENDER = 'M' DATE_OF_BIRTH = '19720312' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'GHICKINBOTTO' FIRSTNAME = 'Goddard' LASTNAME = 'Hickinbottom' EMAIL = 'ghickinbottom26@topsy.com' GENDER = 'M' DATE_OF_BIRTH = '19801031' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'MKAY' FIRSTNAME = 'Moritz' LASTNAME = 'Kay' EMAIL = 'mkay27@tmall.com' GENDER = 'M' DATE_OF_BIRTH = '19740506' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'DBLUNT' FIRSTNAME = 'Darrick' LASTNAME = 'Blunt' EMAIL = 'dblunt28@360.cn' GENDER = 'M' DATE_OF_BIRTH = '19910901' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'PMAINE' FIRSTNAME = 'Paloma' LASTNAME = 'Maine' EMAIL = 'pmaine29@uiuc.edu' GENDER = 'F' DATE_OF_BIRTH = '19690417' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'HGALLEAR' FIRSTNAME = 'Hymie' LASTNAME = 'Gallear' EMAIL = 'hgallear2a@marriott.com' GENDER = 'M' DATE_OF_BIRTH = '19760521' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'ZFERRERS' FIRSTNAME = 'Zebedee' LASTNAME = 'Ferrers' EMAIL = 'zferrers2b@addthis.com' GENDER = 'M' DATE_OF_BIRTH = '19880305' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'RDOYLE' FIRSTNAME = 'Retha' LASTNAME = 'Doyle' EMAIL = 'rdoyle2c@photobucket.com' GENDER = 'F' DATE_OF_BIRTH = '19970828' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'NPESSELT' FIRSTNAME = 'Nickie' LASTNAME = 'Pesselt' EMAIL = 'npesselt2d@discuz.net' GENDER = 'M' DATE_OF_BIRTH = '19701103' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'VTWYFORD' FIRSTNAME = 'Veronike' LASTNAME = 'Twyford' EMAIL = 'vtwyford2e@cornell.edu' GENDER = 'F' DATE_OF_BIRTH = '19850728' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'AGERGUS' FIRSTNAME = 'Abby' LASTNAME = 'Gergus' EMAIL = 'agergus2f@jiathis.com' GENDER = 'M' DATE_OF_BIRTH = '19980424' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'CFEATHERSTON' FIRSTNAME = 'Cindra' LASTNAME = 'Featherstone' EMAIL = 'cfeatherstone2g@fotki.com' GENDER = 'F' DATE_OF_BIRTH = '19650814' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'WMONARD' FIRSTNAME = 'Wilone' LASTNAME = 'Monard' EMAIL = 'wmonard2h@wufoo.com' GENDER = 'F' DATE_OF_BIRTH = '19980412' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'JBYFIELD' FIRSTNAME = 'Joellyn' LASTNAME = 'Byfield' EMAIL = 'jbyfield2i@reuters.com' GENDER = 'F' DATE_OF_BIRTH = '19990528' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'ELARAWAY' FIRSTNAME = 'Elenore' LASTNAME = 'Laraway' EMAIL = 'elaraway2j@washington.edu' GENDER = 'F' DATE_OF_BIRTH = '19920905' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'LMILLETT' FIRSTNAME = 'Lorry' LASTNAME = 'Millett' EMAIL = 'lmillett2k@time.com' GENDER = 'M' DATE_OF_BIRTH = '19710108' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'SRIDGES' FIRSTNAME = 'Stern' LASTNAME = 'Ridges' EMAIL = 'sridges2l@technorati.com' GENDER = 'M' DATE_OF_BIRTH = '19610906' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'AROOSE' FIRSTNAME = 'Arabela' LASTNAME = 'Roose' EMAIL = 'aroose2m@phpbb.com' GENDER = 'F' DATE_OF_BIRTH = '19630403' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'LEDGLER' FIRSTNAME = 'Loni' LASTNAME = 'Edgler' EMAIL = 'ledgler2o@tmall.com' GENDER = 'F' DATE_OF_BIRTH = '19810130' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'WGYRGORWICX' FIRSTNAME = 'Wake' LASTNAME = 'Gyrgorwicx' EMAIL = 'wgyrgorwicx2p@go.com' GENDER = 'M' DATE_OF_BIRTH = '19820119' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'LPEPPER' FIRSTNAME = 'Lou' LASTNAME = 'Pepper' EMAIL = 'lpepper2q@webeden.co.uk' GENDER = 'F' DATE_OF_BIRTH = '19811108' CHANGED_AT = '0.0000000 '  )
+( CLIENT = '100' USER_ID = 'AHACHETTE' FIRSTNAME = 'Anabella' LASTNAME = 'Hachette' EMAIL = 'ahachette2r@mapy.cz' GENDER = 'F' DATE_OF_BIRTH = '19911002' CHANGED_AT = '0.0000000 '  )
+ ).
+     insert  zbc_users from table @lt_users.
+
+  ENDMETHOD.
+
 ENDCLASS.

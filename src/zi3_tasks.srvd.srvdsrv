@@ -1,0 +1,5 @@
+@EndUserText.label: 'Tasks'
+define service Zi3_tasks {
+  expose zi3_jb_tasks as Tasks;
+  expose zi_efforts as Efforts;
+}

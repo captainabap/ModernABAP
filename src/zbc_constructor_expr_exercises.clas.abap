@@ -40,16 +40,16 @@ CLASS ZBC_CONSTRUCTOR_EXPR_EXERCISES IMPLEMENTATION.
 
     SELECT * FROM zbc_users INTO TABLE @DATA(users).
 
-*    benutzer = corresponding  tt_benutzer( users MAPPING vorname    = firstname
-*                                                          nachname   = lastname
-*                                                          geschlecht = gender
-*                                                          geb_dat    = date_of_birth ) .
+    benutzer = corresponding  tt_benutzer( users MAPPING nachname   = lastname
+                                                         vorname    = firstname
+                                                         geschlecht = gender
+                                                         geb_dat    = date_of_birth ) .
 
-    benutzer = value tt_benutzer( for user
-                                   in users
-                                   ( vorname = to_upper( user-firstname )
-                                     nachname = user-lastname
-                                      ) )        .
+*    benutzer = value tt_benutzer( for user
+*                                   in users
+*                                   ( vorname = to_upper( user-firstname )
+*                                     nachname = user-lastname
+*                                      ) )        .
 
     out->WRITE( benutzer ).
 

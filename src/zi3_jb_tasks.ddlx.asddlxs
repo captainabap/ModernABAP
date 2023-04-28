@@ -1,0 +1,40 @@
+@Metadata.layer: #CUSTOMER
+annotate view zi3_jb_tasks with 
+{
+
+  @UI: { lineItem: [{ position: 20 }],
+         identification: [{ position: 20 }]  }
+  TaskKey;
+  @UI: { lineItem: [{ position: 20 }],
+         identification: [{ position: 20 }]  }
+  @Search: { defaultSearchElement: true,
+             fuzzinessThreshold: 0.7 ,
+             ranking: #MEDIUM }
+  Summary;
+  @UI: { identification: [{ position: 30 }]  }
+  Status;
+  @UI: { lineItem: [{ position: 20 }],
+         identification: [{ position: 30 }]  }
+  Project;
+  @UI: { identification: [{ position: 40 }]  }
+  Description;
+  @UI: { identification: [{ position: 50 }]  }
+  Assignee;
+  @UI: { identification: [{ position: 50 }]  }
+  Type;
+  @UI.lineItem: [{ position: 90 }]
+  Author;
+  @UI.identification: [{ position: 60 }]
+  ChangedAt;
+  @UI.identification: [{ position: 70 }]
+  CreatedAt;
+  @UI.lineItem: [{ position: 80 }]
+  DueDate;
+  @UI.identification: [{ position: 90 }]
+  Solution;
+  @UI.identification: [{ position: 100 }]
+  @UI.lineItem: [{ position: 100 }]
+  Priority;
+  @UI.identification: [{ position: 50 }]
+  Product;
+}

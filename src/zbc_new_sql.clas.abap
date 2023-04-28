@@ -121,10 +121,10 @@ CLASS zbc_new_sql IMPLEMENTATION.
 select from I_SalesDocument
    FIELDS
      SalesDocument,
-     \_item-SalesDocumentItem,
-     \_item-Material,
-     \_item\_Material-MaterialBaseUnit,
-     \_item\_material\_Text-MaterialName
+     \_item[ (1) inner where  SalesDocumentItem = '000010' ]-SalesDocumentItem,
+     \_item[ (1) inner where  SalesDocumentItem = '000010' ]-Material,
+     \_item[ (1) inner where  SalesDocumentItem = '000010' ]\_Material-MaterialBaseUnit,
+     \_item[ (1) inner where  SalesDocumentItem = '000010' ]\_material\_Text[  (1) inner where Language = @sy-langu ]-MaterialName
      into table @data(result).
 
      out->write( result ).

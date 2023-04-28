@@ -65,11 +65,11 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 *      demo_cast( ).
 
 *     for_counter( ).
-*    DATA dec  TYPE p LENGTH 16 DECIMALS 2.
-*    dec = 1 / 3.
-*    demo_exact_calculation( input = 5 ).
+    DATA dec  TYPE p LENGTH 16 DECIMALS 2.
+    dec =  3 / 2 .
+    demo_exact_calculation( input = 4 ).
 *    demo_exact_calculation( input = 3 ).
-*    demo_exact_assignment( input = 5 ).
+*    demo_exact_assignment( input = '1.5' ).
 *    demo_exact_assignment( input = dec ).
 *    demo_calculation_assignment( vat = 19 ).
 *    demo_value_operator( ).
@@ -77,7 +77,8 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 *    for_loop( ).
 *    base_in_value( ).
 *    new_data_object( ).
-    demo_reduce( ).
+*    demo_reduce( ).
+*     demo_corresponding_lookup( ).
 
   ENDMETHOD.
 
@@ -85,7 +86,7 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
   METHOD demo_exact_calculation.
     out->write( |\ndemo_exact_calculation, INPUT = { input }| ).
     TRY.
-        DATA(result) = EXACT int4( 10 / input ).
+        DATA(result) = EXACT decfloat16( 10 / input ).
         out->write( |The result is exact { result }| ).
 
       CATCH cx_sy_conversion_rounding  INTO DATA(lx_conv).
@@ -333,14 +334,15 @@ CLASS zbc_constructor_expressions IMPLEMENTATION.
 
 
   METHOD demo_corresponding_lookup.
-    DATA lt_lookup TYPE HASHED TABLE OF i_countrytext WITH UNIQUE KEY country.
+    DATA lt_lookup TYPE HASHED  TABLE OF i_countrytext WITH UNIQUE KEY country.
     DATA(lt_orig) = VALUE tt_demo( ( country = 'DE' )
                                    ( country = 'US' ) ).
 
     SELECT * FROM i_countrytext WHERE language = 'D' INTO TABLE @lt_lookup.
     out->write( lt_orig ).
 
-    DATA(lt_new) = CORRESPONDING tt_demo( lt_orig FROM lt_lookup
+    DATA(lt_new) = CORRESPONDING tt_demo( lt_orig  ##OPERATOR[LT_ORIG]
+                                                  FROM lt_lookup
                                                   USING country = country
                                                   MAPPING country_text = countryname  ).
     out->write( lt_new ).

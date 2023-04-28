@@ -1,0 +1,42 @@
+managed implementation in class zbp_i3_jb_tasks unique;
+strict;
+
+define behavior for zi3_jb_tasks //alias <alias_name>
+persistent table ZBC_TASKS
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _Efforts { create; }
+
+    mapping for zbc_tasks corresponding
+  {
+    TaskKey = task_key;
+    ChangedAt = changed_at;
+    CreatedAt = created_at;
+    DueDate = due_date;
+  }
+}
+
+define behavior for zi_efforts //alias <alias_name>
+persistent table ZBC_EFFORTS
+lock dependent by _Task
+authorization dependent by _Task
+//etag master <field_name>
+
+{
+  update;
+  delete;
+  field ( readonly ) TaskKey, EffortGuid;
+  field (numbering : managed) EffortGuid;
+  association _Task;
+  mapping for zbc_efforts corresponding {
+  EffortGuid = effort_guid;
+  TaskComment = task_comment;
+  TaskKey = task_key;
+
+  }
+}
