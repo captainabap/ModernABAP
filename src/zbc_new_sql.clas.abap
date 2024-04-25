@@ -118,16 +118,16 @@ CLASS zbc_new_sql IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD test_vdm.
-select from I_SalesDocument
-   FIELDS
-     SalesDocument,
-     \_item[ (1) inner where  SalesDocumentItem = '000010' ]-SalesDocumentItem,
-     \_item[ (1) inner where  SalesDocumentItem = '000010' ]-Material,
-     \_item[ (1) inner where  SalesDocumentItem = '000010' ]\_Material-MaterialBaseUnit,
-     \_item[ (1) inner where  SalesDocumentItem = '000010' ]\_material\_Text[  (1) inner where Language = @sy-langu ]-MaterialName
-     into table @data(result).
-
-     out->write( result ).
+*select from I_SalesDocument
+*   FIELDS
+*     SalesDocument,
+*     \_item[ (1) inner where  SalesDocumentItem = '000010' ]-SalesDocumentItem,
+*     \_item[ (1) inner where  SalesDocumentItem = '000010' ]-Material,
+*     \_item[ (1) inner where  SalesDocumentItem = '000010' ]\_Material-MaterialBaseUnit,
+*     \_item[ (1) inner where  SalesDocumentItem = '000010' ]\_material\_Text[  (1) inner where Language = @sy-langu ]-MaterialName
+*     into table @data(result).
+*
+*     out->write( result ).
   ENDMETHOD.
 
 ENDCLASS.

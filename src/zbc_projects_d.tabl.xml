@@ -38,7 +38,6 @@
      <ROLLNAME>ZBC_PROJECT_KEY</ROLLNAME>
      <ADMINFIELD>0</ADMINFIELD>
      <NOTNULL>X</NOTNULL>
-     <ACTFLAG>I</ACTFLAG>
      <COMPTYPE>E</COMPTYPE>
     </DD03P>
     <DD03P>
@@ -87,6 +86,12 @@
      <GROUPNAME>%ADMIN</GROUPNAME>
     </DD03P>
    </DD03P_TABLE>
+   <TABL_EXTRAS>
+    <TDDAT>
+     <TABNAME>ZBC_PROJECTS_D</TABNAME>
+     <CCLASS>CUS_DEV_SUP_DA</CCLASS>
+    </TDDAT>
+   </TABL_EXTRAS>
   </asx:values>
  </asx:abap>
 </abapGit>

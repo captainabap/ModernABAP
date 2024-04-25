@@ -11,7 +11,7 @@
 @UI.headerInfo:{ typeName: '🦓Task',
                  typeNamePlural: '🦓Tasks',
                  title.value: 'Summary' }
-@Search.searchable: true
+//@Search.searchable: true
 @Metadata.allowExtensions: true
 define root view entity zi3_jb_tasks
   as select from zbc_tasks
@@ -32,6 +32,7 @@ composition [0..*] of zi_efforts  as _Efforts
                    targetElement: '_Efforts' } ]
        @UI: { lineItem: [{ position: 10 }],
          identification: [{ position: 10 }] }
+         
   key task_key    as TaskKey,
        @UI: { lineItem: [{ position: 20 }],
          identification: [{ position: 20 }] }

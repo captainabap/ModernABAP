@@ -32,6 +32,7 @@ authorization dependent by _Task
   delete;
   field ( readonly ) TaskKey, EffortGuid;
   field (numbering : managed) EffortGuid;
+
   association _Task;
   mapping for zbc_efforts corresponding {
   EffortGuid = effort_guid;

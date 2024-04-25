@@ -131,7 +131,7 @@ CLASS zbc_other_expressions IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD loop_into_data.
-    SELECT task_id,
+    SELECT TASK_KEY,
            status,
            solution
       FROM zbc_tasks
@@ -147,8 +147,8 @@ CLASS zbc_other_expressions IMPLEMENTATION.
     LOOP AT lt_tasks INTO ls_tasks.
 
     ENDLOOP.
-    "    READ TABLE lt_tasks INTO DATA(ls_task) WITH KEY task_id = 10.
-    READ TABLE lt_tasks ASSIGNING FIELD-SYMBOL(<ls_task>) WITH KEY task_id = 10.
+    "    READ TABLE lt_tasks INTO DATA(ls_task) WITH KEY TASK_KEY = 10.
+    READ TABLE lt_tasks ASSIGNING FIELD-SYMBOL(<ls_task>) WITH KEY TASK_KEY = 10.
   ENDMETHOD.
 
   METHOD loop_assigning_fs.
@@ -221,15 +221,15 @@ CLASS zbc_other_expressions IMPLEMENTATION.
 
   METHOD for_loop.
     SELECT summary,
-           task_id
+           TASK_KEY
       FROM zbc_tasks
       INTO TABLE @DATA(lt_data)
       UP TO 10 ROWS.
 
     TYPES tt_tmp LIKE lt_data.
 
-    DATA(lt_tmp) = VALUE tt_tmp( FOR line IN lt_data WHERE ( task_id < 4  )
-                                 ( summary = to_upper( line-summary ) task_id = 42 )  ).
+    DATA(lt_tmp) = VALUE tt_tmp( FOR line IN lt_data WHERE ( TASK_KEY < 4  )
+                                 ( summary = to_upper( line-summary ) TASK_KEY = 42 )  ).
 
     out->write( lt_tmp ).
   ENDMETHOD.
@@ -277,7 +277,7 @@ CLASS zbc_other_expressions IMPLEMENTATION.
 
   METHOD demo_corresponding.
     DATA: BEGIN OF ls_task_small,
-            id       TYPE zbc_tasks-task_id,
+            id       TYPE zbc_tasks-TASK_KEY,
             title    TYPE zbc_tasks-summary,
             assignee TYPE zbc_tasks-assignee,
           END OF ls_task_small.

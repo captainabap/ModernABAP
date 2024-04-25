@@ -1,5 +1,9 @@
 CLASS zbp_i3_jb_tasks DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi3_jb_tasks.
+protected section.
+private section.
 ENDCLASS.
 
-CLASS zbp_i3_jb_tasks IMPLEMENTATION.
+
+
+CLASS ZBP_I3_JB_TASKS IMPLEMENTATION.
 ENDCLASS.

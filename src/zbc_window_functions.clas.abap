@@ -96,7 +96,7 @@ CLASS ZBC_WINDOW_FUNCTIONS IMPLEMENTATION.
 
   METHOD demo_lead.
     SELECT assignee,
-           task_id,
+           task_key,
            due_date,
            days_between( due_date
                         ,LEAD( due_date )
