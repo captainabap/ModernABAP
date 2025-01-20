@@ -1,0 +1,40 @@
+managed implementation in class zbp_i_00_projects2 unique;
+strict ( 2 );
+
+with draft;
+define behavior for zi_00_projects2 //alias <alias_name>
+persistent table zbc_projects2
+draft table zbc_projects2d
+lock master total etag createdat //#Draft
+//lock master                    //#Draft
+authorization master ( instance )
+etag master ChangedAt            //#Draft
+{
+  create;
+  update;
+  delete;
+
+  field(numbering : managed) ProjectGUID;
+  field(readonly ) ProjectGUID;
+  field(mandatory) name;
+  field(readonly) ChangedBy,
+                  ChangedAt,
+                  CreatedBy,
+                  CreatedAt;
+
+  draft action Edit;               //#Draft
+  draft action Activate;           //#Draft
+  draft action Discard;            //#Draft
+  draft action Resume;             //#Draft
+  draft determine action Prepare;  //#Draft
+  mapping for zbc_projects2 corresponding
+    {
+      ChangedAt      = changed_at;
+      ChangedBy      = changed_by;
+      CreatedAt      = created_at;
+      CreatedBy      = created_by;
+      ProjectKey     = project_key;
+      ProjectManager = project_manager;
+      ProjectGUID    = project_guid;
+    }
+}

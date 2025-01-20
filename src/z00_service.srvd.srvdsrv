@@ -1,0 +1,9 @@
+@EndUserText.label: 'Service'
+define service Z00_service {
+  expose zi_00_users     as Users;
+  expose zi_00_tasks     as Tasks;
+  expose ZI_00_projects  as Projects;
+  expose zi_00_projects2 as ProjectsDraft;
+  expose zi_00_tasks_r   as TasksApp;
+  expose ZI_00_Comments  as Comments;
+}

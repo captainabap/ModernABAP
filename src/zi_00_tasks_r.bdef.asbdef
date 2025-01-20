@@ -1,0 +1,46 @@
+managed implementation in class zbp_i_00_tasks_r unique;
+strict ( 2 );
+
+define behavior for zi_00_tasks_r //alias <alias_name>
+persistent table zbc_tasks
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  field ( readonly : update ) TaskKey;
+  association _Comments { create; }
+  mapping for zbc_tasks corresponding
+    {
+      TaskKey   = task_key;
+      ChangedAt = changed_at;
+      ChangedBy = changed_by;
+      CreatedAt = created_at;
+      CreatedBy = created_by;
+      DueDate   = due_date;
+      EstimatedEffort = estimated_effort;
+    }
+}
+
+define behavior for ZI_00_Comments //alias <alias_name>
+persistent table zbc_comments
+lock dependent by _Tasks
+authorization dependent by _Tasks
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) Uuid;
+  field ( numbering : managed ) Uuid;
+  field ( readonly ) TaskKey;
+  association _Tasks;
+  mapping for zbc_comments corresponding
+    {
+      TaskKey     = task_key;
+      CommentText = comment_text;
+      ChangedAt   = changed_at;
+      CreatedAt   = created_at;
+    }
+}
